@@ -1,0 +1,39 @@
+﻿@model Inventory.ArqLimpia.BL.DTOs.FindOneProductsOutputDTOs
+
+@{
+    ViewData["Title"] = "Details";
+    var url = "http://localhost:5275/images/" + Model.ImageUrl;
+}
+
+<div class="card">
+    <div class="card-header">
+        Details
+    </div>
+    <div class="card-body">
+             <div class="mb-3">
+                    <label for="exampleFormControlFile1">Image</label>
+                    @Html.DisplayFor(model => model.ImageUrl)
+                    <img width="500" src=@url/>
+             </div>
+            <div class="mb-3">
+                <label class="form-label">Product Name</label>
+                 @Html.DisplayFor(model => model.ProductName)
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                     @Html.DisplayFor(model => model.Description)
+               </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Price</label>
+                    @Html.DisplayFor(model => model.Price)
+                   
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Stock</label>
+                    @Html.DisplayFor(model => model.Stock)
+                </div>
+                <a asp-action="Index" asp-controller="Product" class="btn btn-success"><i class="bi bi-arrow-left"></i>Back to list</a>
+      
+    </div>
+</div>

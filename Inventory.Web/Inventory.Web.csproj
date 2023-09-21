@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="bootstrap" Version="5.2.3" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.13" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\InventoryPLT\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Inventory.ArqLimpia.BL.DTOs\Inventory.ArqLimpia.BL.DTOs.csproj" />
+    <ProjectReference Include="..\Inventory.ArqLimpia.BL.Interfaces\Inventory.ArqLimpia.BL.Interfaces.csproj" />
+    <ProjectReference Include="..\Inventory.ArqLimpia.IoC\Inventory.ArqLimpia.IoC.csproj" />
+    <ProjectReference Include="..\Inventory.ArqLimpia.BL.DTOs\Inventory.ArqLimpia.BL.DTOs.csproj" />
+  </ItemGroup>
+
+</Project>

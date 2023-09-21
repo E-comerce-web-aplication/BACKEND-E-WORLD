@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BCrypt.NET" Version="0.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.4" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Inventory.ArqLimpia.BL.DTOs\Inventory.ArqLimpia.BL.DTOs.csproj" />
+    <ProjectReference Include="..\Inventory.ArqLimpia.BL.Interfaces\Inventory.ArqLimpia.BL.Interfaces.csproj" />
+    <ProjectReference Include="..\inventory.ArqLimpia.EN\inventory.ArqLimpia.EN.csproj" />
+    <ProjectReference Include="..\Inventory.EN.Enterprice\Inventory.ArqLimpia.EN.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>
