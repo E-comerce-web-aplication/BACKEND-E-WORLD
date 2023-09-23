@@ -20,9 +20,32 @@ CREATE TABLE "Users" (
     "Surname" VARCHAR(30) NOT NULL,
     "Email" VARCHAR(140) UNIQUE NOT NULL,
     "DateOfBirth" DATE NOT NULL CHECK ("DateOfBirth" >= '1955-01-01'),
-    "ROLE" role NOT NULL,
-    "Password" VARCHAR(90) NOT NULL
+    "Password" VARCHAR(90) NOT NULL,
+    "Google" BOOLEAN,
+    "Recovery_token" VARCHAR NOT NULL
 );
+
+
+CREATE TABLE "Costumer" (
+    "Id" SERIAL PRIMARY KEY,
+    "UserId"
+    "CompanyId",
+);
+
+
+CREATE TABLE "Company" (
+    "Id" SERIAL PRIMARY KEY,
+    "BusinessOwnerId",
+);
+
+
+CREATE TABLE "Stores" (
+    "Id" SERIAL PRIMARY KEY,
+    "CompanyId" 
+    "addres"
+);
+
+
 
 CREATE TABLE "StoreInfo" (
     "Id" SERIAL PRIMARY KEY,
