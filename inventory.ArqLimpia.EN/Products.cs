@@ -1,29 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace inventory.ArqLimpia.EN
 {
        public class ProductEN
     {
-        public int Id { get; set; }
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string Id { get; set; }
 
-        public string ProductName { get; set; }
+    [BsonRequired]
+    [BsonElement("ProductName")]
+    public string ProductName { get; set; }
 
-        public string Descriptions { get; set; }
+    [BsonRequired]
+    [BsonElement("Description")]
+    public string Description { get; set; }
 
-        public int Stock { get; set; }
+    [BsonRequired]
+    [BsonElement("Stock")]
+    public int Stock { get; set; }
 
-        public decimal Price { get; set; }
+    [BsonRequired]
+    [BsonElement("Price")]
+    [BsonRepresentation(BsonType.Decimal128)]
+    public decimal Price { get; set; }
 
-        public string ImageUrl { get; set; }
+    [BsonElement("Images")]
+    public List<string> Images { get; set; }
 
-        public virtual ICollection<ProductStoreEN> ProductStore { get; set; }
-        
-        public virtual ICollection<OrdersProductEN> ProductOrder { get; set; }
+    [BsonElement("tags")]
+    public List<string> Tags { get; set; }
+
+    [BsonRequired]
+    [BsonElement("companyCategoryId")]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string CompanyCategoryId { get; set; }
+
+    [BsonRequired]
+    [BsonElement("companyId")]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string CompanyId { get; set; }
     }
 
     
 }
+
