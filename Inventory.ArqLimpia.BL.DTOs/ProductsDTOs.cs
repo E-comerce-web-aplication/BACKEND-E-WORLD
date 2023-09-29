@@ -20,22 +20,22 @@ namespace Inventory.ArqLimpia.BL.DTOs
         [Range(5, double.MaxValue, ErrorMessage = "The field Stock must be greater than 5.")]
         public int Stock { get; set; }
 
-        public string ImageUrl { get; set; }
+        public List<string> ImageUrl { get; set; }
 
         [Required(ErrorMessage = "The field Price is required")]
         [Range(10, double.MaxValue, ErrorMessage = "The field Price must be greater than 10.")]
-        public decimal Price { get; set; } 
+        public double Price { get; set; } 
 
     }
 
     public class CreateProductsOutputDTOs
     {
-        public int IdProduct { get; set; }
+        public string IdProduct { get; set; }
         public string ProductName { get; set; }
         public string Description{ get; set; }
         public int Stock { get; set; }
-        public string ImageUrl { get; set; }
-        public decimal Price { get; set; }
+        public List<string> ImageUrl { get; set; }
+        public double Price { get; set; }
 
     }
 
@@ -43,7 +43,7 @@ namespace Inventory.ArqLimpia.BL.DTOs
     public class DeleteProductsInputDTOs
     {
         [Required]
-        public int IdProduct { get; set; }
+        public string IdProduct { get; set; }
     }
 
     public class DeleteProductsOutputDTOs
@@ -54,7 +54,7 @@ namespace Inventory.ArqLimpia.BL.DTOs
     //  DTOs PARA ACTUALIZAR PRODUCTOS
     public class UpdateProductsInputDTOs
     {
-        public int ProductId { get; set; }
+        public string ProductId { get; set; }
         [Required(ErrorMessage = "The field Title is required")]
         [StringLength(50)]
         [MinLength(8, ErrorMessage = "The Title must have at least 8 characters.")]
@@ -70,17 +70,17 @@ namespace Inventory.ArqLimpia.BL.DTOs
 
         [Required(ErrorMessage = "The field Price is required")]
         [Range(10, double.MaxValue, ErrorMessage = "The field Price must be greater than 10.")]
-        public decimal Price { get; set; }
+        public double Price { get; set; }
 
     }
 
     public class UpdateProductsOutputDTOs
     {
-        public int ProductId { get; set; }
+        public string ProductId { get; set; }
         public string ProductName { get; set; }
         public string Description { get; set; }
         public int Stock { get; set; }
-        public decimal Price { get; set; }
+        public double Price { get; set; }
        
     }
 
@@ -94,28 +94,28 @@ namespace Inventory.ArqLimpia.BL.DTOs
 
     public class FindByIdDTOs {
          [Required(ErrorMessage = "You must enter a id for the search")]
-        public int Id { get; set; }
+        public string Id { get; set; }
       }
 
     public class FindOneProductsOutputDTOs
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string ProductName { get; set; }
         public string Description { get; set; }
         public int Stock { get; set; }
-        public string ImageUrl { get; set; }
-        public decimal Price { get; set; }      
+        public List<string> ImageUrl { get; set; }
+        public double Price { get; set; }      
 
     }
 
      public class FindProductsOutputDTOs
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string ProductName { get; set; }
         public string Description { get; set; }
         public int Stock { get; set; }
-        public string ImageUrl { get; set; }
-        public decimal Price { get; set; }      
+        public List<string> ImageUrl { get; set; }
+        public double Price { get; set; }      
 
     }
 }

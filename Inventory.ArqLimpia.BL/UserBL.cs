@@ -9,12 +9,9 @@ namespace Inventory.ArqLimpia.BL
     public class UserBL: IUserBL
     {
        readonly IUser userDAL;
-       readonly IUnitOfWork unitWork;
-
-        public UserBL(IUser UserDAL, IUnitOfWork pUnitWork)
+        public UserBL(IUser UserDAL)
         {
             userDAL = UserDAL;
-            unitWork = pUnitWork;
         }
        
 
@@ -46,7 +43,6 @@ namespace Inventory.ArqLimpia.BL
                 Password = pUser.Password
             };
             UserEN isUserEmail = await userDAL.LoginUser(user);
-            await unitWork.SaveChangesAsync();
             if(isUserEmail == null){
                 throw new Exception($"User with email: {pUser.Email} not found");   
             }else{
@@ -75,7 +71,6 @@ namespace Inventory.ArqLimpia.BL
                 Password = passHashed
             };
             userDAL.Register(user);
-            await unitWork.SaveChangesAsync();
             RegisterUserOutputDTO User = new RegisterUserOutputDTO(){
                 FirstName = user.FirstName,
                 Surname = user.Surname,

@@ -1,21 +1,21 @@
-using Microsoft.EntityFrameworkCore;
 using inventory.ArqLimpia.EN;
+using MongoDB.Driver;
+
 namespace Inventary.ArqLimpia.DAL
 {
-    public class InventoryContextDAL: DbContext
+    public class InventoryContextDAL
     {
-        public DbSet<ProductEN> Products { get; set; }
-        public DbSet<UserEN> Users { get; set; }
-        public DbSet<StoreEN> Stores { get; set; }
-        public DbSet<ProductStoreEN> ProductStore { get; set; }
-        public DbSet<OrdersEN> Order { get; set; }
-        public DbSet<OrdersProductEN> OrderProduct { get; set; }
-        public DbSet<UserStoreEN> UserStore { get; set; }
-        public DbSet<RegisterEN> Register { get; set; }
-        public DbSet<ProductRegisterEN> ProductRegister { get; set; }
-        public DbSet<ReturnsEN> Returns { get; set; }
-        public DbSet<ProductsReturnEN> ProductReturn { get; set; }
+        private readonly IMongoDatabase _database;
 
-        public InventoryContextDAL(DbContextOptions<InventoryContextDAL> options): base(options){}
+        public InventoryContextDAL(string connectionString, string databaseName)
+        {
+            var client = new MongoClient(connectionString);
+            _database = client.GetDatabase(databaseName);
+        }
+
+        // Agrega propiedades para acceder a las colecciones aquí
+        public IMongoCollection<ProductEN> Products => _database.GetCollection<ProductEN>("Products");
+        // Agrega otras colecciones si es necesario
     }
 }
+

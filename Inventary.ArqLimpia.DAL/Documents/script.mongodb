@@ -22,7 +22,7 @@ db.createCollection("Products", {
                 minimum: 0
              },
              Price: {
-                bsonType: "decimal",
+                bsonType: "double",
                 description: "Price of the product",
                 minimum: 0
              },

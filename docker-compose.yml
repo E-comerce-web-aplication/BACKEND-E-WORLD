@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  db: 
+   image: mongo:5
+   restart: always
+   container_name: inventoryDB
+   environment:
+    - MONGO_INITDB_ROOT_USERNAME=${DB_USER}
+    - MONGO_INITDB_ROOT_PASSWORD=${DB_PASSWORD}  
+    - MONGO_INITDB_DATABASE=${DB_NAME}
+   volumes:
+    - ./data:/data/db
+   ports:
+    - ${DB_PORT}:27017  
+
+  db_test: 
+   image: mongo:5
+   container_name: inventoryTestDB
+   environment:
+    - MONGO_INITDB_ROOT_USERNAME=${DB_USER_TEST}
+    - MONGO_INITDB_ROOT_PASSWORD=${DB_PASSWORD_TEST}  
+    - MONGO_INITDB_DATABASE=${DB_NAME_TEST}
+   ports:
+    - ${DB_PORT_TEST}:27017   

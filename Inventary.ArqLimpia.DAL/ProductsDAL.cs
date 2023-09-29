@@ -1,51 +1,54 @@
 ﻿using inventory.ArqLimpia.EN;
 using Inventory.ArqLimpia.EN.Interfaces;
-using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
 
 namespace Inventary.ArqLimpia.DAL
 {
     public class ProductsDAL : IProduct
     {
-        readonly InventoryContextDAL dbContext;
+        private readonly IMongoCollection<ProductEN> _collection;
 
-        public ProductsDAL(InventoryContextDAL pdbContext)
+        public ProductsDAL(InventoryContextDAL dbContext)
         {
-            dbContext = pdbContext;
+            _collection = dbContext.Products;
         }
 
-        public void Create(ProductEN pProducts)
+        public async Task Create(ProductEN product)
         {
-            dbContext.Products.Add(pProducts);
+            await _collection.InsertOneAsync(product);
         }
 
-        public void Delete(ProductEN pProducts)
+        public async Task Delete(string productId) // Cambiado para usar el objeto ProductEN como filtro
         {
-            dbContext.Products.Remove(pProducts);
+            var filter = Builders<ProductEN>.Filter.Eq("_id", productId);
+            await _collection.DeleteOneAsync(filter);
+        }
+      
+        public async Task<List<ProductEN>> Find(ProductEN product)
+        {
+            var filter = Builders<ProductEN>.Filter.Empty; // Filtro vacío para obtener todos los documentos
+            var result = await _collection.FindAsync(filter);
+            return await result.ToListAsync();
         }
 
-        public async Task<List<ProductEN>> Find(ProductEN pProduct)
+        public async Task<ProductEN> FindByName(string productName)
         {
-            List<ProductEN> isProducts = await dbContext.Products.ToListAsync();
-            return isProducts;
+            var filter = Builders<ProductEN>.Filter.Eq("ProductName", productName);
+            var result = await _collection.FindAsync(filter);
+            return await result.FirstOrDefaultAsync();
         }
 
-     
-
-        public async Task<ProductEN> FindByName(ProductEN pProducts)
+        public async Task<ProductEN> FindOne(string productId)
         {
-            ProductEN isProduct = await dbContext.Products.SingleOrDefaultAsync(p=> p.ProductName == pProducts.ProductName);
-            return isProduct;
+            var filter = Builders<ProductEN>.Filter.Eq("_id", productId);
+            var result = await _collection.FindAsync(filter);
+            return await result.FirstOrDefaultAsync();
         }
 
-        public async Task<ProductEN> FindOne(int productId)
+        public async Task Update(ProductEN product)
         {
-            ProductEN isProduct = await dbContext.Products.FindAsync(productId);
-            return isProduct;
-        }
-
-        public void Update(ProductEN pProducts)
-        {
-            dbContext.Products.Update(pProducts);
+            var filter = Builders<ProductEN>.Filter.Eq("_id", product.Id);
+            await _collection.ReplaceOneAsync(filter, product);
         }
     }
 }

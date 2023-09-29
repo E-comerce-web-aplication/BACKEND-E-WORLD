@@ -4,18 +4,8 @@
 
 namespace Inventary.ArqLimpia.DAL
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork 
     {
-        readonly InventoryContextDAL dbContext;
-
-        public UnitOfWork(InventoryContextDAL pDbContext)
-        {
-            dbContext = pDbContext;
-        }
-        public Task<int> SaveChangesAsync()
-        {
-            return dbContext.SaveChangesAsync();
-
-        }
+        
     }
 }

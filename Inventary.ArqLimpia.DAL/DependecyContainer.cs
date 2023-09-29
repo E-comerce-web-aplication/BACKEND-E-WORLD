@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore;
 using Inventory.ArqLimpia.EN.Interfaces;
 
 namespace Inventary.ArqLimpia.DAL
@@ -9,14 +8,19 @@ namespace Inventary.ArqLimpia.DAL
     {
         public static IServiceCollection AddDALDependecies(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<InventoryContextDAL>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("DbConn")));
+            var mongoDBSettings = configuration.GetSection("MongoDBSettings");
+            var connectionString = mongoDBSettings.GetValue<string>("ConnectionString");
+            var databaseName = mongoDBSettings.GetValue<string>("DatabaseName");
+
+            services.AddSingleton<InventoryContextDAL>(provider =>
+            {
+                return new InventoryContextDAL(connectionString, databaseName);
+            });
 
             services.AddScoped<IProduct, ProductsDAL>();
-            services.AddScoped<IUser, UserDAL>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-
             return services;
         }
     }
 }
+
+    

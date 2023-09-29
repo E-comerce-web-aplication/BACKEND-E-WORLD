@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace inventory.ArqLimpia.EN
 {
-       public class ProductEN
+    public class ProductEN
     {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
@@ -23,8 +23,8 @@ namespace inventory.ArqLimpia.EN
 
     [BsonRequired]
     [BsonElement("Price")]
-    [BsonRepresentation(BsonType.Decimal128)]
-    public decimal Price { get; set; }
+    [BsonRepresentation(BsonType.Double)]
+    public double Price { get; set; }
 
     [BsonElement("Images")]
     public List<string> Images { get; set; }

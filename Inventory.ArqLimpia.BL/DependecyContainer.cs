@@ -9,8 +9,6 @@ namespace Inventory.ArqLimpia.BL
         public static IServiceCollection AddBLDependecies(this IServiceCollection services)
         {
             services.AddTransient<IProductBL, ProductsBL>();
-            services.AddTransient<IUserBL, UserBL>();
-            services.AddTransient<IInventoryStoreBL, InventoryStoreBL>();
             return services;
         }
     }

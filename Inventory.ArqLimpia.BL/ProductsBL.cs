@@ -2,161 +2,148 @@
 using Inventory.ArqLimpia.BL.DTOs;
 using Inventory.ArqLimpia.EN.Interfaces;
 using inventory.ArqLimpia.EN;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Inventory.ArqLimpia.BL
 {
     public class ProductsBL : IProductBL
     {
         readonly IProduct _productDAL;
-        readonly IUnitOfWork _unitWork;
-       
 
-        public ProductsBL(IProduct pProductDAL, IUnitOfWork pUnitWork)
+        public ProductsBL(IProduct productDAL)
         {
-            _productDAL = pProductDAL;
-            _unitWork = pUnitWork;
+            _productDAL = productDAL;
         }
 
-        //METODO PARA CREAR PRODUCTOS//
         public async Task<CreateProductsOutputDTOs> CreateProduct(CreateProductsInputDTOs pProducts)
         {
-                
-             ProductEN newProduct = new ProductEN(){
+             var newProduct = new ProductEN()
+            {
                 ProductName = pProducts.ProductName,
-                Descriptions = pProducts.Description,
+                Description = pProducts.Description,
                 Price = pProducts.Price,
-                ImageUrl = pProducts.ImageUrl,
+                Images = pProducts.ImageUrl,
                 Stock = pProducts.Stock
             };
 
-            ProductEN existingProduct = await _productDAL.FindByName(newProduct);
-
-            // Verificar si ya existe un producto con el mismo nombre (NO FUNCIONA)
+            var existingProduct = await _productDAL.FindByName(newProduct.ProductName);
             if (existingProduct != null)
             {
                 throw new ArgumentException("Ya existe un producto con este nombre.");
             }
 
-            // Verificar si los valores de stock y precio son válidos
-            if (pProducts.Stock < 0 && pProducts.Stock >= 5)
+            if (newProduct.Stock < 0 || newProduct.Stock > 5)
             {
-                throw new ArgumentException("The value of the shares cannot be negative and must be greater than 5");
+                throw new ArgumentException("El valor de las existencias debe estar entre 0 y 5.");
             }
-            if (pProducts.Price <= 10)
+            if (newProduct.Price <= 10)
             {
-                throw new ArgumentException("The price value must be greater than ten.");
+                throw new ArgumentException("El precio debe ser mayor que 10.");
             }
 
-            _productDAL.Create(newProduct);
-            await _unitWork.SaveChangesAsync();
-            CreateProductsOutputDTOs productsOutput = new CreateProductsOutputDTOs()
+            await _productDAL.Create(newProduct);
+
+            var productsOutput = new CreateProductsOutputDTOs()
             {
-                IdProduct =newProduct.Id,
+                IdProduct = newProduct.Id,
                 ProductName = newProduct.ProductName,
-                Description = newProduct.Descriptions,
+                Description = newProduct.Description,
                 Stock = newProduct.Stock,
-                ImageUrl = newProduct.ImageUrl,
+                ImageUrl = newProduct.Images,
                 Price = newProduct.Price
-
             };
+
             return productsOutput;
         }
 
-
-        //METODO PARA ELIMINAR PRODUCTOS//
-        public async Task<DeleteProductsOutputDTOs> Delete( DeleteProductsInputDTOs pProduct)
+        public async Task<DeleteProductsOutputDTOs> Delete(DeleteProductsInputDTOs pProduct)
         {
-
-            ProductEN isProduct = await _productDAL.FindOne(pProduct.IdProduct);
-            
-            if(isProduct.Id == pProduct.IdProduct){
-            _productDAL.Delete(isProduct);
-            await _unitWork.SaveChangesAsync();
-            DeleteProductsOutputDTOs status = new DeleteProductsOutputDTOs()
+            var isProduct = await _productDAL.FindOne(pProduct.IdProduct);
+            if (isProduct != null)
             {
-                IsDeleted = true
-            };
+                await _productDAL.Delete(isProduct.Id);
+                var status = new DeleteProductsOutputDTOs()
+                {
+                    IsDeleted = true
+                };
 
-            return status;
+                return status;
             }
-           throw new Exception($"Product with {pProduct.IdProduct} not found");
+
+            throw new Exception($"Producto con ID {pProduct.IdProduct} no encontrado");
         }
 
         public async Task<List<FindOneProductsOutputDTOs>> Find(FindProductsOutputDTOs pProducts)
         {
-            List<ProductEN> products = await _productDAL.Find(new ProductEN { 
-                Id= pProducts.Id,
+            var products = await _productDAL.Find(new ProductEN
+            {
+                Id = pProducts.Id,
                 ProductName = pProducts.ProductName,
                 Price = pProducts.Price,
-                ImageUrl = pProducts.ImageUrl,
-                Stock =  pProducts.Stock
+                Images = pProducts.ImageUrl,
+                Stock = pProducts.Stock
             });
-            List<FindOneProductsOutputDTOs> List = new List<FindOneProductsOutputDTOs>();
-            products.ForEach(s => List.Add(new FindOneProductsOutputDTOs
+
+            var resultList = new List<FindOneProductsOutputDTOs>();
+            products.ForEach(product => resultList.Add(new FindOneProductsOutputDTOs
             {
-                Id=s.Id,
-                ProductName=s.ProductName,
-                Description=s.Descriptions,  
-                Stock=s.Stock,
-                ImageUrl = s.ImageUrl,
-                Price=s.Price,
-
-
+                Id = product.Id,
+                ProductName = product.ProductName,
+                Description = product.Description,
+                Stock = product.Stock,
+                ImageUrl = product.Images,
+                Price = product.Price,
             }));
-            return List;
 
+            return resultList;
         }
 
-        //METODO PARA BUSCAR PRODUCTOS//
         public async Task<FindOneProductsOutputDTOs> FindOne(FindByIdDTOs pProducts)
         {
-            ProductEN byProduct = new ProductEN(){
-                 Id= pProducts.Id
-            };
-            ProductEN isProduct = await _productDAL.FindOne(byProduct.Id);
-
-            if(isProduct  != null){
-
-                FindOneProductsOutputDTOs products = new FindOneProductsOutputDTOs(){
-                  Id = isProduct.Id,
-                  Description = isProduct.Descriptions,
-                  ProductName = isProduct.ProductName,
-                  Stock = isProduct.Stock,
-                  Price = isProduct.Price  
+            var product = await _productDAL.FindOne(pProducts.Id);
+            if (product != null)
+            {
+                var products = new FindOneProductsOutputDTOs
+                {
+                    Id = product.Id,
+                    ProductName = product.ProductName,
+                    Description = product.Description,
+                    Stock = product.Stock,
+                    Price = product.Price
                 };
-                return products ;
+                return products;
             }
-            throw new Exception($"Product with id: {pProducts.Id} not found");
+
+            throw new Exception($"Producto con ID {pProducts.Id} no encontrado");
         }
 
-
-        //METODO PARA ACTUALIZAR PRODUCTOS//
         public async Task<UpdateProductsOutputDTOs> Update(UpdateProductsInputDTOs pProducts)
         {
+            var productToUpdate = await _productDAL.FindOne(pProducts.ProductId);
 
-            ProductEN productUpdate = await _productDAL.FindOne(pProducts.ProductId);
-
-            if (productUpdate.Id == pProducts.ProductId)
+            if (productToUpdate != null)
             {
-              productUpdate.Price = pProducts.Price;
-              productUpdate.ProductName = pProducts.ProductName;
-              productUpdate.Stock = pProducts.Stock;
-              productUpdate.Descriptions = pProducts.Description;
-              
-              _productDAL.Update(productUpdate);
-              await _unitWork.SaveChangesAsync();
-              UpdateProductsOutputDTOs product = new UpdateProductsOutputDTOs(){
-                ProductId = productUpdate.Id,
-                ProductName = productUpdate.ProductName,
-                Stock = productUpdate.Stock,
-                Description = productUpdate.Descriptions
-              };
-              return product;
+                productToUpdate.Price = pProducts.Price;
+                productToUpdate.ProductName = pProducts.ProductName;
+                productToUpdate.Stock = pProducts.Stock;
+                productToUpdate.Description = pProducts.Description;
+
+                await _productDAL.Update(productToUpdate);
+
+                var product = new UpdateProductsOutputDTOs()
+                {
+                    ProductId = productToUpdate.Id,
+                    ProductName = productToUpdate.ProductName,
+                    Stock = productToUpdate.Stock,
+                    Description = productToUpdate.Description
+                };
+
+                return product;
             }
 
-        throw new Exception($"The product with id: {pProducts.ProductId} not found");
-            
+            throw new Exception($"Producto con ID {pProducts.ProductId} no encontrado");
         }
-  
     }
 }
