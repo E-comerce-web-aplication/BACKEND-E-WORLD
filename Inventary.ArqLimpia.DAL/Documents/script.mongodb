@@ -67,6 +67,10 @@ db.createCollection("OrdersProducts", {
                 bsonType: "int",
                 description: "Quantity of the product in the order",
                 minimum: 1
+             },
+             Total: {
+               bsonType: "double",
+               description: "Total of the product in the order"
              }
           }
        }

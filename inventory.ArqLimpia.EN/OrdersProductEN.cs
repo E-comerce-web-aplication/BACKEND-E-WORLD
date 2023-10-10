@@ -1,22 +1,24 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
-namespace inventory.ArqLimpia.EN
+namespace Inventory.ArqLimpia.EN
 {
     public class OrdersProductEN
     {
-        public int Id { get; set; }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
 
-        public int IdProduct { get; set; }
+        [BsonElement("ProductId")]
+        public string ProductId { get; set; }
 
-        public int IdOrder { get; set; }
+        [BsonElement("IdOrder")]
+        public string IdOrder { get; set; }
 
+        [BsonElement("Quantity")]
         public int Quantity { get; set; }
 
-        public virtual  ProductEN Product { get; set; }
-
-        public virtual OrdersEN Order { get; set; }
+        [BsonElement("Total")]
+        public double Total { get; set; }
     }
 }

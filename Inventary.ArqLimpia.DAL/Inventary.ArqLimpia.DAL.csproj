@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\inventory.ArqLimpia.EN\inventory.ArqLimpia.EN.csproj" />
     <ProjectReference Include="..\Inventory.EN.Enterprice\Inventory.ArqLimpia.EN.Interfaces.csproj" />
+    <ProjectReference Include="..\Inventory.ArqLimpia.BL.DTOs\Inventory.ArqLimpia.BL.DTOs.csproj" />
   </ItemGroup>
 
 </Project>

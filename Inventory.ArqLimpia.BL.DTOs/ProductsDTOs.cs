@@ -103,8 +103,10 @@ namespace Inventory.ArqLimpia.BL.DTOs
         public string ProductName { get; set; }
         public string Description { get; set; }
         public int Stock { get; set; }
-        public List<string> ImageUrl { get; set; }
-        public double Price { get; set; }      
+        public List<string> Images { get; set; }
+        public double Price { get; set; }   
+        public List<string> Tags { get; set; }
+        public string CompanyId { get; set; }   
 
     }
 
@@ -114,8 +116,10 @@ namespace Inventory.ArqLimpia.BL.DTOs
         public string ProductName { get; set; }
         public string Description { get; set; }
         public int Stock { get; set; }
-        public List<string> ImageUrl { get; set; }
-        public double Price { get; set; }      
+        public double Price { get; set; }   
+        public List<string> Images { get; set; }   
+        public List<string> Tags { get; set; }
+        public string CompanyId { get; set; }
 
     }
 }

@@ -2,9 +2,6 @@
 using Inventory.ArqLimpia.BL.DTOs;
 using Inventory.ArqLimpia.EN.Interfaces;
 using inventory.ArqLimpia.EN;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Inventory.ArqLimpia.BL
 {
@@ -82,8 +79,10 @@ namespace Inventory.ArqLimpia.BL
                 Id = pProducts.Id,
                 ProductName = pProducts.ProductName,
                 Price = pProducts.Price,
-                Images = pProducts.ImageUrl,
-                Stock = pProducts.Stock
+                Images = pProducts.Images,
+                Stock = pProducts.Stock,
+                CompanyId = pProducts.CompanyId,
+                Tags = pProducts.Tags
             });
 
             var resultList = new List<FindOneProductsOutputDTOs>();
@@ -93,8 +92,10 @@ namespace Inventory.ArqLimpia.BL
                 ProductName = product.ProductName,
                 Description = product.Description,
                 Stock = product.Stock,
-                ImageUrl = product.Images,
+                Images = product.Images,
                 Price = product.Price,
+                CompanyId = product.CompanyId,
+                Tags = product.Tags
             }));
 
             return resultList;

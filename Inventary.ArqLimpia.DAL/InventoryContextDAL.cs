@@ -1,4 +1,5 @@
 using inventory.ArqLimpia.EN;
+using Inventory.ArqLimpia.EN;
 using MongoDB.Driver;
 
 namespace Inventary.ArqLimpia.DAL
@@ -15,7 +16,8 @@ namespace Inventary.ArqLimpia.DAL
 
         // Agrega propiedades para acceder a las colecciones aquí
         public IMongoCollection<ProductEN> Products => _database.GetCollection<ProductEN>("Products");
-        // Agrega otras colecciones si es necesario
+        public IMongoCollection<OrdersEN> Orders => _database.GetCollection<OrdersEN>("Orders");
+        public IMongoCollection<OrdersProductEN> OrderProducts => _database.GetCollection<OrdersProductEN>("OrdersProducts");
     }
 }
 

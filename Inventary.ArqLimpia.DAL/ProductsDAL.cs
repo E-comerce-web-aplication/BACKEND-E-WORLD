@@ -18,13 +18,13 @@ namespace Inventary.ArqLimpia.DAL
             await _collection.InsertOneAsync(product);
         }
 
-        public async Task Delete(string productId) // Cambiado para usar el objeto ProductEN como filtro
+        public async Task Delete(string productId) 
         {
             var filter = Builders<ProductEN>.Filter.Eq("_id", productId);
             await _collection.DeleteOneAsync(filter);
         }
       
-        public async Task<List<ProductEN>> Find(ProductEN product)
+        public async Task<List<ProductEN>> Find()
         {
             var filter = Builders<ProductEN>.Filter.Empty; // Filtro vacío para obtener todos los documentos
             var result = await _collection.FindAsync(filter);
