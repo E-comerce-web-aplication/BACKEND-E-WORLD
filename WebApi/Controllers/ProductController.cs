@@ -8,7 +8,7 @@ using Inventory.ArqLimpia.BL.DTOs;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("api/Product")]
+    [Route("api/Products")]
     public class ProductController : ControllerBase
     {
         private readonly IProductBL _productBL;
@@ -23,7 +23,6 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Recupera todos los productos
                 var products = await _productBL.Find(new FindProductsOutputDTOs());
                 return Ok(products);
             }
@@ -38,7 +37,6 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Recupera un producto por su ID
                 var product = await _productBL.FindOne(new FindByIdDTOs { Id = id });
 
                 if (product == null)
@@ -59,7 +57,6 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Crea un nuevo producto
                 var newProduct = await _productBL.CreateProduct(product);
                 return CreatedAtAction(nameof(GetById), new { id = newProduct.IdProduct }, newProduct);
             }
@@ -74,7 +71,6 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Actualiza un producto existente
                 product.ProductId = id;
                 var updatedProduct = await _productBL.Update(product);
 
@@ -96,7 +92,6 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Elimina un producto por su ID
                 var deleteResult = await _productBL.Delete(new DeleteProductsInputDTOs { IdProduct = id });
 
                 if (!deleteResult.IsDeleted)
