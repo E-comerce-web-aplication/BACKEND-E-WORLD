@@ -14,7 +14,7 @@ namespace inventory.ArqLimpia.EN
 
         public int IdStore { get; set; }
 
-        public virtual ICollection<OrdersEN> UserOrders { get; set; }
+        // public virtual ICollection<OrdersEN> UserOrders { get; set; }
 
         public virtual ICollection<ReturnsEN> UserReturns { get; set; }
 
