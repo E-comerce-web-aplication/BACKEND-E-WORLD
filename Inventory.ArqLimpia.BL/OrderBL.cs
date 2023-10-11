@@ -1,6 +1,6 @@
 
 using Inventory.ArqLimpia.BL.DTOs;
-using Inventory.ArqLimpia.BL.Interfaces.Interfaces;
+using Inventory.ArqLimpia.BL.Interfaces;
 using Inventory.EN.Enterprice;
 
 namespace Inventory.ArqLimpia.BL
@@ -13,14 +13,39 @@ namespace Inventory.ArqLimpia.BL
             _orderDAL = orderDAL;
         }
 
-        public Task<CreateOrderOutputDTOs> Create(CreateOrderInputDTOs pProducts)
+        public async Task<CreateOrderOutputDTOs> Create(CreateOrderInputDTOs order)
         {
-            throw new NotImplementedException();
+            await _orderDAL.Create(order);
+            var _order = new CreateOrderOutputDTOs()
+            {
+
+                Status = order.Status,
+                StoreId = order.StoreId,
+                Total = order.Total,
+                OrderDate = order.OrderDate,
+                DeliveryDate = order.DeliveryDate
+            };
+            return _order;
         }
 
-        public Task<List<FindOrderOutputDTOs>> Find()
+        public async Task<List<FindOrderOutputDTOs>> Find()
         {
-            throw new NotImplementedException();
+            var orders = await _orderDAL.Find();
+
+            var resultList = new List<FindOrderOutputDTOs>();
+
+            orders.ForEach(order => resultList.Add(new FindOrderOutputDTOs
+            {
+                Id = order.Id,
+                StoreId = order.StoreId,
+                Status = order.Status,
+                OrderDate = order.OrderDate,
+                DeliveryDate = order.DeliveryDate,
+                Total = order.Total
+                
+            }));
+
+            return resultList;
         }
     }
 }

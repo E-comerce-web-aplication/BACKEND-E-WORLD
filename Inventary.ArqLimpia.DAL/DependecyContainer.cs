@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Inventory.ArqLimpia.EN.Interfaces;
+using Inventory.EN.Enterprice;
 
 namespace Inventary.ArqLimpia.DAL
 {
@@ -18,6 +19,7 @@ namespace Inventary.ArqLimpia.DAL
             });
 
             services.AddScoped<IProduct, ProductsDAL>();
+            services.AddScoped<IOrder, OrderDAL>();
             return services;
         }
     }

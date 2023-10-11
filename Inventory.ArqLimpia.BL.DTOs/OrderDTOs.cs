@@ -10,7 +10,6 @@ namespace Inventory.ArqLimpia.BL.DTOs
 
     public class CreateOrderInputDTOs
     {
-        public string Id { get; set; }
         public DateTime OrderDate { get; set; }
         public string StoreId { get; set; }
         public string Status { get; set; }
@@ -27,6 +26,7 @@ namespace Inventory.ArqLimpia.BL.DTOs
         public string Status { get; set; }
         public List<string> products { get; set; }
         public DateTime DeliveryDate { get; set; }
+        public double Total { get; set; }
     }
 
     public class FindOrderOutputDTOs
@@ -37,6 +37,7 @@ namespace Inventory.ArqLimpia.BL.DTOs
         public string Status { get; set; }
         public List<string> products { get; set; }
         public DateTime DeliveryDate { get; set; }
+        public double Total { get; set; }
     }
 
      public class FindByIdOrderInputDTOs

@@ -1,11 +1,10 @@
 
 using Inventory.ArqLimpia.BL.DTOs;
 
-namespace Inventory.ArqLimpia.BL.Interfaces.Interfaces
+namespace Inventory.ArqLimpia.BL.Interfaces;
+
+public interface IOrderBL
 {
-    public interface IOrderBL
-    {
-        Task<CreateOrderOutputDTOs> Create(CreateOrderInputDTOs pProducts);
-        Task<List<FindOrderOutputDTOs>> Find();
-    }
+    Task<CreateOrderOutputDTOs> Create(CreateOrderInputDTOs pProducts);
+    Task<List<FindOrderOutputDTOs>> Find();
 }
