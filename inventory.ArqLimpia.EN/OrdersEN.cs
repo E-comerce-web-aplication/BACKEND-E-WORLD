@@ -20,5 +20,8 @@ namespace Inventory.ArqLimpia.EN
 
         [BsonElement("DeliveryDate")]
         public DateTime DeliveryDate { get; set; }
+
+        [BsonElement("Total")]
+        public double Total { get; set; }
     }
 }

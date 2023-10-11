@@ -18,7 +18,5 @@ namespace Inventory.ArqLimpia.EN
         [BsonElement("Quantity")]
         public int Quantity { get; set; }
 
-        [BsonElement("Total")]
-        public double Total { get; set; }
     }
 }

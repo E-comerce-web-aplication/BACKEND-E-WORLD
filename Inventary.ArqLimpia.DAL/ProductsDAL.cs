@@ -24,9 +24,9 @@ namespace Inventary.ArqLimpia.DAL
             await _collection.DeleteOneAsync(filter);
         }
       
-        public async Task<List<ProductEN>> Find()
+        public async Task<List<ProductEN>> Find(ProductEN product)
         {
-            var filter = Builders<ProductEN>.Filter.Empty; // Filtro vacío para obtener todos los documentos
+            var filter = Builders<ProductEN>.Filter.Empty;
             var result = await _collection.FindAsync(filter);
             return await result.ToListAsync();
         }
