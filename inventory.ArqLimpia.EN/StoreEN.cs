@@ -13,7 +13,7 @@ namespace inventory.ArqLimpia.EN
         
         public virtual ICollection<ProductStoreEN> StoreProducts { get; set; }
         
-        public virtual ICollection<OrdersEN> StoreOrders { get; set; }
+        // public virtual ICollection<OrderEN> StoreOrders { get; set; }
 
         public virtual  ICollection<UserStoreEN> Users { get; set; }
 
