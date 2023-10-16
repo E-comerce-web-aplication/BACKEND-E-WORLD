@@ -44,7 +44,7 @@ namespace Inventory.ArqLimpia.BL
 
             var productsOutput = new CreateProductsOutputDTOs()
             {
-                IdProduct = newProduct.Id,
+                IdProduct = newProduct._id,
                 ProductName = newProduct.ProductName,
                 Description = newProduct.Description,
                 Stock = newProduct.Stock,
@@ -60,7 +60,7 @@ namespace Inventory.ArqLimpia.BL
             var isProduct = await _productDAL.FindOne(pProduct.IdProduct);
             if (isProduct != null)
             {
-                await _productDAL.Delete(isProduct.Id);
+                await _productDAL.Delete(isProduct._id);
                 var status = new DeleteProductsOutputDTOs()
                 {
                     IsDeleted = true
@@ -76,7 +76,7 @@ namespace Inventory.ArqLimpia.BL
         {
             var products = await _productDAL.Find(new ProductEN
             {
-                Id = pProducts.Id,
+                _id = pProducts.Id,
                 ProductName = pProducts.ProductName,
                 Price = pProducts.Price,
                 Images = pProducts.Images,
@@ -88,7 +88,7 @@ namespace Inventory.ArqLimpia.BL
             var resultList = new List<FindOneProductsOutputDTOs>();
             products.ForEach(product => resultList.Add(new FindOneProductsOutputDTOs
             {
-                Id = product.Id,
+                Id = product._id,
                 ProductName = product.ProductName,
                 Description = product.Description,
                 Stock = product.Stock,
@@ -108,7 +108,7 @@ namespace Inventory.ArqLimpia.BL
             {
                 var products = new FindOneProductsOutputDTOs
                 {
-                    Id = product.Id,
+                    Id = product._id,
                     ProductName = product.ProductName,
                     Description = product.Description,
                     Stock = product.Stock,
@@ -135,7 +135,7 @@ namespace Inventory.ArqLimpia.BL
 
                 var product = new UpdateProductsOutputDTOs()
                 {
-                    ProductId = productToUpdate.Id,
+                    ProductId = productToUpdate._id,
                     ProductName = productToUpdate.ProductName,
                     Stock = productToUpdate.Stock,
                     Description = productToUpdate.Description

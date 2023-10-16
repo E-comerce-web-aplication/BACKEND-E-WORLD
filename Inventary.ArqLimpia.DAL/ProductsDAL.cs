@@ -1,5 +1,6 @@
 ﻿using inventory.ArqLimpia.EN;
 using Inventory.ArqLimpia.EN.Interfaces;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Inventary.ArqLimpia.DAL
@@ -40,14 +41,14 @@ namespace Inventary.ArqLimpia.DAL
 
         public async Task<ProductEN> FindOne(string productId)
         {
-            var filter = Builders<ProductEN>.Filter.Eq("_id", productId);
+            var filter = Builders<ProductEN>.Filter.Eq("_id", productId);        
             var result = await _collection.FindAsync(filter);
             return await result.FirstOrDefaultAsync();
         }
 
         public async Task Update(ProductEN product)
         {
-            var filter = Builders<ProductEN>.Filter.Eq("_id", product.Id);
+            var filter = Builders<ProductEN>.Filter.Eq("_id", product._id);
             await _collection.ReplaceOneAsync(filter, product);
         }
     }

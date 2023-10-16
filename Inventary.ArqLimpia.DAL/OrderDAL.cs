@@ -52,13 +52,13 @@ namespace Inventary.ArqLimpia.DAL
 
                     foreach (var productInput in orderInput.products)
                     {
-                        var product = await _productsCollection.Find(p => p.Id == productInput.ProductId).FirstOrDefaultAsync();
+                        var product = await _productsCollection.Find(p => p._id == productInput.ProductId).FirstOrDefaultAsync();
 
                         var newStock = product.Stock - productInput.Quantity;
 
                         if (newStock >= 0)
                         {
-                            var filter = Builders<ProductEN>.Filter.Eq(p => p.Id, productInput.ProductId);
+                            var filter = Builders<ProductEN>.Filter.Eq(p => p._id, productInput.ProductId);
                             var update = Builders<ProductEN>.Update.Set(p => p.Stock, newStock);
 
                             await _productsCollection.UpdateOneAsync(session, filter, update);
