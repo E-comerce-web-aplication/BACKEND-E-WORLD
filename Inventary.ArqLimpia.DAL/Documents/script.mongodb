@@ -109,6 +109,42 @@ db.createCollection("Orders", {
     }
 });
 
+   "validator": {
+      "$jsonSchema": {
+         "bsonType": "object",
+          required: ["ProductName", "Description", "Stock", "Price", "Images", "tags", "companyCategoryId"],
+          properties: {
+             Name: {
+                bsonType: "string",
+                description: "Name of the company",
+                minLength: 1,
+                maxLength: 30
+             },
+             Description: {
+                bsonType: "string",
+                description: "Description of the company",
+                minLength: 1,
+                maxLength: 250
+             },
+              Email: {
+                bsonType: "string",
+                description: "Email of the company",
+                minLength: 1,
+                maxLength: 30
+             },
+               Address: {
+                bsonType: "string",
+                description: "Address of the company",
+                minLength: 1,
+                maxLength: 250
+             }
+          }
+       }
+    }
+});
+
+
+
 db.createCollection("ProductHistory", {
     validator: {
        $jsonSchema: {
