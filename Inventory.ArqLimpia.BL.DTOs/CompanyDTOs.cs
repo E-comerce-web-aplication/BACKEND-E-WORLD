@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Inventory.ArqLimpia.BL.DTOs
 {
-    internal class CompanyDTOs
+    public class CompanyDTOs
     {
     }
 }
