@@ -10,7 +10,7 @@ namespace Inventory.ArqLimpia.BL.Interfaces.Interfaces
     public interface ICompanyBL
     {
         Task<CreateCompanyOutputDTO> CreateCompany(CreateCompanyInputDTO cCompany);
-        Task<UpdateCompanyOutputDTO> UpdateCompany(UpdateCompanyInputDTO pCompany);
-        Task<DeleteCompanyOutputDTO> DeleteCompany(DeleteCompanyInputDTO pCompany);
+        Task<List<FindOneCompanyOutputDTOs>> Find(FindCompanyOutputDTOs cCompany);
+        Task<FindOneCompanyOutputDTOs> FindOne(FindByIdDTO cCompany);
     }
 }
