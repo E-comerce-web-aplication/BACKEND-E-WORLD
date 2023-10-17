@@ -41,7 +41,7 @@ namespace Inventory.ArqLimpia.BL
 
             var companiesOutput = new CreateCompanyOutputDTO()
             {
-                Id = newCompany.Id,
+                Id = newCompany._id,
                 Name = newCompany.Name,
                 Description = newCompany.Description,
                 Email = newCompany.Email,
@@ -55,7 +55,7 @@ namespace Inventory.ArqLimpia.BL
         {
             var company = await _companyDAL.Find(new Company
             {
-                Id = cCompany.Id,
+                _id = cCompany.Id,
                 Name = cCompany.Name,
                 Description = cCompany.Description,
                 Email = cCompany.Email,
@@ -66,7 +66,7 @@ namespace Inventory.ArqLimpia.BL
             var resultList = new List<FindOneCompanyOutputDTOs>();
             company.ForEach(product => resultList.Add(new FindOneCompanyOutputDTOs
             {
-                Id = product.Id,
+                Id = product._id,
                 Name = product.Name,
                 Description = product.Description,
                 Email = product.Email,
@@ -84,7 +84,7 @@ namespace Inventory.ArqLimpia.BL
             {
                 var companies = new FindOneCompanyOutputDTOs
                 {
-                    Id = company.Id,
+                    Id = company._id,
                     Name = company.Name,
                     Description = company.Description,
                     Email = company.Email,
