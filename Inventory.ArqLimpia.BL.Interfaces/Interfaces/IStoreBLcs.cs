@@ -1,13 +1,15 @@
-﻿using static Inventory.ArqLimpia.BL.DTOs.StoreDTOs;
+﻿
+
+using static Inventory.ArqLimpia.BL.DTOs.Store;
 
 namespace Inventory.ArqLimpia.BL.Interfaces.Interfaces
 {
     public  interface IStoreBLcs
 
     {
-        Task <FindProductStoreOutputDTO > FindProduct (FindProductStoretInputDTO pStore);
-        Task<FindUserStoreOutputDTO> FindUSer(FindUserStoreInputDTO pStore);
-        Task<InfoStoreOutputDTO> InfoStore(InfoStoreInputDTO pStore);
+        Task<CreateStoreOutputDTOs> CreateStore(CreateStoreInputDTOs sStore);
+        Task<List<FindOneStoreOutputDTOs>> Find(FindStoreOuputDTOs sStore);
+        Task<FindOneStoreOutputDTOs> FindOne(FindByIdDTOs sStore);
 
     }
 }
