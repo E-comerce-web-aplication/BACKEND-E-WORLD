@@ -2,61 +2,95 @@
 
 namespace Inventory.ArqLimpia.BL.DTOs
 {
-     public  class StoreDTOs
-        //DTO para buscar por tienda 
+    public class Store
     {
-        public class FindProductStoretInputDTO
+        public class CreateStoreInputDTO
         {
-            [Required]
-            public int IdStore { get; set; }
-            
-
-        }
-
-        //DTos que mostraran los productos de x tienda 
-        public class FindProductStoreOutputDTO
-        {
-            public int IdProduct { get; set; }
-
-            public string  ProductName  { get; set; }
-            public string  Description { get; set; }
-            public int  Stock { get; set; }
-            public  decimal Price { get; set; }
-
-
-
-        }
-
-        public class FindUserStoreInputDTO
-        {
-            [Required]
-            public  int IdUser { get; set; }
-
-        }
-
-        public class FindUserStoreOutputDTO{
-
-            public string Email { get; set; }
-            public int Id { get; set; }
+            [Required(ErrorMessage = "The Name field is required.")]
             public string Name { get; set; }
-            public string Surname { get; set; }
-            public string DateOfBrith { get; set; }
-            public string Role { get; set; }
+
+            [StringLength(255, ErrorMessage = "Description cannot exceed 255 characters.")]
+            public string Description { get; set; }
+
+            [Required(ErrorMessage = "The Email field is required.")]
+            [EmailAddress(ErrorMessage = "The Email field must be a valid email address.")]
+            public string Email { get; set; }
+
+            [Required(ErrorMessage = "The PostalCode field is required.")]
+            public string PostalCode { get; set; }
+
+            [Required(ErrorMessage = "The Department field is required.")]
+            public string Department { get; set; }
+
+            [Required(ErrorMessage = "The City field is required.")]
+            public string City { get; set; }
+
+            [Required(ErrorMessage = "The Address field is required.")]
+            public string Address { get; set; }
         }
 
-        public class InfoStoreInputDTO
+
+        public class CreateStoreOutputDTO
         {
-            [Required]
-            public int IdStore { get; set;}
-            
+            public string Id { get; set; }
+
+            [Required(ErrorMessage = "The Name field is required.")]
+            public string Name { get; set; }
+
+            [StringLength(255, ErrorMessage = "Description cannot exceed 255 characters.")]
+            public string Description { get; set; }
+
+            [Required(ErrorMessage = "The Email field is required.")]
+            [EmailAddress(ErrorMessage = "The Email field must be a valid email address.")]
+            public string Email { get; set; }
+
+            [Required(ErrorMessage = "The PostalCode field is required.")]
+            public string PostalCode { get; set; }
+
+            [Required(ErrorMessage = "The Department field is required.")]
+            public string Department { get; set; }
+
+            [Required(ErrorMessage = "The City field is required.")]
+            public string City { get; set; }
+
+            [Required(ErrorMessage = "The Address field is required.")]
+            public string Address { get; set; }
         }
 
-        public class InfoStoreOutputDTO
-        { 
+        public class FindOneStoreInputDTOs
+        {
+            [Required(ErrorMessage = "You must enter a title for the search.")]
+            public string Name { get; set; }
+        }
 
-            public int IdUser { get; set; }
-            public string Quantity { get; set; }
-            public int Idproduct { get; set; }
+        public class FindByIdDTOs
+        {
+            [Required(ErrorMessage = "You must enter a id for the search")]
+            public string Id { get; set; }
+        }
+
+        public class FindOneStoreOutputDTOs
+        {
+            public string Id { get; set; }
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public string Email { get; set; }
+            public string PostalCode { get; set; }
+            public string Department { get; set; }
+            public string City { get; set; }
+            public string Address { get; set; }
+        }
+
+        public class FindStoreOuputDTOs
+        {
+            public string Id { get; set; }
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public string Email { get; set; }
+            public string PostalCode { get; set; }
+            public string Department { get; set; }
+            public string City { get; set; }
+            public string Address { get; set; }
         }
     }
 }
