@@ -5,7 +5,8 @@ namespace Inventory.ArqLimpia.BL.DTOs
     public class Store
     {
         public class CreateStoreInputDTOs
-        {
+        {  
+
             [Required(ErrorMessage = "The Name field is required.")]
             public string Name { get; set; }
 
