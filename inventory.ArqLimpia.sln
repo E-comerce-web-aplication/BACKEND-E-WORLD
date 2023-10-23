@@ -26,6 +26,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inventory.ArqLimpia.IoC", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi\WebApi.csproj", "{5DE87FE0-E9BB-4D07-93B5-55DD823F0A38}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frontend-E-World", "Frontend-E-World\Frontend-E-World.csproj", "{A59347D0-B447-4FB1-8FC6-40F667EABF90}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +66,10 @@ Global
 		{5DE87FE0-E9BB-4D07-93B5-55DD823F0A38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DE87FE0-E9BB-4D07-93B5-55DD823F0A38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DE87FE0-E9BB-4D07-93B5-55DD823F0A38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A59347D0-B447-4FB1-8FC6-40F667EABF90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A59347D0-B447-4FB1-8FC6-40F667EABF90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A59347D0-B447-4FB1-8FC6-40F667EABF90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A59347D0-B447-4FB1-8FC6-40F667EABF90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
