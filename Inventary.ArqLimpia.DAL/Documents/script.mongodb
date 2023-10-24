@@ -140,7 +140,7 @@ db.createCollection("Company", {
 });
 
 
-db.createCollection("Company", {
+db.createCollection("Store", {
   "validator": {
     "$jsonSchema": {
       "bsonType": "object",
