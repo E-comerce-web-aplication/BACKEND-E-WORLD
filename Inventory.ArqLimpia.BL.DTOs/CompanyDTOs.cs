@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Inventory.ArqLimpia.BL.DTOs
 {
+
     public class CreateCompanyInputDTO
     {
         [Required(ErrorMessage = "The Name field is required.")]

@@ -12,8 +12,8 @@ namespace Inventory.ArqLimpia.EN
         [BsonElement("ProductId")]
         public string ProductId { get; set; }
 
-        [BsonElement("IdOrder")]
-        public string IdOrder { get; set; }
+        [BsonElement("OrderId")]
+        public string OrderId { get; set; }
 
         [BsonElement("Quantity")]
         public int Quantity { get; set; }

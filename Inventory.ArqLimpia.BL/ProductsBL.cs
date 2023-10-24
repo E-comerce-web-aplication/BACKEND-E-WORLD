@@ -22,7 +22,9 @@ namespace Inventory.ArqLimpia.BL
                 Description = pProducts.Description,
                 Price = pProducts.Price,
                 Images = pProducts.ImageUrl,
-                Stock = pProducts.Stock
+                Stock = pProducts.Stock,
+                CompanyId = pProducts.CompanyId,
+                Category = pProducts.Category
             };
 
             var existingProduct = await _productDAL.FindByName(newProduct.ProductName);
@@ -49,7 +51,10 @@ namespace Inventory.ArqLimpia.BL
                 Description = newProduct.Description,
                 Stock = newProduct.Stock,
                 ImageUrl = newProduct.Images,
-                Price = newProduct.Price
+                Price = newProduct.Price,
+                Tags = newProduct.Tags,
+                Category = newProduct.Category,
+                CompanyId = newProduct.CompanyId
             };
 
             return productsOutput;
@@ -82,7 +87,8 @@ namespace Inventory.ArqLimpia.BL
                 Images = pProducts.Images,
                 Stock = pProducts.Stock,
                 CompanyId = pProducts.CompanyId,
-                Tags = pProducts.Tags
+                Tags = pProducts.Tags,
+                Category = pProducts.Category
             });
 
             var resultList = new List<FindOneProductsOutputDTOs>();
@@ -95,7 +101,8 @@ namespace Inventory.ArqLimpia.BL
                 Images = product.Images,
                 Price = product.Price,
                 CompanyId = product.CompanyId,
-                Tags = product.Tags
+                Tags = product.Tags,
+                Category = product.Category
             }));
 
             return resultList;
@@ -112,7 +119,8 @@ namespace Inventory.ArqLimpia.BL
                     ProductName = product.ProductName,
                     Description = product.Description,
                     Stock = product.Stock,
-                    Price = product.Price
+                    Price = product.Price,
+                    Category = product.Category
                 };
                 return products;
             }

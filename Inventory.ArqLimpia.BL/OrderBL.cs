@@ -40,7 +40,7 @@ namespace Inventory.ArqLimpia.BL
                 StoreId = order.StoreId,
                 Status = order.Status,
                 OrderDate = order.OrderDate,
-                DeliveryDate = order.DeliveryDate,
+                DeliveryDate = (DateTime)order.DeliveryDate,
                 Total = order.Total
                 
             }));

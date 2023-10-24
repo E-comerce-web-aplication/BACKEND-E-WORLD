@@ -15,11 +15,14 @@ namespace Inventory.ArqLimpia.EN
         [BsonElement("StoreId")]
         public string StoreId { get; set; }
 
+        [BsonElement("CustomerId")]
+        public string CustomerId { get; set; }
+
         [BsonElement("Status")]
         public string Status { get; set; }
 
         [BsonElement("DeliveryDate")]
-        public DateTime DeliveryDate { get; set; }
+        public BsonDateTime DeliveryDate { get; set; }
 
         [BsonElement("Total")]
         public double Total { get; set; }

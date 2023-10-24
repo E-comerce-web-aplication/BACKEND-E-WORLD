@@ -64,13 +64,13 @@ namespace Inventory.ArqLimpia.BL
             });
 
             var resultList = new List<FindOneCompanyOutputDTOs>();
-            company.ForEach(product => resultList.Add(new FindOneCompanyOutputDTOs
+            company.ForEach(company => resultList.Add(new FindOneCompanyOutputDTOs
             {
-                Id = product._id,
-                Name = product.Name,
-                Description = product.Description,
-                Email = product.Email,
-                Address = product.Address
+                Id = company._id,
+                Name = company.Name,
+                Description = company.Description,
+                Email = company.Email,
+                Address = company.Address
             }));
 
             return resultList;

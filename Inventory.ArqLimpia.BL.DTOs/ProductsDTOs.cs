@@ -26,6 +26,15 @@ namespace Inventory.ArqLimpia.BL.DTOs
         [Range(10, double.MaxValue, ErrorMessage = "The field Price must be greater than 10.")]
         public double Price { get; set; } 
 
+        [Required(ErrorMessage = "The field Category is required")]
+        [StringLength(150)]
+        public string Category { get; set; }
+
+        public List<string> Tags { get; set; }
+
+        [Required(ErrorMessage = "The field CompanyId is required")]
+        [StringLength(150)]
+        public string CompanyId { get; set; }
     }
 
     public class CreateProductsOutputDTOs
@@ -36,7 +45,9 @@ namespace Inventory.ArqLimpia.BL.DTOs
         public int Stock { get; set; }
         public List<string> ImageUrl { get; set; }
         public double Price { get; set; }
-
+        public List<string> Tags { get; set; }
+        public string Category { get; set; }
+        public string CompanyId { get; set; }
     }
 
     //  DTOs PARA ELIMINAR PRODUCTOS
@@ -107,6 +118,7 @@ namespace Inventory.ArqLimpia.BL.DTOs
         public double Price { get; set; }   
         public List<string> Tags { get; set; }
         public string CompanyId { get; set; }   
+        public string Category { get; set; }
 
     }
 
@@ -120,6 +132,6 @@ namespace Inventory.ArqLimpia.BL.DTOs
         public List<string> Images { get; set; }   
         public List<string> Tags { get; set; }
         public string CompanyId { get; set; }
-
+        public string Category { get; set; }
     }
 }
