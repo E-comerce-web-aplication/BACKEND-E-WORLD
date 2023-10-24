@@ -1,13 +1,19 @@
-using Frontend_E_World.Data;
+//using Frontend_E_World.Data;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Inventary.ArqLimpia.DAL;
+using inventory.ArqLimpia.EN;
+using Inventory.ArqLimpia.BL.DTOs;
+using Inventory.ArqLimpia.BL.Interfaces.Interfaces;
+using Inventory.ArqLimpia.EN.Interfaces;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
+//builder.Services.AddSingleton<WeatherForecastService>();
 
 var app = builder.Build();
 
