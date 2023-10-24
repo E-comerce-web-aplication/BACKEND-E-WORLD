@@ -2,46 +2,46 @@ db.createCollection("Products", {
     validator: {
        $jsonSchema: {
           bsonType: "object",
-          required: ["ProductName", "Description", "Stock", "Price", "Images", "tags", "companyCategoryId"],
+          required: ["product_name", "description", "stock", "price", "images", "tags", "company_id", "category"],
           properties: {
-             ProductName: {
+             product_name: {
                 bsonType: "string",
                 description: "Name of the product",
                 minLength: 1,
                 maxLength: 30
              },
-             Description: {
+             description: {
                 bsonType: "string",
                 description: "Description of the product",
                 minLength: 1,
                 maxLength: 90
              },
-             Stock: {
+             stock: {
                 bsonType: "int",
                 description: "Stock quantity",
                 minimum: 0
              },
-             Price: {
+             price: {
                 bsonType: "double",
                 description: "Price of the product",
                 minimum: 0
              },
-             Images: {
+             images: {
                 bsonType: "array",
                 description: "Array of product images",
-                maxItems: 5 // Restricción de un máximo de 5 elementos en el array Images
+                maxItems: 5 
              },
              tags: {
                 bsonType: "array",
                 description: "Array of product tags"
              },
-             companyCategoryId: {
-                bsonType: "objectId", // Cambiado a objectId para hacer referencia a otro modelo
-                description: "ID of the company category"
-             },
-             companyId: {
-                bsonType: "objectId", // Cambiado a objectId para hacer referencia a otro modelo
+             company_id: {
+                bsonType: "objectId", 
                 description: "ID of the company"
+             },
+             category: {
+               bsonType: "string",
+               description: "Category of the product"
              }
           }
        }
@@ -53,17 +53,17 @@ db.createCollection("OrdersProducts", {
     validator: {
        $jsonSchema: {
           bsonType: "object",
-          required: ["ProductId", "OrderId", "Quantity"],
+          required: ["product_id", "order_id", "quantity"],
           properties: {
-             ProductId: {
+             product_id: {
                 bsonType: "objectId",
                 description: "ID of the product"
              },
-             OrderId: {
+             order_id: {
                 bsonType: "objectId",
                 description: "ID of the order"
              },
-             Quantity: {
+             quantity: {
                 bsonType: "int",
                 description: "Quantity of the product in the order",
                 minimum: 1
@@ -77,30 +77,30 @@ db.createCollection("Orders", {
     validator: {
        $jsonSchema: {
           bsonType: "object",
-          required: ["OrderDate", "StoreId", "CustomerId", "Status"],
+          required: ["order_date", "store_id", "customer_id", "status"],
           properties: {
-             OrderDate: {
+             order_date: {
                 bsonType: "date",
                 description: "Date of the order",
              },
-             StoreId: {
+             store_id: {
                 bsonType: "objectId",
                 description: "ID of the store"
              },
-             CustomerId: {
+             customer_id: {
                 bsonType: "objectId",
                 description: "ID of the customer"
              },
-             Status: {
+            status: {
                 bsonType: "string",
                 enum: ["cancelled", "in progress","received"],
                 description: "Order status"
              },
-             DeliveryDate: {
+             delivery_date: {
                 bsonType: "date",
                 description: "Date of delivery"
              },
-             Total: {
+             total: {
                bsonType: "double",
                description: "Total of the product in the order"
              }
@@ -109,30 +109,26 @@ db.createCollection("Orders", {
     }
 });
 
-   "validator": {
-      "$jsonSchema": {
-         "bsonType": "object",
-          required: ["ProductName", "Description", "Stock", "Price", "Images", "tags", "companyCategoryId"],
+   
+db.createCollection("Company", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+          required: ["name", "description", "address"],
           properties: {
-             Name: {
+             name: {
                 bsonType: "string",
                 description: "Name of the company",
                 minLength: 1,
                 maxLength: 30
              },
-             Description: {
+             description: {
                 bsonType: "string",
                 description: "Description of the company",
                 minLength: 1,
                 maxLength: 250
              },
-              Email: {
-                bsonType: "string",
-                description: "Email of the company",
-                minLength: 1,
-                maxLength: 30
-             },
-               Address: {
+               address: {
                 bsonType: "string",
                 description: "Address of the company",
                 minLength: 1,
@@ -141,7 +137,8 @@ db.createCollection("Orders", {
           }
        }
     }
-});
+})
+
 
 
 
@@ -149,9 +146,9 @@ db.createCollection("ProductHistory", {
     validator: {
        $jsonSchema: {
           bsonType: "object",
-          required: ["CompanyId", "OwnerId", "Information", "RegistrationDate"],
+          required: ["company_id", "owner_id", "information", "registration_date"],
           properties: {
-             Company: {
+             company: {
                 bsonType: "object",
                 description: "ID of the company"
              },

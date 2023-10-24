@@ -10,35 +10,33 @@ namespace inventory.ArqLimpia.EN
     public string _id { get; set; }
 
     [BsonRequired]
-    [BsonElement("ProductName")]
+    [BsonElement("product_name")]
     public string ProductName { get; set; }
 
     [BsonRequired]
-    [BsonElement("Description")]
+    [BsonElement("description")]
     public string Description { get; set; }
 
     [BsonRequired]
-    [BsonElement("Stock")]
+    [BsonElement("stock")]
     public int Stock { get; set; }
 
     [BsonRequired]
-    [BsonElement("Price")]
+    [BsonElement("price")]
     [BsonRepresentation(BsonType.Double)]
     public double Price { get; set; }
 
-    [BsonElement("Images")]
+    [BsonElement("images")]
     public List<string> Images { get; set; }
 
     [BsonElement("tags")]
     public List<string> Tags { get; set; }
 
-    [BsonRequired]
-    [BsonElement("companyCategoryId")]
-    [BsonRepresentation(BsonType.ObjectId)]
-    public string CompanyCategoryId { get; set; }
+    [BsonElement("category")]
+    public string Category { get; set; }
 
     [BsonRequired]
-    [BsonElement("companyId")]
+    [BsonElement("company_id")]
     [BsonRepresentation(BsonType.ObjectId)]
     public string CompanyId { get; set; }
     }

@@ -2,6 +2,7 @@ using inventory.ArqLimpia.EN;
 using Inventory.ArqLimpia.BL.DTOs;
 using Inventory.ArqLimpia.EN;
 using Inventory.EN.Enterprice;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Inventary.ArqLimpia.DAL
@@ -21,61 +22,55 @@ namespace Inventary.ArqLimpia.DAL
 
         public async Task Create(CreateOrderInputDTOs orderInput)
         {
-            using (var session = await _ordersCollection.Database.Client.StartSessionAsync())
+            BsonDateTime deliveryDateParse = BsonDateTime.Create(orderInput.DeliveryDate);
+            try
             {
-                session.StartTransaction();
-
-                try
+                var order = new OrdersEN
                 {
-                    var order = new OrdersEN
+                    OrderDate = DateTime.Now,
+                    StoreId = orderInput.StoreId,
+                    Status = orderInput.Status,
+                    DeliveryDate = deliveryDateParse,
+                    CustomerId = orderInput.CustomerId,
+                    Total = orderInput.Total
+                };
+                await _ordersCollection.InsertOneAsync(order);
+
+                var orderProducts = new List<OrdersProductEN>();
+                foreach (var productInput in orderInput.products)
+                {
+                    var orderProduct = new OrdersProductEN
                     {
-                        OrderDate = DateTime.Now,
-                        StoreId = orderInput.StoreId,
-                        Status = "Pending",
-                        DeliveryDate = orderInput.DeliveryDate,
-                        Total = orderInput.Total
+                        ProductId = productInput.ProductId,
+                        OrderId = order.Id, 
+                        Quantity = productInput.Quantity,
                     };
-                    await _ordersCollection.InsertOneAsync(session, order);
-
-                    var orderProducts = new List<OrdersProductEN>();
-                    foreach (var productInput in orderInput.products)
-                    {
-                        var orderProduct = new OrdersProductEN
-                        {
-                            ProductId = productInput.ProductId,
-                            IdOrder = order.Id, 
-                            Quantity = productInput.Quantity,
-                        };
-                        orderProducts.Add(orderProduct);
-                    }
-                    await _ordersProductCollection.InsertManyAsync(session, orderProducts);
-
-                    foreach (var productInput in orderInput.products)
-                    {
-                        var product = await _productsCollection.Find(p => p._id == productInput.ProductId).FirstOrDefaultAsync();
-
-                        var newStock = product.Stock - productInput.Quantity;
-
-                        if (newStock >= 0)
-                        {
-                            var filter = Builders<ProductEN>.Filter.Eq(p => p._id, productInput.ProductId);
-                            var update = Builders<ProductEN>.Update.Set(p => p.Stock, newStock);
-
-                            await _productsCollection.UpdateOneAsync(session, filter, update);
-                        }
-                        else
-                        {
-                            throw new Exception("Insufficient stock for product: " + product.ProductName);
-                        }
-                    }
-
-                    await session.CommitTransactionAsync();
+                    orderProducts.Add(orderProduct);
                 }
-                catch (Exception ex)
+                await _ordersProductCollection.InsertManyAsync(orderProducts);
+
+                foreach (var productInput in orderInput.products)
                 {
-                    await session.AbortTransactionAsync();
-                    throw ex;
+                    var product = await _productsCollection.Find(p => p._id == productInput.ProductId).FirstOrDefaultAsync();
+
+                    var newStock = product.Stock - productInput.Quantity;
+
+                    if (newStock >= 0)
+                    {
+                        var filter = Builders<ProductEN>.Filter.Eq(p => p._id, productInput.ProductId);
+                        var update = Builders<ProductEN>.Update.Set(p => p.Stock, newStock);
+
+                        await _productsCollection.UpdateOneAsync(filter, update);
+                    }
+                    else
+                    {
+                        throw new Exception("Insufficient stock for product: " + product.ProductName);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
         public async Task<List<OrdersEN>> Find()
