@@ -137,8 +137,68 @@ db.createCollection("Company", {
           }
        }
     }
-})
+});
 
+
+db.createCollection("Company", {
+  "validator": {
+    "$jsonSchema": {
+      "bsonType": "object",
+      "required": [
+        "Name",
+        "Email",
+        "PostalCode",
+        "Department",
+        "City",
+        "Address"
+      ],
+      "properties": {
+        "Name": {
+          "bsonType": "string",
+          "description": "Store name",
+          "minLength": 1,
+          "maxLength": 150
+        },
+        "Description": {
+          "bsonType": "string",
+          "description": "Store Description",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "Email": {
+          "bsonType": "string",
+          "description": "Store email address",
+          "minLength": 5,
+          "maxLength": 100
+        },
+        "PostalCode": {
+          "bsonType": "string",
+          "description": "Store postal code",
+          "minimum": 5,
+          "maximum": 10
+        },
+        "Department": {
+          "bsonType": "string",
+          "description": "Store department or province",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "City": {
+          "bsonType": "string",
+          "description": "Store city",
+          "minLength": 1,
+          "maxLength": 50
+        },
+        "Address": {
+          "bsonType": "string",
+          "description": "Store address",
+          "minLength": 1,
+          "maxLength": 200
+        }
+      }
+    }
+  }
+});
 
 
 
