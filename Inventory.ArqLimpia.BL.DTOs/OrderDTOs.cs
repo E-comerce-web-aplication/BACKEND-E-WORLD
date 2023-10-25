@@ -12,6 +12,7 @@ namespace Inventory.ArqLimpia.BL.DTOs
     {
         public DateTime OrderDate { get; set; }
         public string StoreId { get; set; }
+        public string CustomerId { get; set; }
         public string Status { get; set; }
         public List<OrderProductInputDTO> products { get; set; }
         public DateTime DeliveryDate { get; set; }
@@ -23,6 +24,7 @@ namespace Inventory.ArqLimpia.BL.DTOs
         public string Id { get; set; }
         public DateTime OrderDate { get; set; }
         public string StoreId { get; set; }
+        public string CustomerId { get; set; }
         public string Status { get; set; }
         public List<string> products { get; set; }
         public DateTime DeliveryDate { get; set; }
