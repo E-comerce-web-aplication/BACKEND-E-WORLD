@@ -71,7 +71,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                product.ProductId = id;
+                product.IdProduct = id;
                 var updatedProduct = await _productBL.Update(product);
 
                 if (updatedProduct == null)
