@@ -64,7 +64,7 @@ namespace Inventary.ArqLimpia.DAL
                     }
                     else
                     {
-                        throw new Exception("Insufficient stock for product: " + product.ProductName);
+                        throw new Exception("Insufficient stock for product: " + product.Product_Name);
                     }
                 }
             }

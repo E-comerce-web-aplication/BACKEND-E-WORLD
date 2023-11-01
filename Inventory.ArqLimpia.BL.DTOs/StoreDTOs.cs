@@ -17,6 +17,8 @@ namespace Inventory.ArqLimpia.BL.DTOs
             [EmailAddress(ErrorMessage = "The Email field must be a valid email address.")]
             public string Email { get; set; }
 
+            [MaxLength(8)]
+            [MinLength(1)]
             [Required(ErrorMessage = "The PostalCode field is required.")]
             public string PostalCode { get; set; }
 

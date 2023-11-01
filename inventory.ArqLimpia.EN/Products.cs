@@ -11,7 +11,7 @@ namespace inventory.ArqLimpia.EN
 
     [BsonRequired]
     [BsonElement("product_name")]
-    public string ProductName { get; set; }
+    public string Product_Name { get; set; }
 
     [BsonRequired]
     [BsonElement("description")]

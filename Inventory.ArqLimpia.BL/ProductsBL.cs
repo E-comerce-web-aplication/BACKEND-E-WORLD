@@ -18,16 +18,16 @@ namespace Inventory.ArqLimpia.BL
         {
              var newProduct = new ProductEN()
             {
-                ProductName = pProducts.ProductName,
+                Product_Name = pProducts.Product_Name,
                 Description = pProducts.Description,
                 Price = pProducts.Price,
-                Images = pProducts.ImageUrl,
+                Images = pProducts.Images,
                 Stock = pProducts.Stock,
                 CompanyId = pProducts.CompanyId,
                 Category = pProducts.Category
             };
 
-            var existingProduct = await _productDAL.FindByName(newProduct.ProductName);
+            var existingProduct = await _productDAL.FindByName(newProduct.Product_Name);
             if (existingProduct != null)
             {
                 throw new ArgumentException("Ya existe un producto con este nombre.");
@@ -47,10 +47,10 @@ namespace Inventory.ArqLimpia.BL
             var productsOutput = new CreateProductsOutputDTOs()
             {
                 IdProduct = newProduct._id,
-                ProductName = newProduct.ProductName,
+                Product_Name = newProduct.Product_Name,
                 Description = newProduct.Description,
                 Stock = newProduct.Stock,
-                ImageUrl = newProduct.Images,
+                Images = newProduct.Images,
                 Price = newProduct.Price,
                 Tags = newProduct.Tags,
                 Category = newProduct.Category,
@@ -82,7 +82,7 @@ namespace Inventory.ArqLimpia.BL
             var products = await _productDAL.Find(new ProductEN
             {
                 _id = pProducts.Id,
-                ProductName = pProducts.ProductName,
+                Product_Name = pProducts.Product_Name,
                 Price = pProducts.Price,
                 Images = pProducts.Images,
                 Stock = pProducts.Stock,
@@ -95,7 +95,7 @@ namespace Inventory.ArqLimpia.BL
             products.ForEach(product => resultList.Add(new FindOneProductsOutputDTOs
             {
                 Id = product._id,
-                ProductName = product.ProductName,
+                Product_Name = product.Product_Name,
                 Description = product.Description,
                 Stock = product.Stock,
                 Images = product.Images,
@@ -116,7 +116,7 @@ namespace Inventory.ArqLimpia.BL
                 var products = new FindOneProductsOutputDTOs
                 {
                     Id = product._id,
-                    ProductName = product.ProductName,
+                    Product_Name = product.Product_Name,
                     Description = product.Description,
                     Stock = product.Stock,
                     Price = product.Price,
@@ -130,12 +130,12 @@ namespace Inventory.ArqLimpia.BL
 
         public async Task<UpdateProductsOutputDTOs> Update(UpdateProductsInputDTOs pProducts)
         {
-            var productToUpdate = await _productDAL.FindOne(pProducts.ProductId);
+            var productToUpdate = await _productDAL.FindOne(pProducts.IdProduct);
 
             if (productToUpdate != null)
             {
                 productToUpdate.Price = pProducts.Price;
-                productToUpdate.ProductName = pProducts.ProductName;
+                productToUpdate.Product_Name = pProducts.Product_Name;
                 productToUpdate.Stock = pProducts.Stock;
                 productToUpdate.Description = pProducts.Description;
 
@@ -143,8 +143,8 @@ namespace Inventory.ArqLimpia.BL
 
                 var product = new UpdateProductsOutputDTOs()
                 {
-                    ProductId = productToUpdate._id,
-                    ProductName = productToUpdate.ProductName,
+                    IdProduct = productToUpdate._id,
+                    Product_Name = productToUpdate.Product_Name,
                     Stock = productToUpdate.Stock,
                     Description = productToUpdate.Description
                 };
@@ -152,7 +152,7 @@ namespace Inventory.ArqLimpia.BL
                 return product;
             }
 
-            throw new Exception($"Producto con ID {pProducts.ProductId} no encontrado");
+            throw new Exception($"Producto con ID {pProducts.IdProduct} no encontrado");
         }
     }
 }

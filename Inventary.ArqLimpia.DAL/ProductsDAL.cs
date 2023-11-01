@@ -32,9 +32,9 @@ namespace Inventary.ArqLimpia.DAL
             return await result.ToListAsync();
         }
 
-        public async Task<ProductEN> FindByName(string productName)
+        public async Task<ProductEN> FindByName(string product_Name)
         {
-            var filter = Builders<ProductEN>.Filter.Eq("product_name", productName);
+            var filter = Builders<ProductEN>.Filter.Eq("Product_Name", product_Name);
             var result = await _collection.FindAsync(filter);
             return await result.FirstOrDefaultAsync();
         }
