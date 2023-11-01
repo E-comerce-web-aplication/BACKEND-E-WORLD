@@ -34,7 +34,7 @@ namespace Inventary.ArqLimpia.DAL
 
         public async Task<ProductEN> FindByName(string productName)
         {
-            var filter = Builders<ProductEN>.Filter.Eq("ProductName", productName);
+            var filter = Builders<ProductEN>.Filter.Eq("product_name", productName);
             var result = await _collection.FindAsync(filter);
             return await result.FirstOrDefaultAsync();
         }

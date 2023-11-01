@@ -1,188 +1,283 @@
 db.createCollection("Products", {
-    validator: {
-       $jsonSchema: {
-          bsonType: "object",
-          required: ["product_name", "description", "stock", "price", "images", "tags", "company_id", "category"],
-          properties: {
-             product_name: {
-                bsonType: "string",
-                description: "Name of the product",
-                minLength: 1,
-                maxLength: 30
-             },
-             description: {
-                bsonType: "string",
-                description: "Description of the product",
-                minLength: 1,
-                maxLength: 90
-             },
-             stock: {
-                bsonType: "int",
-                description: "Stock quantity",
-                minimum: 0
-             },
-             price: {
-                bsonType: "double",
-                description: "Price of the product",
-                minimum: 0
-             },
-             images: {
-                bsonType: "array",
-                description: "Array of product images",
-                maxItems: 5 
-             },
-             tags: {
-                bsonType: "array",
-                description: "Array of product tags"
-             },
-             company_id: {
-                bsonType: "objectId", 
-                description: "ID of the company"
-             },
-             category: {
-               bsonType: "string",
-               description: "Category of the product"
-             }
-          }
-       }
-    }
-});
-
- 
-db.createCollection("OrdersProducts", {
-    validator: {
-       $jsonSchema: {
-          bsonType: "object",
-          required: ["product_id", "order_id", "quantity"],
-          properties: {
-             product_id: {
-                bsonType: "objectId",
-                description: "ID of the product"
-             },
-             order_id: {
-                bsonType: "objectId",
-                description: "ID of the order"
-             },
-             quantity: {
-                bsonType: "int",
-                description: "Quantity of the product in the order",
-                minimum: 1
-             }
-          }
-       }
-    }
-});
-
-db.createCollection("Orders", {
-    validator: {
-       $jsonSchema: {
-          bsonType: "object",
-          required: ["order_date", "store_id", "customer_id", "status"],
-          properties: {
-             order_date: {
-                bsonType: "date",
-                description: "Date of the order",
-             },
-             store_id: {
-                bsonType: "objectId",
-                description: "ID of the store"
-             },
-             customer_id: {
-                bsonType: "objectId",
-                description: "ID of the customer"
-             },
-            status: {
-                bsonType: "string",
-                enum: ["cancelled", "in progress","received"],
-                description: "Order status"
-             },
-             delivery_date: {
-                bsonType: "date",
-                description: "Date of delivery"
-             },
-             total: {
-               bsonType: "double",
-               description: "Total of the product in the order"
-             }
-          }
-       }
-    }
-});
-
-   
-db.createCollection("Company", {
    validator: {
       $jsonSchema: {
          bsonType: "object",
-          required: ["name", "description", "address"],
-          properties: {
-             name: {
-                bsonType: "string",
-                description: "Name of the company",
-                minLength: 1,
-                maxLength: 30
-             },
-             description: {
-                bsonType: "string",
-                description: "Description of the company",
-                minLength: 1,
-                maxLength: 250
-             },
-               address: {
-                bsonType: "string",
-                description: "Address of the company",
-                minLength: 1,
-                maxLength: 250
-             }
-          }
-       }
-    }
+         required: ["Name", "Title", "Description", "Images", "Stock", "Price", "CompanyId", "SendConditions", "Tags"],
+         properties: {
+            ProductName: {
+               bsonType: "string",
+               description: "Nombre del producto"
+            },
+            Title: {
+               bsonType: "string",
+               description: "Título del producto"
+            },
+            Description: {
+               bsonType: "string",
+               description: "Descripción del producto"
+            },
+            Images: {
+               bsonType: "array",
+               description: "Arreglo de URLs de imágenes del producto",
+               items: {
+                  bsonType: "string",
+                  description: "URL de imagen"
+               }
+            },
+            Stock: {
+               bsonType: "int",
+               minimum: 0,
+               description: "Cantidad en stock del producto"
+            },
+            Price: {
+               bsonType: "double",
+               minimum: 0,
+               description: "Precio del producto"
+            },
+            CompanyId: {
+               bsonType: "objectId",
+               description: "ID de la empresa relacionada con el producto"
+            },
+            SendConditions: {
+               bsonType: "string",
+               description: "Condiciones de envío del producto"
+            },
+            Tags: {
+               bsonType: "array",
+               description: "Etiquetas asociadas al producto",
+               items: {
+                  bsonType: "string",
+                  description: "Etiqueta"
+               }
+            }
+         }
+      }
+   }
 })
 
 
+db.createCollection("SchemaCategory", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["NameCategory", "Description", "Schemas"],
+         properties: {
+            NameCategory: {
+               bsonType: "string",
+               description: "Nombre de la categoría del esquema"
+            },
+            Description: {
+               bsonType: "string",
+               description: "Descripción de la categoría del esquema"
+            },
+            Schemas: {
+               bsonType: "object",
+               description: "Campos arbitrarios relacionados con la categoría del esquema"
+            }
+         }
+      }
+   }
+})
 
+
+db.createCollection("Orders", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["date", "user", "store", "total"],
+         properties: {
+            date: {
+               bsonType: "date",
+               description: "Fecha de la orden"
+            },
+            user: {
+               bsonType: "int",
+               description: "ID del usuario que realizó la orden"
+            },
+            store: {
+               bsonType: "int",
+               description: "ID de la tienda relacionada con la orden"
+            },
+            total: {
+               bsonType: "decimal",
+               minimum: 0,
+               description: "Total de la orden"
+            }
+         }
+      }
+   }
+})
+
+db.createCollection("OrderProduct", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["order", "quantity", "product"],
+         properties: {
+            order: {
+               bsonType: "objectId",
+               description: "ID de la orden a la que se refiere el producto"
+            },
+            quantity: {
+               bsonType: "int",
+               minimum: 1,
+               description: "Cantidad del producto en la orden"
+            },
+            product: {
+               bsonType: "objectId",
+               description: "ID del producto relacionado con la orden"
+            }
+         }
+      }
+   }
+})
+
+db.createCollection("Returns", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["date", "user", "reason", "store", "total"],
+         properties: {
+            date: {
+               bsonType: "date",
+               description: "Fecha de la devolución"
+            },
+            user: {
+               bsonType: "objectId",
+               description: "ID del usuario que realizó la devolución"
+            },
+            reason: {
+               bsonType: "string",
+               description: "Motivo de la devolución"
+            },
+            store: {
+               bsonType: "objectId",
+               description: "ID de la tienda relacionada con la devolución"
+            },
+            total: {
+               bsonType: "decimal",
+               minimum: 0,
+               description: "Total de la devolución"
+            }
+         }
+      }
+   }
+})
+
+
+db.createCollection("ProductReturn", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["return", "quantity", "product"],
+         properties: {
+            return: {
+               bsonType: "objectId",
+               description: "ID de la devolución a la que se refiere el producto"
+            },
+            quantity: {
+               bsonType: "int",
+               minimum: 1,
+               description: "Cantidad del producto en la devolución"
+            },
+            product: {
+               bsonType: "objectId",
+               description: "ID del producto relacionado con la devolución"
+            }
+         }
+      }
+   }
+})
 
 db.createCollection("ProductHistory", {
-    validator: {
-       $jsonSchema: {
-          bsonType: "object",
-          required: ["company_id", "owner_id", "information", "registration_date"],
-          properties: {
-             company: {
-                bsonType: "object",
-                description: "ID of the company"
-             },
-             Owner: {
-                bsonType: "object",
-                description: "ID of the owner"
-             },
-             ProductName: {
-                bsonType: "string",
-                description: "Name of the product",
-                minLength: 1,
-                maxLength: 30
-             },
-             Description: {
-                bsonType: "string",
-                description: "Description of the product",
-                minLength: 1,
-                maxLength: 90
-             },
-             Stock: {
-                bsonType: "int",
-                description: "Stock quantity",
-                minimum: 0
-             },
-             Price: {
-                bsonType: "decimal",
-                description: "Price of the product",
-                minimum: 0
-             },
-             RegistrationDate: {
-                bsonType: "date",
-                description: "Date of registration"
-             }
-          }
-       }
-    }
- });
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["productname", "title", "description", "stock", "price", "extraDescriptions", "shippingConditions", "tags"],
+         properties: {
+            productname: {
+               bsonType: "string",
+               description: "Nombre del producto"
+            },
+            title: {
+               bsonType: "string",
+               description: "Título del producto"
+            },
+            description: {
+               bsonType: "string",
+               description: "Descripción del producto"
+            },
+            stock: {
+               bsonType: "int",
+               minimum: 0,
+               description: "Cantidad en stock del producto"
+            },
+            price: {
+               bsonType: "decimal",
+               minimum: 0,
+               description: "Precio del producto"
+            },
+            SendConditions: {
+               bsonType: "string",
+               description: "Condiciones de envío del producto"
+            },
+            tags: {
+               bsonType: "array",
+               description: "Etiquetas asociadas al producto",
+               items: {
+                  bsonType: "string",
+                  description: "Etiqueta"
+               }
+            }
+         }
+      }
+   }
+})
+
+db.createCollection("ProductRegister", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["user", "store", "product_info", "company_name", "type", "changes"],
+         properties: {
+            user: {
+               bsonType: "object",
+               properties: {
+                  name: {
+                     bsonType: "string",
+                     description: "nombre de usuario"
+                  },
+                  role: {
+                     bsonType: "string",
+                     description: "role el cual ocupo para acceder"
+                  }
+               }
+            },
+            date:{
+               bsonType: "date",
+               description: "Fecha de registro"
+            },
+            company: {
+               bsonType: "objectId",
+               description: "ID de la tienda relacionada con el registro"
+            },
+            product_info: {
+               bsonType: "objectId",
+               description: "Información del producto registrado"
+            },
+            company_name: {
+               bsonType: "string",
+               description: "Nombre de la empresa relacionada con el registro"
+            },
+            type: {
+               enum: ["newStock", "changePrice"],
+               description: "Tipo de registro (newStock o changePrice)"
+            },
+            changes: {
+               bsonType: "object",
+               description: "Cambios realizados en el producto"
+            }
+         }
+      }
+   }
+})
