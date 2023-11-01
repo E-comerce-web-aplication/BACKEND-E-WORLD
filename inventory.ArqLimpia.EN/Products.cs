@@ -1,46 +1,48 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System.Collections.Generic;
 
 namespace inventory.ArqLimpia.EN
 {
     public class ProductEN
     {
-    [BsonId]
-    [BsonRepresentation(BsonType.ObjectId)]
-    public string _id { get; set; }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string _id { get; set; }
 
-    [BsonRequired]
-    [BsonElement("product_name")]
-    public string Product_Name { get; set; }
+        [BsonRequired]
+        [BsonElement("Name")]
+        public string Name { get; set; }
 
-    [BsonRequired]
-    [BsonElement("description")]
-    public string Description { get; set; }
+        [BsonRequired]
+        [BsonElement("Title")]
+        public string Title { get; set; }
 
-    [BsonRequired]
-    [BsonElement("stock")]
-    public int Stock { get; set; }
+        [BsonRequired]
+        [BsonElement("Description")]
+        public string Description { get; set; }
 
-    [BsonRequired]
-    [BsonElement("price")]
-    [BsonRepresentation(BsonType.Double)]
-    public double Price { get; set; }
+        [BsonElement("Images")]
+        public List<string> Images { get; set; }
 
-    [BsonElement("images")]
-    public List<string> Images { get; set; }
+        [BsonRequired]
+        [BsonElement("Stock")]
+        public int Stock { get; set; }
 
-    [BsonElement("tags")]
-    public List<string> Tags { get; set; }
+        [BsonRequired]
+        [BsonElement("Price")]
+        [BsonRepresentation(BsonType.Double)]
+        public double Price { get; set; }
 
-    [BsonElement("category")]
-    public string Category { get; set; }
+        [BsonRequired]
+        [BsonElement("CompanyId")]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string CompanyId { get; set; }
 
-    [BsonRequired]
-    [BsonElement("company_id")]
-    [BsonRepresentation(BsonType.ObjectId)]
-    public string CompanyId { get; set; }
+        [BsonElement("SendConditions")]
+        public string SendConditions { get; set; }
+
+        [BsonElement("tags")]
+        public List<string> Tags { get; set; }
     }
-
-    
 }
-
