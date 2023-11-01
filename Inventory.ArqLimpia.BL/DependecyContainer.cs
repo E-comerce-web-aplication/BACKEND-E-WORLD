@@ -11,8 +11,6 @@ namespace Inventory.ArqLimpia.BL
         {
             services.AddTransient<IProductBL, ProductsBL>();
             services.AddTransient<IOrderBL, OrderBL>();
-            services.AddTransient<ICompanyBL, CompanyBL>();
-            services.AddTransient<IStoreBL, StoreBL>();
 
             return services;
         }

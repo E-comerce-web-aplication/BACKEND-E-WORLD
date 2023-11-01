@@ -17,8 +17,6 @@ namespace Inventary.ArqLimpia.DAL
         // Agrega propiedades para acceder a las colecciones aquí
         public IMongoCollection<ProductEN> Products => _database.GetCollection<ProductEN>("Products");
         public IMongoCollection<OrdersEN> Orders => _database.GetCollection<OrdersEN>("Orders");
-        public IMongoCollection<Company> Company => _database.GetCollection<Company>("Company");
-        public IMongoCollection<StoreEN> Store => _database.GetCollection<StoreEN>("Store");
         public IMongoCollection<OrdersProductEN> OrderProducts => _database.GetCollection<OrdersProductEN>("OrdersProducts");
     }
 }
