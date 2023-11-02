@@ -18,16 +18,18 @@ namespace Inventory.ArqLimpia.BL
         {
              var newProduct = new ProductEN()
             {
-                Product_Name = pProducts.Product_Name,
+                ProductName = pProducts.ProductName,
+                Title =pProducts.Title,
                 Description = pProducts.Description,
-                Price = pProducts.Price,
-                Images = pProducts.Images,
-                Stock = pProducts.Stock,
+                 Images = pProducts.Images,
+                 Stock = pProducts.Stock,
+                 Price = pProducts.Price,
                 CompanyId = pProducts.CompanyId,
-                Category = pProducts.Category
+                SendConditions = pProducts.SendConditions
+                
             };
 
-            var existingProduct = await _productDAL.FindByName(newProduct.Product_Name);
+            var existingProduct = await _productDAL.FindByName(newProduct.ProductName);
             if (existingProduct != null)
             {
                 throw new ArgumentException("Ya existe un producto con este nombre.");
@@ -47,14 +49,15 @@ namespace Inventory.ArqLimpia.BL
             var productsOutput = new CreateProductsOutputDTOs()
             {
                 IdProduct = newProduct._id,
-                Product_Name = newProduct.Product_Name,
+                ProductName = newProduct.ProductName,
+                Title =newProduct.Title,
                 Description = newProduct.Description,
-                Stock = newProduct.Stock,
                 Images = newProduct.Images,
+                Stock = newProduct.Stock,
                 Price = newProduct.Price,
-                Tags = newProduct.Tags,
-                Category = newProduct.Category,
-                CompanyId = newProduct.CompanyId
+                CompanyId = newProduct.CompanyId,
+                SendConditions = newProduct.SendConditions,
+                Tags = newProduct.Tags
             };
 
             return productsOutput;
@@ -82,27 +85,32 @@ namespace Inventory.ArqLimpia.BL
             var products = await _productDAL.Find(new ProductEN
             {
                 _id = pProducts.Id,
-                Product_Name = pProducts.Product_Name,
-                Price = pProducts.Price,
+                ProductName = pProducts.ProductName,
+                Title = pProducts.Title, 
+                Description = pProducts.Description,
                 Images = pProducts.Images,
                 Stock = pProducts.Stock,
+                Price = pProducts.Price,
                 CompanyId = pProducts.CompanyId,
-                Tags = pProducts.Tags,
-                Category = pProducts.Category
+                SendConditions = pProducts.SendConditions,
+                Tags = pProducts.Tags
+               
             });
 
             var resultList = new List<FindOneProductsOutputDTOs>();
             products.ForEach(product => resultList.Add(new FindOneProductsOutputDTOs
             {
                 Id = product._id,
-                Product_Name = product.Product_Name,
+             ProductName = product.ProductName,
+                Title = product.Title, 
                 Description = product.Description,
-                Stock = product.Stock,
                 Images = product.Images,
+                Stock = product.Stock,
                 Price = product.Price,
                 CompanyId = product.CompanyId,
-                Tags = product.Tags,
-                Category = product.Category
+                SendConditions = product.SendConditions,
+                Tags = product.Tags
+               
             }));
 
             return resultList;
@@ -116,11 +124,11 @@ namespace Inventory.ArqLimpia.BL
                 var products = new FindOneProductsOutputDTOs
                 {
                     Id = product._id,
-                    Product_Name = product.Product_Name,
+                    ProductName = product.ProductName,
                     Description = product.Description,
                     Stock = product.Stock,
                     Price = product.Price,
-                    Category = product.Category
+                    SendConditions = product.SendConditions
                 };
                 return products;
             }
@@ -134,20 +142,26 @@ namespace Inventory.ArqLimpia.BL
 
             if (productToUpdate != null)
             {
-                productToUpdate.Price = pProducts.Price;
-                productToUpdate.Product_Name = pProducts.Product_Name;
-                productToUpdate.Stock = pProducts.Stock;
+                productToUpdate.ProductName = pProducts.ProductName;
+                productToUpdate.Title = pProducts.Title;
                 productToUpdate.Description = pProducts.Description;
+                productToUpdate.Images = pProducts.Images;
+                productToUpdate.Stock = pProducts.Stock;
+                productToUpdate.Price = pProducts.Price;
+                productToUpdate.SendConditions = pProducts.SendConditions;
 
                 await _productDAL.Update(productToUpdate);
 
                 var product = new UpdateProductsOutputDTOs()
                 {
                     IdProduct = productToUpdate._id,
-                    Product_Name = productToUpdate.Product_Name,
+                    Title = productToUpdate.Title,
+                    Description = productToUpdate.Description,
+                    Images = productToUpdate.Images,
                     Stock = productToUpdate.Stock,
-                    Description = productToUpdate.Description
-                };
+                    Price = productToUpdate.Price,
+                    SendConditions = productToUpdate.SendConditions
+            };
 
                 return product;
             }

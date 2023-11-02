@@ -9,45 +9,50 @@ namespace Inventory.ArqLimpia.BL.DTOs
         
         [Required(ErrorMessage = "The field Title is required")]
         [StringLength(50)]
-        [MinLength(8, ErrorMessage = "The Title must have at least 8 characters.")]
-        public string Product_Name { get; set; }
+        [MinLength(5, ErrorMessage = "The Title must have at least 8 characters.")]
+        public string ProductName { get; set; }
+
+        [Required(ErrorMessage = "The field Description is required")]
+        [StringLength(50)]
+        public string Title { get; set; }
 
         [Required(ErrorMessage = "The field Description is required")]
         [StringLength(150)]
         public string Description { get; set; }
 
+        public List<string> Images { get; set; }
+
         [Required(ErrorMessage = "The field Stock is required")]
         [Range(5, double.MaxValue, ErrorMessage = "The field Stock must be greater than 5.")]
         public int Stock { get; set; }
 
-        public List<string> Images { get; set; }
-
         [Required(ErrorMessage = "The field Price is required")]
         [Range(10, double.MaxValue, ErrorMessage = "The field Price must be greater than 10.")]
-        public double Price { get; set; } 
+        public double Price { get; set; }
 
-        [Required(ErrorMessage = "The field Category is required")]
+        public string CompanyId { get; set; }
+
+        [Required(ErrorMessage = "The field Conditions is required")]
         [StringLength(150)]
-        public string Category { get; set; }
+        public string SendConditions { get; set; }
 
         public List<string> Tags { get; set; }
-
-        [Required(ErrorMessage = "The field CompanyId is required")]
-        [StringLength(150)]
-        public string CompanyId { get; set; }
+  
     }
 
     public class CreateProductsOutputDTOs
     {
         public string IdProduct { get; set; }
-        public string Product_Name { get; set; }
+        public string ProductName { get; set; }
+        public string Title { get; set; }
         public string Description{ get; set; }
-        public int Stock { get; set; }
         public List<string> Images { get; set; }
+        public int Stock { get; set; }
         public double Price { get; set; }
-        public List<string> Tags { get; set; }
-        public string Category { get; set; }
         public string CompanyId { get; set; }
+        public string SendConditions { get; set; }
+        public List<string> Tags { get; set; }
+       
     }
 
     //  DTOs PARA ELIMINAR PRODUCTOS
@@ -68,12 +73,18 @@ namespace Inventory.ArqLimpia.BL.DTOs
         public string IdProduct { get; set; }
         [Required(ErrorMessage = "The field Title is required")]
         [StringLength(50)]
-        [MinLength(8, ErrorMessage = "The Title must have at least 8 characters.")]
-        public string Product_Name { get; set; }
+        [MinLength(5, ErrorMessage = "The Title must have at least 8 characters.")]
+        public string ProductName { get; set; }
+
+        [Required(ErrorMessage = "The field Description is required")]
+        [StringLength(50)]
+        public string Title { get; set; }
 
         [Required(ErrorMessage = "The field Description is required")]
         [StringLength(150)]
         public string Description { get; set; }
+
+        public List<string> Images { get; set; }
 
         [Required(ErrorMessage = "The field Stock is required")]
         [Range(5, double.MaxValue, ErrorMessage = "The field Stock must be greater than 5.")]
@@ -83,16 +94,24 @@ namespace Inventory.ArqLimpia.BL.DTOs
         [Range(10, double.MaxValue, ErrorMessage = "The field Price must be greater than 10.")]
         public double Price { get; set; }
 
+        [Required(ErrorMessage = "The field Conditions is required")]
+        [StringLength(150)]
+        public string SendConditions { get; set; }
+
+
     }
 
     public class UpdateProductsOutputDTOs
     {
         public string IdProduct { get; set; }
-        public string Product_Name { get; set; }
+        public string ProductName { get; set; }
+        public string Title { get; set; }
         public string Description { get; set; }
+        public List<string> Images { get; set; }
         public int Stock { get; set; }
         public double Price { get; set; }
-       
+        public string SendConditions { get; set; }
+
     }
 
 
@@ -100,7 +119,7 @@ namespace Inventory.ArqLimpia.BL.DTOs
     public class FindOneProductsInputDTOs
     {
         [Required(ErrorMessage = "You must enter a title for the search")]
-        public string Product_Name { get; set; }
+        public string ProductName { get; set; }
     }
 
     public class FindByIdDTOs {
@@ -111,27 +130,28 @@ namespace Inventory.ArqLimpia.BL.DTOs
     public class FindOneProductsOutputDTOs
     {
         public string Id { get; set; }
-        public string Product_Name { get; set; }
+        public string ProductName { get; set; }
+        public string Title { get; set; }
         public string Description { get; set; }
-        public int Stock { get; set; }
         public List<string> Images { get; set; }
-        public double Price { get; set; }   
+        public int Stock { get; set; }
+        public double Price { get; set; }
+        public string CompanyId { get; set; }
+        public string SendConditions { get; set; }
         public List<string> Tags { get; set; }
-        public string CompanyId { get; set; }   
-        public string Category { get; set; }
-
     }
 
      public class FindProductsOutputDTOs
     {
         public string Id { get; set; }
-        public string Product_Name { get; set; }
+        public string ProductName { get; set; }
+        public string Title { get; set; }
         public string Description { get; set; }
+        public List<string> Images { get; set; }
         public int Stock { get; set; }
-        public double Price { get; set; }   
-        public List<string> Images { get; set; }   
-        public List<string> Tags { get; set; }
+        public double Price { get; set; }
         public string CompanyId { get; set; }
-        public string Category { get; set; }
+        public string SendConditions { get; set; }
+        public List<string> Tags { get; set; }
     }
 }
