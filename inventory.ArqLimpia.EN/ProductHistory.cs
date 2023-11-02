@@ -22,24 +22,27 @@ namespace inventory.ArqLimpia.EN
         [BsonElement("Description")]
         public string Description { get; set; }
 
+        [BsonElement("Images")]
+        public List<string> Images { get; set; }
+
         [BsonRequired]
         [BsonElement("Stock")]
         public int Stock { get; set; }
 
         [BsonRequired]
         [BsonElement("Price")]
-        public decimal Price { get; set; }
+        [BsonRepresentation(BsonType.Double)]
+        public double Price { get; set; }
 
         [BsonRequired]
-        [BsonElement("ExtraDescriptions")]
-        public string ExtraDescriptions { get; set; }
+        [BsonElement("CompanyId")]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string CompanyId { get; set; }
 
-        [BsonRequired]
-        [BsonElement("ShippingConditions")]
-        public string ShippingConditions { get; set; }
+        [BsonElement("SendConditions")]
+        public string SendConditions { get; set; }
 
-        [BsonRequired]
-        [BsonElement("Tags")]
+        [BsonElement("tags")]
         public List<string> Tags { get; set; }
     }
 }
