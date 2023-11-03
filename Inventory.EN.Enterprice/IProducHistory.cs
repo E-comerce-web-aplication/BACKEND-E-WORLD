@@ -9,6 +9,6 @@ namespace Inventory.ArqLimpia.EN.Interfaces
 {
     public interface IProducHistory
     {
-        Task<ProductHistory> FindAll(string CompanyId);
+        Task<List<ProductHistory>> FindAll(string CompanyId);
     }
 }

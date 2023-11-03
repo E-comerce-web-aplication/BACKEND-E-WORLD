@@ -2,7 +2,6 @@
 using Inventory.ArqLimpia.EN.Interfaces;
 using MongoDB.Driver;
 
-
 namespace Inventary.ArqLimpia.DAL
 {
     public class ProductHistoryDAL : IProducHistory
@@ -14,11 +13,11 @@ namespace Inventary.ArqLimpia.DAL
             _collection = dbContext.ProductHistory;
         }
 
-        public async Task<ProductHistory> FindAll(string CompanyId)
+        public async Task<List<ProductHistory>> FindAll(string CompanyId)
         {
             var filter = Builders<ProductHistory>.Filter.Eq("CompanyId", CompanyId);
             var result = await _collection.FindAsync(filter);
-            return await result.FirstOrDefaultAsync();
+            return await result.ToListAsync();
         }
     }
 }
