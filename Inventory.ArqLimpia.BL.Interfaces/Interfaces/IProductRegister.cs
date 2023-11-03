@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Inventory.ArqLimpia.BL.DTOs;
+using static Inventory.ArqLimpia.BL.DTOs.ProductRegisterDTOs;
 
-namespace Inventory.ArqLimpia.BL.Interfaces.Interfaces
+namespace Inventory.ArqLimpia.BL.Interfaces;
+
+public  interface IProductRegister
 {
-    internal interface IProductRegister
-    {
-    }
+    Task<FindQueryProductRegisterDTOs> FindQuery(FindQueryProductRegisterDTOs pRegister);
+    Task<FindAllProductRegisterDTOs> FindAll(FindAllProductRegisterDTOs pRegister);
+    Task<FindByIdProductRegisterDTOs> FindById(FindByIdProductRegisterDTOs pRegister);
 }
