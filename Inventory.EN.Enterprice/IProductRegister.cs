@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Inventory.ArqLimpia.EN.Interfaces
 {
-    public interface IProducHistory
+    public interface IProductRegister
     {
-        Task<List<ProductHistory>> FindAll(string CompanyId);
+        Task<List<ProductRegisterEN>> FindAll(string CompanyId, string UserName);
     }
 }

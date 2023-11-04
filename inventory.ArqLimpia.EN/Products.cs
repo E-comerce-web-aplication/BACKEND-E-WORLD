@@ -42,7 +42,7 @@ namespace inventory.ArqLimpia.EN
         [BsonElement("SendConditions")]
         public string SendConditions { get; set; }
 
-        [BsonElement("tags")]
+        [BsonElement("Tags")]
         public List<string> Tags { get; set; }
     }
 }

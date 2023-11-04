@@ -20,7 +20,7 @@ namespace Inventary.ArqLimpia.DAL
 
             services.AddScoped<IProduct, ProductsDAL>();
             services.AddScoped<IOrder, OrderDAL>();
-            services.AddScoped<IProducHistory, ProductHistoryDAL>();
+            services.AddScoped<IProductRegister, ProductRegisterDAL>();
             return services;
         }
     }
