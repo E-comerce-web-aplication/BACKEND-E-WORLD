@@ -21,6 +21,7 @@ namespace Inventary.ArqLimpia.DAL
         {
             ProductHistory productHistory = new ProductHistory
             {
+                _id = product._id,
                 ProductName = product.ProductName,
                 Title = product.Title,
                 Description = product.Description,
@@ -67,10 +68,38 @@ namespace Inventary.ArqLimpia.DAL
             return await result.FirstOrDefaultAsync();
         }
 
-        public async Task Update(ProductEN product)
+        public async Task Update(ProductEN updatedProduct)
         {
-            var filter = Builders<ProductEN>.Filter.Eq("_id", product._id);
-            await _collection.ReplaceOneAsync(filter, product);
+           
+            var filter = Builders<ProductEN>.Filter.Eq("_id", updatedProduct._id);
+            var originalProduct = await _collection.Find(filter).FirstOrDefaultAsync();
+
+            if (originalProduct != null)
+            {
+               
+                ProductHistory productHistory = new ProductHistory
+                {
+                    ProductName = originalProduct.ProductName,
+                    Title = originalProduct.Title,
+                    Description = originalProduct.Description,
+                    Images = originalProduct.Images,
+                    Stock = originalProduct.Stock,
+                    Price = originalProduct.Price,
+                    CompanyId = originalProduct.CompanyId,
+                    SendConditions = originalProduct.SendConditions,
+                    Tags = originalProduct.Tags,
+                    Timestamp = DateTime.UtcNow,
+
+                };
+
+              
+                await _productHistoryCollection.InsertOneAsync(productHistory);
+
+               
+                await _collection.ReplaceOneAsync(p => p._id == updatedProduct._id, updatedProduct);
+            }
         }
+
+
     }
 }

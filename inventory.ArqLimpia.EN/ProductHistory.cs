@@ -44,5 +44,6 @@ namespace inventory.ArqLimpia.EN
 
         [BsonElement("tags")]
         public List<string> Tags { get; set; }
+        public DateTime Timestamp { get; set; }
     }
 }
