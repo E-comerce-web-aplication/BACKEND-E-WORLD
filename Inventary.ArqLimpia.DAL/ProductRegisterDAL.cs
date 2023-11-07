@@ -14,23 +14,18 @@ namespace Inventary.ArqLimpia.DAL
             _collection = dbContext.ProductRegister;
         }
 
-        public async Task<List<ProductRegisterEN>> FindAll(string CompanyId, string UserName)
+        public async Task<List<ProductRegisterEN>> FindAllByCompanyId(string companyId)
         {
-            FilterDefinition<ProductRegisterEN> filter = Builders<ProductRegisterEN>.Filter.Empty;
-
-            if (!string.IsNullOrEmpty(CompanyId))
-            {
-                filter = Builders<ProductRegisterEN>.Filter.Eq("CompanyId", CompanyId);
-            }
-
-            if (!string.IsNullOrEmpty(UserName))
-            {
-                var userFilter = Builders<ProductRegisterEN>.Filter.Eq("User.name", UserName);
-                filter = filter & userFilter;
-            }
-
+            var filter = Builders<ProductRegisterEN>.Filter.Eq("CompanyId", companyId);
             var result = await _collection.Find(filter).ToListAsync();
             return result;
         }
-    }
+
+        public async Task<List<ProductRegisterEN>> FindAllByName(string name)
+        {
+            var filter = Builders<ProductRegisterEN>.Filter.Eq("User.name", name);
+            var result = await _collection.Find(filter).ToListAsync();
+            return result;
+        }
+    }    
 }

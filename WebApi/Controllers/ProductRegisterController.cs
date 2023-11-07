@@ -1,5 +1,10 @@
 ﻿using Inventory.ArqLimpia.BL.Interfaces;
+using Inventory.ArqLimpia.BL.DTOs; // Asegúrate de importar el espacio de nombres correcto para los DTOs
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using static Inventory.ArqLimpia.BL.DTOs.ProductRegisterDTOs;
 
 namespace WebApi.Controllers
 {
@@ -13,30 +18,85 @@ namespace WebApi.Controllers
         {
             _productRegisterBL = productRegisterBL;
         }
-        [HttpGet]
-        [Route("find-all")]
-        public async Task<IActionResult> FindAll(string CompanyId = null, string UserName = null)
+
+        [HttpGet("find-by-company")]
+        public async Task<IActionResult> FindByCompany(string companyId)
         {
             try
             {
-                if (string.IsNullOrEmpty(CompanyId) && string.IsNullOrEmpty(UserName))
+                if (string.IsNullOrEmpty(companyId))
                 {
-                    return BadRequest("Debes proporcionar al menos un valor (companyId o userName) para buscar.");
+                    return BadRequest("Debes proporcionar un companyId para buscar.");
                 }
 
-                var productRegisters = await _productRegisterBL.FindAll(CompanyId, UserName);
+                var result = await _productRegisterBL.FindAllByCompanyId(companyId);
 
-                if (productRegisters.Count > 0)
+                if (result.Count > 0)
                 {
-                    return Ok(productRegisters);
+                    var formattedResult = result.Select(register => new ProductRegisterDTOs
+                    {
+                        Id = register.Id.ToString(),
+                        Date = register.Date,
+                        User = new UserDto
+                        {
+                            name = register.User.name,
+                            role = register.User.role
+                        },
+                        Company_name = register.Company_name,
+                        Type = (ProductRegisterDTOs.ProductType)register.Type,
+                        CompanyId = register.CompanyId
+                    }).ToList();
+
+                    return Ok(formattedResult);
                 }
 
-                return NotFound("No se encontraron registros con los criterios de búsqueda proporcionados.");
+                return NotFound("No se encontraron registros con el companyId proporcionado.");
             }
             catch (Exception ex)
             {
                 return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
         }
+
+        [HttpGet("find-by-name")]
+        public async Task<IActionResult> FindByName(string name)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(name))
+                {
+                    return BadRequest("Debes proporcionar un nombre para buscar.");
+                }
+
+                var result = await _productRegisterBL.FindAllByName(name);
+
+                if (result.Count > 0)
+                {
+                    var formattedResult = result.Select(register => new ProductRegisterDTOs
+                    {
+                        Id = register.Id.ToString(),
+                        Date = register.Date,
+                        User = new UserDto
+                        {
+                            name = register.User.name,
+                            role = register.User.role
+                        },
+                        Company_name = register.Company_name,
+                        Type = (ProductRegisterDTOs.ProductType)register.Type,
+                        CompanyId = register.CompanyId
+                    }).ToList();
+
+                    return Ok(formattedResult);
+                }
+
+
+                return NotFound("No se encontraron registros con el nombre proporcionado.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
+        }
+
     }
 }

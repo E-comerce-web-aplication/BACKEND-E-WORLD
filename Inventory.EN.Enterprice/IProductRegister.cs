@@ -9,6 +9,7 @@ namespace Inventory.ArqLimpia.EN.Interfaces
 {
     public interface IProductRegister
     {
-        Task<List<ProductRegisterEN>> FindAll(string CompanyId, string UserName);
+        Task<List<ProductRegisterEN>> FindAllByCompanyId(string companyId);
+        Task<List<ProductRegisterEN>> FindAllByName(string name);
     }
 }

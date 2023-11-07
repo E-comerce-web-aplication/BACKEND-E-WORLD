@@ -1,57 +1,87 @@
 ﻿using Inventary.ArqLimpia.DAL;
-using Inventory.ArqLimpia.BL.DTOs;
 using Inventory.ArqLimpia.BL.Interfaces;
-using Inventory.ArqLimpia.BL.Interfaces.Interfaces;
 using Inventory.ArqLimpia.EN.Interfaces;
-using static Inventory.ArqLimpia.BL.DTOs.ProductHistoryDTOs;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Inventory.ArqLimpia.BL
 {
     public class ProductRegisterBL : IProductRegisterBL
     {
-        readonly IProductRegister _productRegisterDAL;
+        private readonly IProductRegister _productRegisterDAL;
 
         public ProductRegisterBL(IProductRegister productRegisterDAL)
         {
             _productRegisterDAL = productRegisterDAL;
         }
 
-        public async Task<List<ProductRegisterDTOs>> FindAll(string companyId, string userName)
+        public async Task<List<ProductRegisterEN>> FindAllByCompanyId(string companyId)
         {
             try
             {
-                
-                List<ProductRegisterEN> productRegisters = await _productRegisterDAL.FindAll(companyId, userName);
-
-              
+                List<ProductRegisterEN> productRegisters = await _productRegisterDAL.FindAllByCompanyId(companyId);
 
                 if (productRegisters != null)
                 {
-                    
-                    List<ProductRegisterDTOs> result = productRegisters.Select(register => new ProductRegisterDTOs
+                    var result = productRegisters.Select(register => new ProductRegisterEN
                     {
-                        Id = register.Id.ToString(),
-                        Date = register.Date, 
-                        User = new ProductRegisterDTOs.UserDto
+                        Id = register.Id,
+                        Date = register.Date,
+                        User = new User
                         {
                             name = register.User.name,
                             role = register.User.role
                         },
                         Company_name = register.Company_name,
-                        Type = (ProductRegisterDTOs.ProductType)register.Type,
+                        Type = register.Type,
                         CompanyId = register.CompanyId
                     }).ToList();
 
                     return result;
                 }
 
-                throw new Exception($"No se encontraron Registro con CompanyId {companyId} y UserName {userName}");
+                throw new Exception($"No se encontraron registros con CompanyId {companyId}");
             }
             catch (Exception ex)
             {
-              
                 throw ex;
             }
         }
+
+        public async Task<List<ProductRegisterEN>> FindAllByName(string name)
+        {
+            try
+            {
+                List<ProductRegisterEN> productRegisters = await _productRegisterDAL.FindAllByName(name);
+
+                if (productRegisters != null)
+                {
+                    var result = productRegisters.Select(register => new ProductRegisterEN
+                    {
+                        Id = register.Id,
+                        Date = register.Date,
+                        User = new User
+                        {
+                            name = register.User.name,
+                            role = register.User.role
+                        },
+                        Company_name = register.Company_name,
+                        Type = register.Type,
+                        CompanyId = register.CompanyId
+                    }).ToList();
+
+                    return result;
+                }
+
+                throw new Exception($"No se encontraron registros con el nombre {name}");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }
