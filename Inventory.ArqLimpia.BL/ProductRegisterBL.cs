@@ -1,10 +1,9 @@
 ﻿using Inventary.ArqLimpia.DAL;
+using inventory.ArqLimpia.EN;
 using Inventory.ArqLimpia.BL.Interfaces;
 using Inventory.ArqLimpia.EN.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using MongoDB.Bson;
+
 
 namespace Inventory.ArqLimpia.BL
 {
@@ -82,6 +81,20 @@ namespace Inventory.ArqLimpia.BL
                 throw ex;
             }
         }
+        public async Task RegistrarAccionEnProductRegisterEN(ProductEN producto, ProductType tipoAccion)
+        {
+            
+            var registroAccion = new ProductRegisterEN
+            {
+                Date = DateTime.Now,
+                User = new User { name = "Nombre de usuario", role = "Rol de usuario" },
+                Product_info = ObjectId.Parse(producto._id),
+                Company_name = "Nombre de la empresa",
+                Type = tipoAccion,
+                Changes = new BsonDocument(),
+                CompanyId = producto.CompanyId
+            };
 
+        }
     }
 }

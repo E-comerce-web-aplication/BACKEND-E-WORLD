@@ -5,6 +5,7 @@ namespace Inventory.ArqLimpia.BL.Interfaces;
 
 public interface IProductRegisterBL
 {
+
     Task<List<ProductRegisterEN>> FindAllByCompanyId(string companyId);
     Task<List<ProductRegisterEN>> FindAllByName(string name);
 }

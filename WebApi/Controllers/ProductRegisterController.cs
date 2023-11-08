@@ -1,9 +1,6 @@
 ﻿using Inventory.ArqLimpia.BL.Interfaces;
-using Inventory.ArqLimpia.BL.DTOs; // Asegúrate de importar el espacio de nombres correcto para los DTOs
+using Inventory.ArqLimpia.BL.DTOs; 
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using static Inventory.ArqLimpia.BL.DTOs.ProductRegisterDTOs;
 
 namespace WebApi.Controllers

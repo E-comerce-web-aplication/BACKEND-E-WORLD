@@ -23,7 +23,6 @@ namespace Inventory.ArqLimpia.BL.DTOs
         public List<string> Images { get; set; }
 
         [Required(ErrorMessage = "The field Stock is required")]
-        [Range(5, double.MaxValue, ErrorMessage = "The field Stock must be greater than 5.")]
         public int Stock { get; set; }
 
         [Required(ErrorMessage = "The field Price is required")]
@@ -87,7 +86,6 @@ namespace Inventory.ArqLimpia.BL.DTOs
         public List<string> Images { get; set; }
 
         [Required(ErrorMessage = "The field Stock is required")]
-        [Range(5, double.MaxValue, ErrorMessage = "The field Stock must be greater than 5.")]
         public int Stock { get; set; }
 
         [Required(ErrorMessage = "The field Price is required")]

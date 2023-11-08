@@ -11,5 +11,6 @@ namespace Inventory.ArqLimpia.EN.Interfaces
     {
         Task<List<ProductRegisterEN>> FindAllByCompanyId(string companyId);
         Task<List<ProductRegisterEN>> FindAllByName(string name);
+        Task RegistrarAccionEnProductRegisterEN(ProductEN producto, ProductType tipoAccion);
     }
 }

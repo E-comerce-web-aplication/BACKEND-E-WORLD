@@ -22,8 +22,9 @@ namespace Inventory.ArqLimpia.BL.DTOs
         }
         public enum ProductType
         {
-            newStock,
-            changePrice
+            NewProduct,
+            ProductDeletion,
+            ProductUpdate
         }
     }
 }

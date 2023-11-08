@@ -13,9 +13,6 @@ public class ProductRegisterEN
     [BsonElement("User")]
     public User User { get; set; }
 
-    [BsonElement("Store")]
-    public ObjectId Store { get; set; }
-
     [BsonElement("Product_info")]
     public ObjectId Product_info { get; set; }
 
@@ -40,6 +37,7 @@ public class User
 
 public enum ProductType
 {
-    newStock,
-    changePrice
+    NewProduct,
+    ProductDeletion,
+    ProductUpdate
 }

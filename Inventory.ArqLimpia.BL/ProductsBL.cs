@@ -3,15 +3,18 @@ using Inventory.ArqLimpia.BL.DTOs;
 using Inventory.ArqLimpia.EN.Interfaces;
 using inventory.ArqLimpia.EN;
 
+
 namespace Inventory.ArqLimpia.BL
 {
     public class ProductsBL : IProductBL
     {
         readonly IProduct _productDAL;
+        readonly IProductRegister _productRegister;
 
-        public ProductsBL(IProduct productDAL)
+        public ProductsBL(IProduct productDAL, IProductRegister productRegister)
         {
             _productDAL = productDAL;
+            _productRegister = productRegister;
         }
 
         public async Task<CreateProductsOutputDTOs> CreateProduct(CreateProductsInputDTOs pProducts)
@@ -29,19 +32,21 @@ namespace Inventory.ArqLimpia.BL
                 
             };
 
+            
+
             var existingProduct = await _productDAL.FindByName(newProduct.ProductName);
             if (existingProduct != null)
             {
                 throw new ArgumentException("Ya existe un producto con este nombre.");
             }
 
-            if (newProduct.Stock < 0 || newProduct.Stock > 5)
+            if (newProduct.Stock < 0 || newProduct.Stock > 100)
             {
-                throw new ArgumentException("El valor de las existencias debe estar entre 0 y 5.");
+                throw new ArgumentException("El valor de las existencias debe estar entre 0 y 100.");
             }
-            if (newProduct.Price <= 10)
+            if (newProduct.Price <= 0)
             {
-                throw new ArgumentException("El precio debe ser mayor que 10.");
+                throw new ArgumentException("El precio debe ser mayor que 0.");
             }
 
             await _productDAL.Create(newProduct);
@@ -60,8 +65,12 @@ namespace Inventory.ArqLimpia.BL
                 Tags = newProduct.Tags
             };
 
+            await _productRegister.RegistrarAccionEnProductRegisterEN(newProduct, ProductType.NewProduct);
+
             return productsOutput;
         }
+
+  
 
         public async Task<DeleteProductsOutputDTOs> Delete(DeleteProductsInputDTOs pProduct)
         {
