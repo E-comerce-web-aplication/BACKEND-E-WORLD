@@ -9,22 +9,25 @@ namespace Inventory.ArqLimpia.EN
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
-        [BsonElement("OrderDate")]
+        [BsonElement("Date")]
+        [BsonRepresentation(BsonType.DateTime)]
         public DateTime OrderDate { get; set; }
 
-        [BsonElement("StoreId")]
-        public string StoreId { get; set; }
+        [BsonElement("User")]
+        [BsonRepresentation(BsonType.Int32)]
+        public int CustomerId { get; set; }
 
-        [BsonElement("CustomerId")]
-        public string CustomerId { get; set; }
-
-        [BsonElement("Status")]
-        public string Status { get; set; }
-
-        [BsonElement("DeliveryDate")]
-        public BsonDateTime DeliveryDate { get; set; }
+        [BsonElement("Store")]
+        [BsonRepresentation(BsonType.Int32)]
+        public int StoreId { get; set; }
 
         [BsonElement("Total")]
-        public double Total { get; set; }
+        [BsonRepresentation(BsonType.Decimal128)]
+        public decimal Total { get; set; }
     }
 }
+
+
+
+
+
