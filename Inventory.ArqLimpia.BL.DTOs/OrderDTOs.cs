@@ -1,7 +1,5 @@
-
 namespace Inventory.ArqLimpia.BL.DTOs
 {
-
     public class OrderProductInputDTO
     {
         public string ProductId { get; set; }
@@ -11,51 +9,44 @@ namespace Inventory.ArqLimpia.BL.DTOs
     public class CreateOrderInputDTOs
     {
         public DateTime OrderDate { get; set; }
-        public string StoreId { get; set; }
-        public string CustomerId { get; set; }
-        public string Status { get; set; }
-        public List<OrderProductInputDTO> products { get; set; }
-        public DateTime DeliveryDate { get; set; }
-        public double Total { get; set; }
+        public int StoreId { get; set; }
+        public int CustomerId { get; set; }
+        public decimal Total { get; set; }
+        public List<OrderProductInputDTO> Products { get; set; }
     }
 
     public class CreateOrderOutputDTOs
     {
         public string Id { get; set; }
         public DateTime OrderDate { get; set; }
-        public string StoreId { get; set; }
-        public string CustomerId { get; set; }
-        public string Status { get; set; }
-        public List<string> products { get; set; }
-        public DateTime DeliveryDate { get; set; }
-        public double Total { get; set; }
+        public int StoreId { get; set; }
+        public int CustomerId { get; set; }
+        public decimal Total { get; set; }
+        public List<string> Products { get; set; }
     }
 
     public class FindOrderOutputDTOs
     {
         public string Id { get; set; }
         public DateTime OrderDate { get; set; }
-        public string StoreId { get; set; }
-        public string Status { get; set; }
-        public List<string> products { get; set; }
-        public DateTime DeliveryDate { get; set; }
-        public double Total { get; set; }
+        public int StoreId { get; set; }
+        public int CustomerId { get; set; }
+        public decimal Total { get; set; }
+        public List<string> Products { get; set; }
     }
 
-     public class FindByIdOrderInputDTOs
+    public class FindByIdOrderInputDTO
     {
         public string Id { get; set; }
     }
 
-     public class FindByIdOrderOutputDTOs
+    public class FindByIdOrderOutputDTO
     {
         public string Id { get; set; }
         public DateTime OrderDate { get; set; }
-        public string StoreId { get; set; }
-        public string Status { get; set; }
-        public List<string> products { get; set; }
-        public DateTime DeliveryDate { get; set; }
+        public int StoreId { get; set; }
+        public int CustomerId { get; set; }
+        public decimal Total { get; set; }
+        public List<string> Products { get; set; }
     }
-
-
 }
