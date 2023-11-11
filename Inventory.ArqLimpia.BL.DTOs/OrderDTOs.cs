@@ -1,7 +1,7 @@
 namespace Inventory.ArqLimpia.BL.DTOs
 {
     public class OrderProductInputDTO
-    {
+    { 
         public string ProductId { get; set; }
         public int Quantity { get; set; }
     }
@@ -32,7 +32,7 @@ namespace Inventory.ArqLimpia.BL.DTOs
         public int StoreId { get; set; }
         public int CustomerId { get; set; }
         public decimal Total { get; set; }
-        public List<string> Products { get; set; }
+        public List<OrderProductInputDTO> Products { get; set; }
     }
 
     public class FindByIdOrderInputDTO

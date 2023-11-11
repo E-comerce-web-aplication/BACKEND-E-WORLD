@@ -22,22 +22,19 @@ namespace Inventary.ArqLimpia.DAL
 
         public async Task Create(CreateOrderInputDTOs orderInput)
         {
-            BsonDateTime deliveryDateParse = BsonDateTime.Create(orderInput.DeliveryDate);
             try
             {
                 var order = new OrdersEN
                 {
                     OrderDate = DateTime.Now,
                     StoreId = orderInput.StoreId,
-                    Status = orderInput.Status,
-                    DeliveryDate = deliveryDateParse,
                     CustomerId = orderInput.CustomerId,
                     Total = orderInput.Total
                 };
                 await _ordersCollection.InsertOneAsync(order);
 
                 var orderProducts = new List<OrdersProductEN>();
-                foreach (var productInput in orderInput.products)
+                foreach (var productInput in orderInput.Products)
                 {
                     var orderProduct = new OrdersProductEN
                     {
@@ -49,7 +46,7 @@ namespace Inventary.ArqLimpia.DAL
                 }
                 await _ordersProductCollection.InsertManyAsync(orderProducts);
 
-                foreach (var productInput in orderInput.products)
+                foreach (var productInput in orderInput.Products)
                 {
                     var product = await _productsCollection.Find(p => p._id == productInput.ProductId).FirstOrDefaultAsync();
 

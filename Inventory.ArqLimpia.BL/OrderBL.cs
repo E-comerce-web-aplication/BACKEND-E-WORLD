@@ -16,34 +16,30 @@ namespace Inventory.ArqLimpia.BL
         public async Task<CreateOrderOutputDTOs> Create(CreateOrderInputDTOs order)
         {
             await _orderDAL.Create(order);
-            var _order = new CreateOrderOutputDTOs()
-            {
 
-                Status = order.Status,
-                StoreId = order.StoreId,
-                Total = order.Total,
+            var createdOrder = new CreateOrderOutputDTOs
+            {
                 OrderDate = order.OrderDate,
-                DeliveryDate = order.DeliveryDate
+                StoreId = order.StoreId,
+                CustomerId = order.CustomerId,
+                Total = order.Total
             };
-            return _order;
+
+            return createdOrder;
         }
 
         public async Task<List<FindOrderOutputDTOs>> Find()
         {
             var orders = await _orderDAL.Find();
 
-            var resultList = new List<FindOrderOutputDTOs>();
-
-            orders.ForEach(order => resultList.Add(new FindOrderOutputDTOs
+            var resultList = orders.Select(order => new FindOrderOutputDTOs
             {
                 Id = order.Id,
-                StoreId = order.StoreId,
-                Status = order.Status,
                 OrderDate = order.OrderDate,
-                DeliveryDate = (DateTime)order.DeliveryDate,
+                StoreId = order.StoreId,
+                CustomerId = order.CustomerId,
                 Total = order.Total
-                
-            }));
+            }).ToList();
 
             return resultList;
         }
