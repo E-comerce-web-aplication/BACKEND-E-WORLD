@@ -2,9 +2,11 @@
 using Inventory.ArqLimpia.BL.DTOs; 
 using Microsoft.AspNetCore.Mvc;
 using static Inventory.ArqLimpia.BL.DTOs.ProductRegisterDTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
+    [Authorize]
     [Route("api/product-register/find-all")]
     [ApiController]
     public class ProductRegisterController : ControllerBase

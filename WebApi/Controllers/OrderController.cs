@@ -4,9 +4,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Inventory.ArqLimpia.BL.Interfaces;
 using Inventory.ArqLimpia.BL.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/Orders")]
     public class OrderController : ControllerBase
