@@ -17,9 +17,6 @@ namespace inventory.ArqLimpia.EN
         [BsonElement("CompanyId")]
         public int CompanyId { get; set; }
 
-        [BsonElement("Company")]
-        public string Company { get; set; }
-
         [BsonElement("ProductId")]
         public ObjectId ProductId { get; set; }
 
