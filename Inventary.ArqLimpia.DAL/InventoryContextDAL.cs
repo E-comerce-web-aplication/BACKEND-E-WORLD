@@ -20,6 +20,8 @@ namespace Inventary.ArqLimpia.DAL
         public IMongoCollection<ProductRegisterEN> ProductRegister => _database.GetCollection<ProductRegisterEN>("ProductRegister");
         public IMongoCollection<ProductHistory> ProductHistory => _database.GetCollection<ProductHistory>("ProductHistory");
         public IMongoCollection<OrdersProductEN> OrderProducts => _database.GetCollection<OrdersProductEN>("OrdersProducts");
+        public IMongoCollection<InventoryStoreEN> InventoryStore => _database.GetCollection<InventoryStoreEN>("InventoryStore");
+        public IMongoCollection<InventoryCompanyEN> InventoryCompany => _database.GetCollection<InventoryCompanyEN>("InventoryCompany");
     }
 }
 

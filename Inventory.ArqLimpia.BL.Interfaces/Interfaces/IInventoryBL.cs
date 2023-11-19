@@ -1,15 +1,11 @@
-﻿using inventory.ArqLimpia.EN;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using static Inventory.ArqLimpia.BL.DTOs.InventoryDTOs;
 
 namespace Inventory.ArqLimpia.BL.Interfaces.Interfaces
 {
     public interface IInventoryBL
     {
-        List<InventoryStoreEN> FindAllStores(int storeId);
-        List<InventoryCompanyEN> FindAllCompanies(int companyId);
+        Task<List<InventoryStoreDto>> FindAllStores(int storeId);
+        Task<List<InventoryCompanyDto>> FindAllCompanies(int companyId);
     }
 }
