@@ -281,3 +281,77 @@ db.createCollection("ProductRegister", {
       }
    }
 })
+
+db.createCollection("SinglePurchase", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["ProductId", "Date", "Total", "User", "CompanyId", "Quantity"],
+      properties: {
+        ProductId: { bsonType: "objectId" },
+        Date: { bsonType: "date" },
+        Total: { bsonType: "double" },
+        User: { bsonType: "string" },
+        CompanyId: { bsonType: "int" },
+        Quantity: { bsonType: "int", minimum: 1 }
+      }
+    }
+  }
+});
+
+db.createCollection("Purchase", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["Date", "CompanyId", "UserId", "Total"],
+      properties: {
+        Date: { bsonType: "date" },
+        CompanyId: { bsonType: "int" },
+        UserId: { bsonType: "int" },
+        Total: { bsonType: "double" }
+      }
+    }
+  }
+});
+
+db.createCollection("PurchaseProduct", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["PurchaseId", "ProductId", "Quantity"],
+      properties: {
+        PurchaseId: { bsonType: "objectId" },
+        ProductId: { bsonType: "objectId" },
+        Quantity: { bsonType: "int", minimum: 1 }
+      }
+    }
+  }
+});
+
+db.createCollection("InventoryStore", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["StoreId", "ProductId", "Quantity"],
+      properties: {
+        StoreId: { bsonType: "int" },
+        ProductId: { bsonType: "objectId" },
+        Quantity: { bsonType: "int", minimum: 0 }
+      }
+    }
+  }
+});
+
+db.createCollection("InventoryCompany", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["CompanyId", "ProductId", "Quantity"],
+      properties: {
+        CompanyId: { bsonType: "int" },
+        ProductId: { bsonType: "objectId" },
+        Quantity: { bsonType: "int", minimum: 0 }
+      }
+    }
+  }
+});
