@@ -28,7 +28,7 @@ namespace Inventory.ArqLimpia.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+                return StatusCode(500, $"Error al crear la transacción de compra: {ex.Message}");
             }
         }
 
@@ -41,14 +41,14 @@ namespace Inventory.ArqLimpia.API.Controllers
 
                 if (purchaseTransaction == null)
                 {
-                    return NotFound();
+                    return NotFound($"No se encontró ninguna transacción con el Id {id}");
                 }
 
                 return Ok(purchaseTransaction);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+                return StatusCode(500, $"Error al obtener la transacción de compra por Id: {ex.Message}");
             }
         }
 
@@ -58,11 +58,17 @@ namespace Inventory.ArqLimpia.API.Controllers
             try
             {
                 var transactions = await _purcharseBL.GetTransactionsByCompanyAsync(companyId);
+
+                if (transactions == null || transactions.Count == 0)
+                {
+                    return NotFound($"No se encontraron transacciones para la compañía con el Id {companyId}");
+                }
+
                 return Ok(transactions);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+                return StatusCode(500, $"Error al obtener las transacciones de compra por CompanyId: {ex.Message}");
             }
         }
 
@@ -72,11 +78,17 @@ namespace Inventory.ArqLimpia.API.Controllers
             try
             {
                 var transactions = await _purcharseBL.GetTransactionsByProviderAsync(providerId);
+
+                if (transactions == null || transactions.Count == 0)
+                {
+                    return NotFound($"No se encontraron transacciones para el proveedor con el Id {providerId}");
+                }
+
                 return Ok(transactions);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+                return StatusCode(500, $"Error al obtener las transacciones de compra por ProviderId: {ex.Message}");
             }
         }
 
@@ -86,11 +98,17 @@ namespace Inventory.ArqLimpia.API.Controllers
             try
             {
                 var transactions = await _purcharseBL.GetTransactionsByUserAsync(userId);
+
+                if (transactions == null || transactions.Count == 0)
+                {
+                    return NotFound($"No se encontraron transacciones para el usuario con el Id {userId}");
+                }
+
                 return Ok(transactions);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+                return StatusCode(500, $"Error al obtener las transacciones de compra por UserId: {ex.Message}");
             }
         }
 
@@ -104,8 +122,9 @@ namespace Inventory.ArqLimpia.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+                return StatusCode(500, $"Error al eliminar la transacción de compra: {ex.Message}");
             }
         }
     }
 }
+

@@ -3,6 +3,8 @@ using Inventory.ArqLimpia.BL.DTOs;
 using Inventory.ArqLimpia.BL.Interfaces.Interfaces;
 using Inventory.ArqLimpia.EN.Interfaces;
 using MongoDB.Bson;
+using static inventory.ArqLimpia.EN.PurchaseProductEN;
+using static Inventory.ArqLimpia.BL.DTOs.PurcharseProductsDTOs;
 
 namespace Inventory.ArqLimpia.BL
 {
@@ -71,14 +73,13 @@ namespace Inventory.ArqLimpia.BL
                 else
                 {
                     return await _purchasesDAL.CreatePurchaseTransactionAsync(purchaseEN);
-                    Console.WriteLine("Transacción de compra creada con éxito.");
+                    
                 }
             }
             catch (Exception ex)
             {
-                // Manejar la excepción de manera adecuada, podrías loguearla o lanzarla nuevamente según el contexto
-                Console.WriteLine($"Error al crear la transacción de compra: {ex.Message}");
-                throw; // Lanza la excepción nuevamente para que pueda ser manejada en capas superiores si es necesario
+
+                throw new Exception($"Error al crear la transacción de compra: {ex.Message}");
             }
         }
 
@@ -92,8 +93,7 @@ namespace Inventory.ArqLimpia.BL
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error al eliminar la transacción de compra: {ex.Message}");
-                throw;
+                throw new Exception($"Error al eliminar la transacción de compra: {ex.Message}");
             }
         }
 
@@ -109,22 +109,41 @@ namespace Inventory.ArqLimpia.BL
                 {
                     var purchaseDTO = new PurcharseProductsDTOs
                     {
-                        // Asignar propiedades desde la entidad a DTO
                         Id = purchaseEN.Id,
-                        // ...
+                        User = new UserDTO
+                        {
+                            UserId = purchaseEN.UserId.UserId
+                            // Asignar otras propiedades del usuario si es necesario
+                        },
+                        Products = purchaseEN.Products.Select(product => new ProductDTO
+                        {
+                            IdProduct = product.IdProduct,
+                            Price = product.Price,
+                            Amount = product.Amount
+                            // Asignar otras propiedades del producto si es necesario
+                        }).ToList(),
+                        Total = purchaseEN.Total,
+                        PurchaseDate = purchaseEN.PurchaseDate,
+                        Company = new CompanyDTO
+                        {
+                            CompanyId = purchaseEN.CompanyId
+                            // Asignar otras propiedades de la compañía si es necesario
+                        },
+                        ProviderId = purchaseEN.ProviderId.ToString()
+                        // Asignar otras propiedades si es necesario
                     };
 
                     return purchaseDTO;
                 }
 
-                return null; // O manejar de otra manera si la transacción no existe
+                return null;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error al obtener la transacción de compra por Id: {ex.Message}");
-                throw;
+                throw new Exception($"Error al obtener la transacción de compra por Id: {ex.Message}");
             }
         }
+
 
         public async Task<List<PurcharseProductsDTOs>> GetTransactionsByCompanyAsync(int companyId)
         {
@@ -138,15 +157,34 @@ namespace Inventory.ArqLimpia.BL
                 {
                     // Asignar propiedades desde la entidad a DTO
                     Id = purchaseEN.Id,
-                    // ...
+                    User = new UserDTO
+                    {
+                        UserId = purchaseEN.UserId.UserId
+                        // Asignar otras propiedades del usuario si es necesario
+                    },
+                    Products = purchaseEN.Products.Select(product => new ProductDTO
+                    {
+                        IdProduct = product.IdProduct,
+                        Price = product.Price,
+                        Amount = product.Amount
+                        // Asignar otras propiedades del producto si es necesario
+                    }).ToList(),
+                    Total = purchaseEN.Total,
+                    PurchaseDate = purchaseEN.PurchaseDate,
+                    Company = new CompanyDTO
+                    {
+                        CompanyId = purchaseEN.CompanyId
+                        // Asignar otras propiedades de la compañía si es necesario
+                    },
+                    ProviderId = purchaseEN.ProviderId.ToString()
+                    // Asignar otras propiedades si es necesario
                 }).ToList();
 
                 return purchaseDTOList;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error al obtener las transacciones de compra por CompanyId: {ex.Message}");
-                throw;
+                throw new Exception($"Error al obtener las transacciones de compra por CompanyId: {ex.Message}");
             }
         }
 
@@ -162,15 +200,34 @@ namespace Inventory.ArqLimpia.BL
                 {
                     // Asignar propiedades desde la entidad a DTO
                     Id = purchaseEN.Id,
-                    // ...
+                    User = new UserDTO
+                    {
+                        UserId = purchaseEN.UserId.UserId
+                        // Asignar otras propiedades del usuario si es necesario
+                    },
+                    Products = purchaseEN.Products.Select(product => new ProductDTO
+                    {
+                        IdProduct = product.IdProduct,
+                        Price = product.Price,
+                        Amount = product.Amount
+                        // Asignar otras propiedades del producto si es necesario
+                    }).ToList(),
+                    Total = purchaseEN.Total,
+                    PurchaseDate = purchaseEN.PurchaseDate,
+                    Company = new CompanyDTO
+                    {
+                        CompanyId = purchaseEN.CompanyId
+                        // Asignar otras propiedades de la compañía si es necesario
+                    },
+                    ProviderId = purchaseEN.ProviderId.ToString()
+                    // Asignar otras propiedades si es necesario
                 }).ToList();
 
                 return purchaseDTOList;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error al obtener las transacciones de compra por ProviderId: {ex.Message}");
-                throw;
+                throw new Exception($"Error al obtener las transacciones de compra por ProviderId: {ex.Message}");
             }
         }
 
@@ -186,15 +243,34 @@ namespace Inventory.ArqLimpia.BL
                 {
                     // Asignar propiedades desde la entidad a DTO
                     Id = purchaseEN.Id,
-                    // ...
+                    User = new UserDTO
+                    {
+                        UserId = purchaseEN.UserId.UserId
+                        // Asignar otras propiedades del usuario si es necesario
+                    },
+                    Products = purchaseEN.Products.Select(product => new ProductDTO
+                    {
+                        IdProduct = product.IdProduct,
+                        Price = product.Price,
+                        Amount = product.Amount
+                        // Asignar otras propiedades del producto si es necesario
+                    }).ToList(),
+                    Total = purchaseEN.Total,
+                    PurchaseDate = purchaseEN.PurchaseDate,
+                    Company = new CompanyDTO
+                    {
+                        CompanyId = purchaseEN.CompanyId
+                        // Asignar otras propiedades de la compañía si es necesario
+                    },
+                    ProviderId = purchaseEN.ProviderId.ToString()
+                    // Asignar otras propiedades si es necesario
                 }).ToList();
 
                 return purchaseDTOList;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error al obtener las transacciones de compra por UserId: {ex.Message}");
-                throw;
+                throw new Exception($"Error al obtener las transacciones de compra por ProviderId: {ex.Message}");
             }
         }
     }

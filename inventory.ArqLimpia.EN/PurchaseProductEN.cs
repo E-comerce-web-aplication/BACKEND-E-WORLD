@@ -9,6 +9,29 @@ namespace inventory.ArqLimpia.EN
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
+        [BsonRequired]
+        [BsonElement("User")]
+        public User UserId { get; set; }
+
+        [BsonRequired]
+        [BsonElement("Products")]
+        public List<Product> Products { get; set; }
+
+        [BsonRequired]
+        [BsonElement("Total")]
+        public double Total { get; set; }
+
+        [BsonRequired]
+        [BsonElement("purchaseDate")]
+        public DateTime PurchaseDate { get; set; }
+
+        [BsonRequired]
+        [BsonElement("Company")]
+        public int CompanyId { get; set; }
+
+        [BsonRequired]
+        [BsonElement("ProviderId")]
+        public ObjectId ProviderId { get; set; }
 
         public class User
         {
@@ -38,29 +61,5 @@ namespace inventory.ArqLimpia.EN
             [BsonElement("CompanyId")]
             public int CompanyId { get; set; }
         }
-
-        [BsonRequired]
-        [BsonElement("User")]
-        public User UserId { get; set; }
-
-        [BsonRequired]
-        [BsonElement("Products")]
-        public List<Product> Products { get; set; }
-
-        [BsonRequired]
-        [BsonElement("Total")]
-        public double Total { get; set; }
-
-        [BsonRequired]
-        [BsonElement("purchaseDate")]
-        public DateTime PurchaseDate { get; set; }
-
-        [BsonRequired]
-        [BsonElement("Company")]
-        public int CompanyId { get; set; }
-
-        [BsonRequired]
-        [BsonElement("ProviderId")]
-        public ObjectId ProviderId { get; set; }
     }
 }

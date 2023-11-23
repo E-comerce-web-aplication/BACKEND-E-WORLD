@@ -18,6 +18,7 @@ namespace Inventory.ArqLimpia.BL.DTOs
 
         public string ProviderId { get; set; }
 
+
         public class UserDTO
         {
             [Required(ErrorMessage = "User ID is required.")]
