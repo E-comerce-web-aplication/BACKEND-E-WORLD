@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
-    [Authorize]
+ 
     [Route("api/product-register/find-all")]
     [ApiController]
     public class ProductRegisterController : ControllerBase

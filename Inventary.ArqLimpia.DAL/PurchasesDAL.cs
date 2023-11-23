@@ -1,40 +1,80 @@
-﻿using inventory.ArqLimpia.EN;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using inventory.ArqLimpia.EN;
 using Inventory.ArqLimpia.EN.Interfaces;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Inventary.ArqLimpia.DAL
 {
     public class PurchasesDAL : IPurchases
     {
-        private readonly IMongoCollection<PurchaseEN> _purcharse;
-        private readonly IMongoCollection<PurchaseProductEN> _purcharseProduct;
-        private readonly IMongoCollection<SinglePurchaseEN> _singlePurcharse;
+        private readonly IMongoCollection<PurchaseProductEN> _purchaseCollection;
 
         public PurchasesDAL(InventoryContextDAL dbContext)
         {
-            _purcharse = dbContext.Purchase;
-            _purcharseProduct = dbContext.PurchaseProduct;
-            _singlePurcharse = dbContext.SinglePurchase;
+            _purchaseCollection = dbContext.PurchaseProduct;
         }
 
-        public Task CreateNormalBuyAsync()
+        public async Task<string> CreatePurchaseTransactionAsync(PurchaseProductEN purchaseTransaction)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _purchaseCollection.InsertOneAsync(purchaseTransaction);
+                return purchaseTransaction.Id;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al insertar en la base de datos: {ex.Message}");
+                throw; 
+            }
         }
 
-        public Task CreateUniqueBuyAsync()
+        public async Task DeletePurchaseTransactionAsync(string Id)
         {
-            throw new NotImplementedException();
+            var filter = Builders<PurchaseProductEN>.Filter.Eq(p => p.Id, Id);
+            await _purchaseCollection.DeleteOneAsync(filter);
         }
 
-        public Task<IEnumerable<SinglePurchaseEN>> FindAllNormalBuyAsync()
+        public async Task<PurchaseProductEN> GetExistingTransactionAsync(object userId, object companyId)
         {
-            throw new NotImplementedException();
+            var filter = Builders<PurchaseProductEN>.Filter.And(
+                Builders<PurchaseProductEN>.Filter.Eq(p => p.UserId.UserId, (int)userId),
+                Builders<PurchaseProductEN>.Filter.Eq(p => p.CompanyId, (int)companyId)
+            );
+
+            return await _purchaseCollection.Find(filter).FirstOrDefaultAsync();
         }
 
-        public Task<IEnumerable<PurchaseEN>> FindAllUniqueBuyAsync()
+        public async Task<PurchaseProductEN> GetPurchaseTransactionByIdAsync(string Id)
         {
-            throw new NotImplementedException();
+            var filter = Builders<PurchaseProductEN>.Filter.Eq(p => p.Id, Id);
+            return await _purchaseCollection.Find(filter).FirstOrDefaultAsync();
+        }
+
+        public async Task<List<PurchaseProductEN>> GetTransactionsByCompanyAsync(int companyId)
+        {
+            var filter = Builders<PurchaseProductEN>.Filter.Eq(p => p.CompanyId, companyId);
+            return await _purchaseCollection.Find(filter).ToListAsync();
+        }
+
+        public async Task<List<PurchaseProductEN>> GetTransactionsByProviderAsync(string providerId)
+        {
+            var filter = Builders<PurchaseProductEN>.Filter.Eq(p => p.ProviderId, ObjectId.Parse(providerId));
+            return await _purchaseCollection.Find(filter).ToListAsync();
+        }
+
+        public async Task<List<PurchaseProductEN>> GetTransactionsByUserAsync(int userId)
+        {
+            var filter = Builders<PurchaseProductEN>.Filter.Eq(p => p.UserId.UserId, userId);
+            return await _purchaseCollection.Find(filter).ToListAsync();
+        }
+
+        public async Task UpdatePurchaseTransactionAsync(PurchaseProductEN existingTransaction)
+        {
+            var filter = Builders<PurchaseProductEN>.Filter.Eq(p => p.Id, existingTransaction.Id);
+            await _purchaseCollection.ReplaceOneAsync(filter, existingTransaction);
         }
     }
 }
