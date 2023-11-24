@@ -23,6 +23,7 @@ namespace Inventary.ArqLimpia.DAL
             services.AddScoped<IProductRegister, ProductRegisterDAL>();
             services.AddScoped<IInventory, InventoryDAL>();
             services.AddScoped<IPurchases, PurchasesDAL>();
+            services.AddScoped<IProvider, ProviderDAL>();
             return services;
         }
     }

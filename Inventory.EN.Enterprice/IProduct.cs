@@ -2,6 +2,7 @@
 
 namespace Inventory.ArqLimpia.EN.Interfaces
 {
+
     public interface IProduct
     {
         Task Create(ProductEN pProducts);
