@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using inventory.ArqLimpia.EN;
+﻿using inventory.ArqLimpia.EN;
 using Inventory.ArqLimpia.EN.Interfaces;
 using MongoDB.Bson;
 using MongoDB.Driver;

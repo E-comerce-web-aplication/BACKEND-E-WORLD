@@ -59,8 +59,14 @@ namespace WebApi.Controllers
         {
             try
             {
-                var newProduct = await _productBL.CreateProduct(product);
-                return CreatedAtAction(nameof(GetById), new { id = newProduct.IdProduct }, newProduct);
+                _productBL.CreateProduct(product);
+
+                var response = new Response{
+                    Ok = "ok",
+                    error = ""
+                };
+
+                return  Ok(response);
             }
             catch (Exception ex)
             {
@@ -107,6 +113,12 @@ namespace WebApi.Controllers
             {
                 return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
+        }
+
+        public class Response {
+            public string Ok { get; set; }
+            public string error { get; set; }
+            
         }
     }
 }

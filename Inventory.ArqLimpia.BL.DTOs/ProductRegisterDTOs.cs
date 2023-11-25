@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Inventory.ArqLimpia.BL.DTOs
+﻿namespace Inventory.ArqLimpia.BL.DTOs
 {
     public class ProductRegisterDTOs
     {
@@ -12,7 +6,7 @@ namespace Inventory.ArqLimpia.BL.DTOs
         public UserDto User { get; set; }
         public string Company_name { get; set; }
         public ProductType Type { get; set; }
-        public string CompanyId { get; set; }
+        public int CompanyId { get; set; }
         public DateTime Date { get; set; }
 
         public class UserDto

@@ -17,19 +17,19 @@ namespace Inventory.ArqLimpia.BL
             _productRegister = productRegister;
         }
 
-        public async Task<CreateProductsOutputDTOs> CreateProduct(CreateProductsInputDTOs pProducts)
+        public async void  CreateProduct(CreateProductsInputDTOs pProducts)
         {
              var newProduct = new ProductEN()
             {
                 ProductName = pProducts.ProductName,
                 Title =pProducts.Title,
                 Description = pProducts.Description,
-                 Images = pProducts.Images,
-                 Stock = pProducts.Stock,
-                 Price = pProducts.Price,
+                Images = pProducts.Images,
+                Stock = 0,
+                Price = pProducts.Price,
                 CompanyId = pProducts.CompanyId,
-                SendConditions = pProducts.SendConditions
-                
+                SendConditions = pProducts.SendConditions,
+                Tags = pProducts.Tags
             };
 
             
@@ -51,23 +51,8 @@ namespace Inventory.ArqLimpia.BL
 
             await _productDAL.Create(newProduct);
 
-            var productsOutput = new CreateProductsOutputDTOs()
-            {
-                IdProduct = newProduct._id,
-                ProductName = newProduct.ProductName,
-                Title =newProduct.Title,
-                Description = newProduct.Description,
-                Images = newProduct.Images,
-                Stock = newProduct.Stock,
-                Price = newProduct.Price,
-                CompanyId = newProduct.CompanyId,
-                SendConditions = newProduct.SendConditions,
-                Tags = newProduct.Tags
-            };
+            // await _productRegister.RegistrarAccionEnProductRegisterEN(newProduct, ProductType.NewProduct);
 
-            await _productRegister.RegistrarAccionEnProductRegisterEN(newProduct, ProductType.NewProduct);
-
-            return productsOutput;
         }
 
   

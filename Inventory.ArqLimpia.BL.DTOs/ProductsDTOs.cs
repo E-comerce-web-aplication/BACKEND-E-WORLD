@@ -13,26 +13,23 @@ namespace Inventory.ArqLimpia.BL.DTOs
         public string ProductName { get; set; }
 
         [Required(ErrorMessage = "The field Description is required")]
-        [StringLength(50)]
+        [MinLength(50)]
         public string Title { get; set; }
 
         [Required(ErrorMessage = "The field Description is required")]
-        [StringLength(150)]
+        [MinLength(80)]
         public string Description { get; set; }
 
         public List<string> Images { get; set; }
 
-        [Required(ErrorMessage = "The field Stock is required")]
-        public int Stock { get; set; }
-
         [Required(ErrorMessage = "The field Price is required")]
-        [Range(10, double.MaxValue, ErrorMessage = "The field Price must be greater than 10.")]
+        [Range(5, double.MaxValue, ErrorMessage = "The field Price must be greater than 10.")]
         public double Price { get; set; }
 
-        public string CompanyId { get; set; }
+        public int CompanyId { get; set; }
 
         [Required(ErrorMessage = "The field Conditions is required")]
-        [StringLength(150)]
+        [MinLength(80)]
         public string SendConditions { get; set; }
 
         public List<string> Tags { get; set; }
@@ -48,7 +45,7 @@ namespace Inventory.ArqLimpia.BL.DTOs
         public List<string> Images { get; set; }
         public int Stock { get; set; }
         public double Price { get; set; }
-        public string CompanyId { get; set; }
+        public int CompanyId { get; set; }
         public string SendConditions { get; set; }
         public List<string> Tags { get; set; }
        
@@ -70,13 +67,13 @@ namespace Inventory.ArqLimpia.BL.DTOs
     public class UpdateProductsInputDTOs
     {
         public string IdProduct { get; set; }
-        [Required(ErrorMessage = "The field Title is required")]
+        [Required(ErrorMessage = "The field ProductName is required")]
         [StringLength(50)]
-        [MinLength(5, ErrorMessage = "The Title must have at least 8 characters.")]
+        [MinLength(5, ErrorMessage = "The ProductName must have at least 8 characters.")]
         public string ProductName { get; set; }
 
-        [Required(ErrorMessage = "The field Description is required")]
-        [StringLength(50)]
+        [Required(ErrorMessage = "The field Title is required")]
+        [MinLength(50)]
         public string Title { get; set; }
 
         [Required(ErrorMessage = "The field Description is required")]
@@ -134,7 +131,7 @@ namespace Inventory.ArqLimpia.BL.DTOs
         public List<string> Images { get; set; }
         public int Stock { get; set; }
         public double Price { get; set; }
-        public string CompanyId { get; set; }
+        public int CompanyId { get; set; }
         public string SendConditions { get; set; }
         public List<string> Tags { get; set; }
     }
@@ -148,7 +145,7 @@ namespace Inventory.ArqLimpia.BL.DTOs
         public List<string> Images { get; set; }
         public int Stock { get; set; }
         public double Price { get; set; }
-        public string CompanyId { get; set; }
+        public int CompanyId { get; set; }
         public string SendConditions { get; set; }
         public List<string> Tags { get; set; }
     }

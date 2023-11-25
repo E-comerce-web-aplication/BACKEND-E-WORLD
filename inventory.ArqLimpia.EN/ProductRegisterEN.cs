@@ -26,7 +26,7 @@ public class ProductRegisterEN
     public BsonDocument Changes { get; set; }
 
     [BsonElement("CompanyId")]
-    public string CompanyId { get; set; }
+    public int CompanyId { get; set; }
 }
 
 public class User

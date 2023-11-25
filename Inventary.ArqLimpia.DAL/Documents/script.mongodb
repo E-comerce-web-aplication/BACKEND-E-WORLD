@@ -1,8 +1,9 @@
 db.createCollection("Products", {
    validator: {
       $jsonSchema: {
-         bsonType: "Object",
-         required: ["ProductName", "Title", "Description", "Images", "Stock", "Price", "CompanyId", "SendConditions", "Tags"],
+         bsonType: "object",
+         required: ["ProductName", "Title", "Description", "Images", "Stock", "Price", "CompanyId", 
+         "SendConditions", "Tags"],
          properties: {
             ProductName: {
                bsonType: "string",
@@ -17,7 +18,7 @@ db.createCollection("Products", {
                description: "Descripción del producto"
             },
             Images: {
-               bsonType: "Array",
+               bsonType: "array",
                description: "Arreglo de URLs de imágenes del producto",
                items: {
                   bsonType: "string",
@@ -30,12 +31,12 @@ db.createCollection("Products", {
                description: "Cantidad en stock del producto"
             },
             Price: {
-               bsonType: "Double",
+               bsonType: "double",
                minimum: 0,
                description: "Precio del producto"
             },
             CompanyId: {
-               bsonType: "ObjectId",
+               bsonType: "int",
                description: "ID de la empresa relacionada con el producto"
             },
             SendConditions: {
@@ -43,7 +44,7 @@ db.createCollection("Products", {
                description: "Condiciones de envío del producto"
             },
             Tags: {
-               bsonType: "Array",
+               bsonType: "array",
                description: "Etiquetas asociadas al producto",
                items: {
                   bsonType: "string",
@@ -59,7 +60,7 @@ db.createCollection("Products", {
 db.createCollection("SchemaCategory", {
    validator: {
       $jsonSchema: {
-         bsonType: "Object",
+         bsonType: "object",
          required: ["NameCategory", "Description", "Schemas"],
          properties: {
             NameCategory: {
@@ -71,7 +72,7 @@ db.createCollection("SchemaCategory", {
                description: "Descripción de la categoría del esquema"
             },
             Schemas: {
-               bsonType: "Object",
+               bsonType: "object",
                description: "Campos arbitrarios relacionados con la categoría del esquema"
             }
          }
@@ -83,11 +84,11 @@ db.createCollection("SchemaCategory", {
 db.createCollection("Orders", {
    validator: {
       $jsonSchema: {
-         bsonType: "Object",
+         bsonType: "object",
          required: ["Date", "User", "Store", "Total"],
          properties: {
             Date: {
-               bsonType: "Date",
+               bsonType: "date",
                description: "Fecha de la orden"
             },
             User: {
@@ -192,8 +193,7 @@ db.createCollection("ProductReturn", {
 db.createCollection("ProductHistory", {
    validator: {
       $jsonSchema: {
-         bsonType: "Object",
-         required: ["ProductName", "Title", "Description", "Stock", "Price", "ExtraDescriptions", "ShippingConditions", "Tags"],
+         bsonType: "object",
          properties: {
             ProductName: {
                bsonType: "string",
@@ -213,7 +213,7 @@ db.createCollection("ProductHistory", {
                description: "Cantidad en stock del producto"
             },
             Price: {
-               bsonType: "decimal",
+               bsonType: "double",
                minimum: 0,
                description: "Precio del producto"
             },
@@ -237,11 +237,10 @@ db.createCollection("ProductHistory", {
 db.createCollection("ProductRegister", {
    validator: {
       $jsonSchema: {
-         bsonType: "Object",
-         required: ["User", "Store", "Product_info", "Company_name", "Type", "Changes"],
+         bsonType: "object",
          properties: {
             User: {
-               bsonType: "Object",
+               bsonType: "object",
                properties: {
                   name: {
                      bsonType: "string",
@@ -254,18 +253,18 @@ db.createCollection("ProductRegister", {
                }
             },
             Date:{
-               bsonType: "Date",
+               bsonType: "date",
                description: "Fecha de registro"
             },
             CompanyId: {
-               bsonType: "ObjectId",
+               bsonType: "int",
                description: "ID de la tienda relacionada con el registro"
             },
-            Product_info: {
-               bsonType: "ObjectId",
+            ProductInfo: {
+               bsonType: "objectId",
                description: "Información del producto registrado"
             },
-            Company_name: {
+            CompanyName: {
                bsonType: "string",
                description: "Nombre de la empresa relacionada con el registro"
             },

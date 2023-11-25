@@ -16,20 +16,28 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+builder.Services.AddCors( options => {
+    options.AddPolicy("AllOrigin", app =>{
+        app.AllowAnyMethod()
+        .AllowAnyOrigin()
+        .AllowAnyHeader();
+    });
+} );
 
-    };
-});
+// builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+// {
+//     options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+//     {
+//         ValidateIssuer = true,
+//         ValidateAudience = true,
+//         ValidateLifetime = true,
+//         ValidateIssuerSigningKey = true,
+//         ValidIssuer = builder.Configuration["Jwt:Issuer"],
+//         ValidAudience = builder.Configuration["Jwt:Audience"],
+//         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+
+//     };
+// });
 
 var app = builder.Build();
 
@@ -40,13 +48,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("AllOrigin");
 app.MapGet("/", () => "Hello World!");
 
 
 //esta parte esta comentada para que kalet pueda correlo 
 // app.UseHttpsRedirection();
 
-app.UseAuthorization();
+// app.UseAuthorization();
 app.UseAuthentication();
 app.MapControllers();
 

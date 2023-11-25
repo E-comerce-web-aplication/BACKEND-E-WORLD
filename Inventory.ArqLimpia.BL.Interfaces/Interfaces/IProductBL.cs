@@ -5,7 +5,7 @@ namespace Inventory.ArqLimpia.BL.Interfaces;
 
 public interface IProductBL
 {
-    Task<CreateProductsOutputDTOs> CreateProduct(CreateProductsInputDTOs pProducts);
+    void CreateProduct(CreateProductsInputDTOs pProducts);
     Task<UpdateProductsOutputDTOs> Update(UpdateProductsInputDTOs pProducts);
     Task<DeleteProductsOutputDTOs> Delete(DeleteProductsInputDTOs pProducts);
     Task<List<FindOneProductsOutputDTOs>> Find(FindProductsOutputDTOs pProducts);

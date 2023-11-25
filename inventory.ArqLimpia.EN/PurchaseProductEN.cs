@@ -9,6 +9,7 @@ namespace inventory.ArqLimpia.EN
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
+        
         [BsonRequired]
         [BsonElement("User")]
         public User UserId { get; set; }

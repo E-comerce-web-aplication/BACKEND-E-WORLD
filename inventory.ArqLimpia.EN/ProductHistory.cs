@@ -36,8 +36,7 @@ namespace inventory.ArqLimpia.EN
 
         [BsonRequired]
         [BsonElement("CompanyId")]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string CompanyId { get; set; }
+        public int CompanyId { get; set; }
 
         [BsonElement("SendConditions")]
         public string SendConditions { get; set; }
