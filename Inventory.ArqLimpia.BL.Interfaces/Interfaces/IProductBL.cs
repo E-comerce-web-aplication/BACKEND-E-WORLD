@@ -8,7 +8,7 @@ public interface IProductBL
     void CreateProduct(CreateProductsInputDTOs pProducts);
     Task<UpdateProductsOutputDTOs> Update(UpdateProductsInputDTOs pProducts);
     Task<DeleteProductsOutputDTOs> Delete(DeleteProductsInputDTOs pProducts);
-    Task<List<FindOneProductsOutputDTOs>> Find(FindProductsOutputDTOs pProducts);
+    Task<List<FindOneProductsOutputDTOs>> Find(int companyId );
     Task<FindOneProductsOutputDTOs> FindOne(FindByIdDTOs pProducts);
    
 }

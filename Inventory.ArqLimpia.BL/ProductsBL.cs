@@ -74,22 +74,9 @@ namespace Inventory.ArqLimpia.BL
             throw new Exception($"Producto con ID {pProduct.IdProduct} no encontrado");
         }
 
-        public async Task<List<FindOneProductsOutputDTOs>> Find(FindProductsOutputDTOs pProducts)
+        public async Task<List<FindOneProductsOutputDTOs>> Find( int companyId )
         {
-            var products = await _productDAL.Find(new ProductEN
-            {
-                _id = pProducts.Id,
-                ProductName = pProducts.ProductName,
-                Title = pProducts.Title, 
-                Description = pProducts.Description,
-                Images = pProducts.Images,
-                Stock = pProducts.Stock,
-                Price = pProducts.Price,
-                CompanyId = pProducts.CompanyId,
-                SendConditions = pProducts.SendConditions,
-                Tags = pProducts.Tags
-               
-            });
+            var products = await _productDAL.Find( companyId );
 
             var resultList = new List<FindOneProductsOutputDTOs>();
             products.ForEach(product => resultList.Add(new FindOneProductsOutputDTOs

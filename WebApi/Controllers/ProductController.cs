@@ -21,11 +21,11 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] int companyId )
         {
             try
             {
-                var products = await _productBL.Find(new FindProductsOutputDTOs());
+                var products = await _productBL.Find( companyId );
                 return Ok(products);
             }
             catch (Exception ex)

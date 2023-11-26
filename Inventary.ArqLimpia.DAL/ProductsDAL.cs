@@ -45,9 +45,9 @@ namespace Inventary.ArqLimpia.DAL
             await _collection.DeleteOneAsync(filter);
         }
       
-        public async Task<List<ProductEN>> Find(ProductEN product)
+        public async Task<List<ProductEN>> Find( int companyId )
         {
-            var filter = Builders<ProductEN>.Filter.Empty;
+            var filter = Builders<ProductEN>.Filter.Eq(p => p.CompanyId, companyId);
             var result = await _collection.FindAsync(filter);
             return await result.ToListAsync();
         }
