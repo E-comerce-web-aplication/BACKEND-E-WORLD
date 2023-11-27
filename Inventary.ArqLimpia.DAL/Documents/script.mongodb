@@ -281,22 +281,6 @@ db.createCollection("ProductRegister", {
    }
 })
 
-db.createCollection("SinglePurchase", {
-  validator: {
-    $jsonSchema: {
-      bsonType: "object",
-      required: ["ProductId", "Date", "Total", "User", "CompanyId", "Quantity"],
-      properties: {
-        ProductId: { bsonType: "objectId" },
-        Date: { bsonType: "date" },
-        Total: { bsonType: "double" },
-        User: { bsonType: "string" },
-        CompanyId: { bsonType: "int" },
-        Quantity: { bsonType: "int", minimum: 1 }
-      }
-    }
-  }
-});
 
 db.createCollection("Purchase", {
   validator: {
@@ -307,7 +291,8 @@ db.createCollection("Purchase", {
         Date: { bsonType: "date" },
         CompanyId: { bsonType: "int" },
         UserId: { bsonType: "int" },
-        Total: { bsonType: "double" }
+        Total: { bsonType: "double" },
+        ProviderId: { bsonType: "objectId"}
       }
     }
   }
@@ -317,7 +302,6 @@ db.createCollection("PurchaseProduct", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["PurchaseId", "ProductId", "Quantity"],
       properties: {
         PurchaseId: { bsonType: "objectId" },
         ProductId: { bsonType: "objectId" },

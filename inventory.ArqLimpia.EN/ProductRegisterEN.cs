@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using inventory.ArqLimpia.EN;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 public class ProductRegisterEN
@@ -33,6 +34,11 @@ public class User
 {
     public string name { get; set; }
     public string role { get; set; }
+
+    public static implicit operator User(Purchase v)
+    {
+        throw new NotImplementedException();
+    }
 }
 
 public enum ProductType

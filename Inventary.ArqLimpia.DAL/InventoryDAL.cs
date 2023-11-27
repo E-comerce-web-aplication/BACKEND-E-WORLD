@@ -1,5 +1,6 @@
 ﻿using inventory.ArqLimpia.EN;
 using Inventory.ArqLimpia.EN.Interfaces;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 
@@ -17,8 +18,20 @@ namespace Inventary.ArqLimpia.DAL
         }
         public async Task<List<InventoryCompanyEN>> FindAllCompanies(int companyId)
         {
-            var filter = Builders<InventoryCompanyEN>.Filter.Eq("CompanyId", companyId);
-            return _inventoryCompanyCollection.Find(filter).ToList();
+            var matchStage = new BsonDocument("$match", new BsonDocument("CompanyId", companyId));
+
+            var lookupStage = new BsonDocument("$lookup", new BsonDocument
+            {
+                { "from", "Products" },
+                { "localField", "ProductId" },
+                { "foreignField", "_id" },
+                { "as", "ProductInfo" }
+            });
+
+            var pipeline = new[] { matchStage, lookupStage };
+
+            var aggregation = await _inventoryCompanyCollection.Aggregate<InventoryCompanyEN>(pipeline).ToListAsync();
+            return aggregation;
         }
 
         public async Task<List<InventoryStoreEN>> FindAllStores(int storeId)

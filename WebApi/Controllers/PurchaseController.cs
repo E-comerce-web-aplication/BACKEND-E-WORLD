@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Inventory.ArqLimpia.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Purchase")]
     [ApiController]
     public class PurchaseController : ControllerBase
     {
@@ -32,25 +32,7 @@ namespace Inventory.ArqLimpia.API.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetPurchaseTransactionById(string id)
-        {
-            try
-            {
-                var purchaseTransaction = await _purcharseBL.GetPurchaseTransactionByIdAsync(id);
-
-                if (purchaseTransaction == null)
-                {
-                    return NotFound($"No se encontró ninguna transacción con el Id {id}");
-                }
-
-                return Ok(purchaseTransaction);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error al obtener la transacción de compra por Id: {ex.Message}");
-            }
-        }
+       
 
         [HttpGet("company/{companyId}")]
         public async Task<IActionResult> GetTransactionsByCompany(int companyId)
@@ -72,45 +54,6 @@ namespace Inventory.ArqLimpia.API.Controllers
             }
         }
 
-        [HttpGet("provider/{providerId}")]
-        public async Task<IActionResult> GetTransactionsByProvider(string providerId)
-        {
-            try
-            {
-                var transactions = await _purcharseBL.GetTransactionsByProviderAsync(providerId);
-
-                if (transactions == null || transactions.Count == 0)
-                {
-                    return NotFound($"No se encontraron transacciones para el proveedor con el Id {providerId}");
-                }
-
-                return Ok(transactions);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error al obtener las transacciones de compra por ProviderId: {ex.Message}");
-            }
-        }
-
-        [HttpGet("user/{userId}")]
-        public async Task<IActionResult> GetTransactionsByUser(int userId)
-        {
-            try
-            {
-                var transactions = await _purcharseBL.GetTransactionsByUserAsync(userId);
-
-                if (transactions == null || transactions.Count == 0)
-                {
-                    return NotFound($"No se encontraron transacciones para el usuario con el Id {userId}");
-                }
-
-                return Ok(transactions);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error al obtener las transacciones de compra por UserId: {ex.Message}");
-            }
-        }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePurchaseTransaction(string id)

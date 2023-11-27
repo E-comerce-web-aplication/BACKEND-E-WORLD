@@ -19,7 +19,21 @@ namespace Inventory.ArqLimpia.BL.DTOs
         {
             public int CompanyId { get; set; }
             public string ProductId { get; set; }
+            public object ProductInfo { get; set; }
             public int Quantity { get; set; }
+        }
+
+        public class ProductInformationDTO
+        {
+           public string Title { get; set; }
+
+           public List<string> Images { get; set; }
+
+           public string ProductName { get; set; }
+        
+           public double Price { get; set; }
+           
+           
         }
 
     }

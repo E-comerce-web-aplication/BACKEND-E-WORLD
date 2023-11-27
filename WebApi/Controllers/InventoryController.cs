@@ -5,7 +5,7 @@ using static Inventory.ArqLimpia.BL.DTOs.InventoryDTOs;
 
 namespace WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/inventory")]
     [ApiController]
     public class InventoryController : ControllerBase
     {

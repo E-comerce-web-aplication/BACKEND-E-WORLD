@@ -1,6 +1,7 @@
 ﻿
 using Inventory.ArqLimpia.BL.Interfaces.Interfaces;
 using Inventory.ArqLimpia.EN.Interfaces;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using static Inventory.ArqLimpia.BL.DTOs.InventoryDTOs;
 
 namespace Inventory.ArqLimpia.BL
@@ -22,10 +23,14 @@ namespace Inventory.ArqLimpia.BL
 
                 if (companies?.Any() == true)
                 {
+                    foreach( var company in companies ){
+                         
+                    };
                     var dtos = companies.Select(company => new InventoryCompanyDto
                     {
                         CompanyId = company.CompanyId,
                         ProductId = company.ProductId.ToString(),
+                        ProductInfo = company.ProductInfo,
                         Quantity = company.Quantity
                         
                     }).ToList();
