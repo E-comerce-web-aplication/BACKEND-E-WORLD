@@ -6,6 +6,7 @@ namespace Inventory.EN.Enterprice
     public interface IOrder
     {
         Task Create( CreateOrderInputDTOs Order );  
-        Task<List<OrdersEN>> Find();   
+        Task<List<OrdersEN>> Find();
+      
     }
 }

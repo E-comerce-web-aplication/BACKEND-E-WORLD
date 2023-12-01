@@ -34,7 +34,7 @@ namespace Inventory.ArqLimpia.BL
 
             var resultList = orders.Select(order => new FindOrderOutputDTOs
             {
-                Id = order.Id,
+                Id = order._id,
                 OrderDate = order.OrderDate,
                 StoreId = order.StoreId,
                 CustomerId = order.CustomerId,

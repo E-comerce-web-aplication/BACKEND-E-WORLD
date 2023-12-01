@@ -7,7 +7,7 @@ namespace Inventory.ArqLimpia.EN
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public string _id { get; set; }
 
         [BsonElement("ProductId")]
         public string ProductId { get; set; }

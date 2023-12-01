@@ -4,6 +4,9 @@ using Inventory.ArqLimpia.EN;
 using Inventory.EN.Enterprice;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Inventary.ArqLimpia.DAL
 {
@@ -11,13 +14,15 @@ namespace Inventary.ArqLimpia.DAL
     {
         private readonly IMongoCollection<OrdersEN> _ordersCollection;
         private readonly IMongoCollection<OrdersProductEN> _ordersProductCollection;
-        private readonly IMongoCollection<ProductEN> _productsCollection;
+        private readonly IMongoCollection<InventoryCompanyEN> _inventoryCompanyCollection;
+        private readonly IMongoCollection<InventoryStoreEN> _inventoryStoreCollection;
 
         public OrderDAL(InventoryContextDAL dbContext)
         {
             _ordersCollection = dbContext.Orders;
             _ordersProductCollection = dbContext.OrderProducts;
-            _productsCollection = dbContext.Products;
+            _inventoryCompanyCollection = dbContext.InventoryCompany;
+            _inventoryStoreCollection = dbContext.InventoryStore;
         }
 
         public async Task Create(CreateOrderInputDTOs orderInput)
@@ -29,7 +34,8 @@ namespace Inventary.ArqLimpia.DAL
                     OrderDate = DateTime.Now,
                     StoreId = orderInput.StoreId,
                     CustomerId = orderInput.CustomerId,
-                    Total = orderInput.Total
+                    Total = orderInput.Total,
+                    Status = ConvertToOrderStatus(orderInput.Status)
                 };
                 await _ordersCollection.InsertOneAsync(order);
 
@@ -39,43 +45,69 @@ namespace Inventary.ArqLimpia.DAL
                     var orderProduct = new OrdersProductEN
                     {
                         ProductId = productInput.ProductId,
-                        OrderId = order.Id, 
+                        OrderId = order._id,
                         Quantity = productInput.Quantity,
                     };
                     orderProducts.Add(orderProduct);
                 }
                 await _ordersProductCollection.InsertManyAsync(orderProducts);
 
-                foreach (var productInput in orderInput.Products)
-                {
-                    var product = await _productsCollection.Find(p => p._id == productInput.ProductId).FirstOrDefaultAsync();
+                // Actualizar el inventario de la compañía
+                await UpdateCompanyInventory(orderInput.Products.ToList());
 
-                    var newStock = product.Stock - productInput.Quantity;
+                // Actualizar el inventario de la tienda
+                await UpdateStoreInventory(orderInput.StoreId, orderInput.Products.ToList());
 
-                    if (newStock >= 0)
-                    {
-                        var filter = Builders<ProductEN>.Filter.Eq(p => p._id, productInput.ProductId);
-                        var update = Builders<ProductEN>.Update.Set(p => p.Stock, newStock);
-
-                        await _productsCollection.UpdateOneAsync(filter, update);
-                    }
-                    else
-                    {
-                        throw new Exception("Insufficient stock for product: " + product.ProductName);
-                    }
-                }
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
+
         public async Task<List<OrdersEN>> Find()
         {
-            var filter = Builders<OrdersEN>.Filter.Empty; // Filtro vacío para obtener todos los documentos
+            var filter = Builders<OrdersEN>.Filter.Empty;
             var result = await _ordersCollection.FindAsync(filter);
             return await result.ToListAsync();
         }
+
+        private async Task UpdateCompanyInventory(List<OrderProductInputDTOs> products)
+        {
+            foreach (var productInput in products)
+            {
+                var filter = Builders<InventoryCompanyEN>.Filter.Eq("ProductId", productInput.ProductId);
+                var update = Builders<InventoryCompanyEN>.Update.Inc("Quantity", -productInput.Quantity);
+                await _inventoryCompanyCollection.UpdateOneAsync(filter, update);
+            }
+        }
+
+        private async Task UpdateStoreInventory(int storeId, List<OrderProductInputDTOs> products)
+        {
+            foreach (var productInput in products)
+            {
+                var filter = Builders<InventoryStoreEN>.Filter.And(
+                    Builders<InventoryStoreEN>.Filter.Eq("StoreId", storeId),
+                    Builders<InventoryStoreEN>.Filter.Eq("ProductId", productInput.ProductId));
+
+                var update = Builders<InventoryStoreEN>.Update.Inc("Quantity", productInput.Quantity);
+                await _inventoryStoreCollection.UpdateOneAsync(filter, update, new UpdateOptions { IsUpsert = true });
+            }
+        }
+
+        private OrderStatus ConvertToOrderStatus(string status)
+        {
+            switch (status.ToLower())
+            {
+                case "pending":
+                    return OrderStatus.Pending;
+                case "rejected":
+                    return OrderStatus.Rejected;
+                case "confirmed":
+                    return OrderStatus.Confirmed;
+                default:
+                    throw new ArgumentException("Estado de pedido no válido");
+            }
+        }
     }
 }
-
