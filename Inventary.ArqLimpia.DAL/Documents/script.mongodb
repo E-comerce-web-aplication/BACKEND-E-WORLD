@@ -85,7 +85,7 @@ db.createCollection("Orders", {
    validator: {
       $jsonSchema: {
          bsonType: "object",
-         required: ["Date", "User", "Store", "Total"],
+         required: ["Date", "User", "Store", "Total", "Status"],
          properties: {
             Date: {
                bsonType: "date",
@@ -103,11 +103,17 @@ db.createCollection("Orders", {
                bsonType: "decimal",
                minimum: 0,
                description: "Total de la orden"
+            },
+            Status: {
+               bsonType: "string",
+               description: "Estatus de la orden",
+               enum: ["Pending", "Rejected", "Confirmed"]
             }
          }
       }
    }
-})
+});
+
 
 db.createCollection("OrderProduct", {
    validator: {
@@ -136,15 +142,15 @@ db.createCollection("OrderProduct", {
 db.createCollection("Returns", {
    validator: {
       $jsonSchema: {
-         bsonType: "Object",
-         required: ["Date", "User", "Reason", "Store", "Total"],
+         bsonType: "object",
+         required: ["Date", "User", "Reason", "Store", "Total", "Status"],
          properties: {
             Date: {
-               bsonType: "Date",
+               bsonType: "date",
                description: "Fecha de la devolución"
             },
             User: {
-               bsonType: "ObjectId",
+               bsonType: "objectId",
                description: "ID del usuario que realizó la devolución"
             },
             Reason: {
@@ -152,18 +158,23 @@ db.createCollection("Returns", {
                description: "Motivo de la devolución"
             },
             Store: {
-               bsonType: "ObjectId",
+               bsonType: "objectId",
                description: "ID de la tienda relacionada con la devolución"
             },
             Total: {
                bsonType: "decimal",
                minimum: 0,
                description: "Total de la devolución"
+            },
+            Status: {
+               bsonType: "string",
+               description: "Estatus de la devolución",
+               enum: ["Pending", "Rejected", "Confirmed"]
             }
          }
       }
    }
-})
+});
 
 
 db.createCollection("ProductReturn", {

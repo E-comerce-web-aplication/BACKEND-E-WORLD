@@ -23,8 +23,9 @@ namespace Inventory.ArqLimpia.BL
 
                 if (companies?.Any() == true)
                 {
-                    foreach( var company in companies ){
-                         
+                    foreach (var company in companies)
+                    {
+
                     };
                     var dtos = companies.Select(company => new InventoryCompanyDto
                     {
@@ -32,7 +33,7 @@ namespace Inventory.ArqLimpia.BL
                         ProductId = company.ProductId.ToString(),
                         ProductInfo = company.ProductInfo,
                         Quantity = company.Quantity
-                        
+
                     }).ToList();
 
                     return dtos;

@@ -1,7 +1,7 @@
 namespace Inventory.ArqLimpia.BL.DTOs
 {
-    public class OrderProductInputDTO
-    { 
+    public class OrderProductInputDTOs
+    {
         public string ProductId { get; set; }
         public int Quantity { get; set; }
     }
@@ -12,7 +12,8 @@ namespace Inventory.ArqLimpia.BL.DTOs
         public int StoreId { get; set; }
         public int CustomerId { get; set; }
         public decimal Total { get; set; }
-        public List<OrderProductInputDTO> Products { get; set; }
+        public ICollection<OrderProductInputDTOs> Products { get; set; }
+        public string Status { get; set; }
     }
 
     public class CreateOrderOutputDTOs
@@ -22,7 +23,8 @@ namespace Inventory.ArqLimpia.BL.DTOs
         public int StoreId { get; set; }
         public int CustomerId { get; set; }
         public decimal Total { get; set; }
-        public List<string> Products { get; set; }
+        public ICollection<OrderProductInputDTOs> Products { get; set; }
+        public string Status { get; set; }
     }
 
     public class FindOrderOutputDTOs
@@ -32,21 +34,23 @@ namespace Inventory.ArqLimpia.BL.DTOs
         public int StoreId { get; set; }
         public int CustomerId { get; set; }
         public decimal Total { get; set; }
-        public List<OrderProductInputDTO> Products { get; set; }
+        public ICollection<OrderProductInputDTOs> Products { get; set; }
+        public string Status { get; set; }
     }
 
-    public class FindByIdOrderInputDTO
+    public class FindByIdOrderInputDTOs
     {
         public string Id { get; set; }
     }
 
-    public class FindByIdOrderOutputDTO
+    public class FindByIdOrderOutputDTOs
     {
         public string Id { get; set; }
         public DateTime OrderDate { get; set; }
         public int StoreId { get; set; }
         public int CustomerId { get; set; }
         public decimal Total { get; set; }
-        public List<string> Products { get; set; }
+        public ICollection<OrderProductInputDTOs> Products { get; set; }
+        public string Status { get; set; }
     }
 }
