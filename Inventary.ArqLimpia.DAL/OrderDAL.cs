@@ -2,11 +2,8 @@ using inventory.ArqLimpia.EN;
 using Inventory.ArqLimpia.BL.DTOs;
 using Inventory.ArqLimpia.EN;
 using Inventory.EN.Enterprice;
-using MongoDB.Bson;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+
 
 namespace Inventary.ArqLimpia.DAL
 {
@@ -20,7 +17,7 @@ namespace Inventary.ArqLimpia.DAL
         public OrderDAL(InventoryContextDAL dbContext)
         {
             _ordersCollection = dbContext.Orders;
-            _ordersProductCollection = dbContext.OrderProducts;
+            _ordersProductCollection = dbContext.OrderProduct;
             _inventoryCompanyCollection = dbContext.InventoryCompany;
             _inventoryStoreCollection = dbContext.InventoryStore;
         }

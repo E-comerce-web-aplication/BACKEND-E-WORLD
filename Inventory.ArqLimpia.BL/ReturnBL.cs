@@ -1,38 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Inventory.ArqLimpia.BL.Interfaces;
-using Inventory.ArqLimpia.BL.DTOs;
-using Inventory.ArqLimpia.BL.Interfaces.Interfaces;
+﻿using Inventory.ArqLimpia.BL.Interfaces.Interfaces;
 using static Inventory.ArqLimpia.BL.DTOs.ReturnDTOs;
+using Inventory.ArqLimpia.EN.Interfaces;
+using Inventory.EN.Enterprice;
 
 namespace Inventory.ArqLimpia.BL
 {
     public class ReturnBL : IReturns
     {
+        readonly IReturn _returnDAL;
 
-        
-
-        //Metodo para crear un retorno 
-
-        public async Task<createReturnInputDTO >Create(createReturnOutputDTO pReturn)
+        public ReturnBL(IReturn returnDAL)
         {
-           throw new NotImplementedException();
+            _returnDAL = returnDAL;
         }
 
-        //Metodo Para cancelar un  producto 
-        public async Task<ReturnDTOs.cancelReturnInputDTO> Cancel(ReturnDTOs.cancelReturnOutputDTO pReturn)
+        public async Task<CreateReturnOutputDTO> Create(CreateReturnInputDTO pReturn)
         {
-            throw new NotImplementedException();
-        }
-        //Metodo para buscar un producto 
+            
+            await _returnDAL.Create(pReturn);
 
-        public Task<ReturnDTOs.findReturnInputDTO> Find(ReturnDTOs.findReturnOutputDTO pReturn)
+            var createdReturn = new CreateReturnOutputDTO
+            {
+                Date = pReturn.Date,
+                UserId = pReturn.UserId,
+                Reason = pReturn.Reason,
+                StoreId = pReturn.StoreId,
+                Total = pReturn.Total,
+                Status = pReturn.Status
+            };
+
+           
+            return createdReturn;
+        }
+
+ 
+        public async Task<List<FindReturnOutputDTOs>> Find()
         {
-            throw new NotImplementedException();
+            var returns = await _returnDAL.Find();
+
+            var resultList = returns.Select(returnItem => new FindReturnOutputDTOs
+            {
+                Date = returnItem.Date,
+                UserId = returnItem.UserId,
+                Reason = returnItem.Reason,
+                StoreId = returnItem.StoreId,
+                Total = returnItem.Total,
+                Status = returnItem.Status.ToString()
+            }).ToList();
+
+            return resultList;
         }
     }
 }
+

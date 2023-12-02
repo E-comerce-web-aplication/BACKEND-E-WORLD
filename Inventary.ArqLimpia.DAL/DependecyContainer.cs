@@ -24,6 +24,7 @@ namespace Inventary.ArqLimpia.DAL
             services.AddScoped<IInventory, InventoryDAL>();
             services.AddScoped<IPurchases, PurchasesDAL>();
             services.AddScoped<IProvider, ProviderDAL>();
+            services.AddScoped<IReturn, ReturnDAL>();
             return services;
         }
     }

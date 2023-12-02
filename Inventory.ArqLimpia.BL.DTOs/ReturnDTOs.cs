@@ -1,81 +1,70 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Inventory.ArqLimpia.BL.DTOs
 {
     public class ReturnDTOs
+
     {
-        //DTOs para crear retorno//
-        public class createReturnInputDTO
+        public class ReturnProductsInputDTOs
         {
-            [Required]
-            public int IdUser { get; set; }
-            
-            public DateTime ReturnDAte { get; set; }
-            [Required]
-            public int IdStore { get; set; }
-            [Required]
-            public int IdProduct { get; set; }
+            public int Returns { get; set; }
+            public int Quantity { get; set; }
+            public string ProductId { get; set; }
+        }
+        public class CreateReturnInputDTO
+        {
+            public DateTime Date { get; set; }
+            public int UserId { get; set; }
+            public string Reason { get; set; }
+            public int StoreId { get; set; }
+            public decimal Total { get; set; }
+            public List<ReturnProductsInputDTOs> Products { get; set; }
+            public string Status { get; set; }          
         }
 
-        public class createReturnOutputDTO
+        public class CreateReturnOutputDTO
         {
-            public int IdUser { get; set; }
-
-            public DateTime ReturnDAte { get; set; }
-
-            public int IdStore { get; set; }
-
-            public int IdProduct { get; set; }
-        }
-        //DTo para buscar datos  un retorno
-        public class findReturnInputDTO
-        {
-            [Required]
-            public int IdStore { get; set; }
-
-
-        }
-        //Datos que devolvera un retorno 
-
-        public class findReturnOutputDTO
-        {
-            public int IdUser { get; set; }
-
-            public DateTime ReturnDAte { get; set; }
-
-            public int IdStore { get; set; }
-
-            public int IdProduct { get; set; }
-
-            public  int IdReturn { get; set; }
-
-
-        }
-        //DTo para hacer  la entrada para cancelar el retorno
-        public class cancelReturnInputDTO
-        {
-            [Required]
-            public int IdReturn{ get; set; }
-
-
+            public string Id { get; set; }
+            public DateTime Date { get; set; }
+            public int UserId { get; set; }
+            public string Reason { get; set; }
+            public int StoreId { get; set; }
+            public decimal Total { get; set; }
+            public List<ReturnProductsInputDTOs> Products { get; set; }
+            public string Status { get; set; }
         }
 
-        //DTO de los datos que mostrara  el retorno 
-        public class cancelReturnOutputDTO
+        public class FindReturnOutputDTOs
         {
-            public bool status  { get; set; }
+            public string Id { get; set; }
+            public DateTime Date { get; set; }
+            public int UserId { get; set; }
+            public string Reason { get; set; }
+            public int StoreId { get; set; }
+            public decimal Total { get; set; }
+            public List<ReturnProductsInputDTOs> Products { get; set; }
+            public string Status { get; set; }
         }
 
+            // DTO para buscar datos de un retorno
+            public class FindReturnInputDTO
+        {
+            public string Id { get; set; }
+        }
 
-
-
+        // Datos que devolverá un retorno
+        public class FindByIdReturnOutputDTOs
+        {
+            public string Id { get; set; }
+            public DateTime Date { get; set; }
+            public int UserId { get; set; }
+            public string Reason { get; set; }
+            public int StoreId { get; set; }
+            public decimal Total { get; set; }
+            public List<ReturnProductsInputDTOs> Products { get; set; }
+            public string Status { get; set; }
+        }
+        
     }
 }
-
-

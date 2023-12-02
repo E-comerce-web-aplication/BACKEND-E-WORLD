@@ -22,7 +22,8 @@ namespace Inventory.ArqLimpia.BL
                 OrderDate = order.OrderDate,
                 StoreId = order.StoreId,
                 CustomerId = order.CustomerId,
-                Total = order.Total
+                Total = order.Total,
+                Status = order.Status
             };
 
             return createdOrder;
@@ -38,7 +39,8 @@ namespace Inventory.ArqLimpia.BL
                 OrderDate = order.OrderDate,
                 StoreId = order.StoreId,
                 CustomerId = order.CustomerId,
-                Total = order.Total
+                Total = order.Total,
+                Status = order.Status.ToString()
             }).ToList();
 
             return resultList;
