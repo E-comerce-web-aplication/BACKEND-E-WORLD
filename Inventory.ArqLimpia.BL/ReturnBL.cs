@@ -33,23 +33,40 @@ namespace Inventory.ArqLimpia.BL
             return createdReturn;
         }
 
- 
-        public async Task<List<FindReturnOutputDTOs>> Find()
+
+        public async Task<FindReturnOutputDTOs> Find(string returnId)
         {
-            var returns = await _returnDAL.Find();
-
-            var resultList = returns.Select(returnItem => new FindReturnOutputDTOs
+            try
             {
-                Date = returnItem.Date,
-                UserId = returnItem.UserId,
-                Reason = returnItem.Reason,
-                StoreId = returnItem.StoreId,
-                Total = returnItem.Total,
-                Status = returnItem.Status.ToString()
-            }).ToList();
+                // Llama al método AuthorizeReturn para obtener la información de la devolución
+                var returnItem = await _returnDAL.AuthorizeReturn(returnId);
 
-            return resultList;
+                // Verificar si la devolución no existe
+                if (returnItem == null)
+                {
+                    return null;
+                }
+
+                // Crear el objeto de salida
+                var result = new FindReturnOutputDTOs
+                {
+                    Date = returnItem.Date,
+                    UserId = returnItem.UserId,
+                    Reason = returnItem.Reason,
+                    StoreId = returnItem.StoreId,
+                    Total = returnItem.Total,
+                    Status = returnItem.Status.ToString()
+                };
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
         }
+
     }
 }
 

@@ -32,18 +32,25 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(string returnId)
         {
             try
             {
-                var products = await _returnBL.Find();
-                return Ok(products);
+                var product = await _returnBL.Find(returnId);
+
+                if (product == null)
+                {
+                    // Manejar el caso en el que no se encuentra el elemento con el ID especificado
+                    return NotFound($"No se encontró el elemento con el ID {returnId}");
+                }
+
+                return Ok(product);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
-        
         }
+
     }
 }

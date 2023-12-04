@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Inventory.ArqLimpia.BL.Interfaces;
 using Inventory.ArqLimpia.BL.DTOs;
 using Microsoft.AspNetCore.Authorization;
+using Inventory.ArqLimpia.BL;
 
 namespace WebApi.Controllers
 {
@@ -20,20 +21,6 @@ namespace WebApi.Controllers
             _orderBL = orderBL;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            try
-            {
-                var products = await _orderBL.Find();
-                return Ok(products);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
-            }
-        }
-
         [HttpPost]
         public async Task<IActionResult> Post(CreateOrderInputDTOs order)
         {
@@ -41,6 +28,27 @@ namespace WebApi.Controllers
             {
                 var newOrder = await _orderBL.Create(order);
                 return Ok(newOrder);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Get(string orderId)
+        {
+            try
+            {
+                var product = await _orderBL.Find(orderId);
+
+                if (product == null)
+                {
+                    // Manejar el caso en el que no se encuentra el elemento con el ID especificado
+                    return NotFound($"No se encontró el elemento con el ID {orderId}");
+                }
+
+                return Ok(product);
             }
             catch (Exception ex)
             {

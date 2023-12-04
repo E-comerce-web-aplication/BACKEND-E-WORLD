@@ -6,5 +6,5 @@ namespace Inventory.ArqLimpia.BL.Interfaces;
 public interface IOrderBL
 {
     Task<CreateOrderOutputDTOs> Create(CreateOrderInputDTOs pProducts);
-    Task<List<FindOrderOutputDTOs>> Find();
+    Task<FindOrderOutputDTOs> Find(string orderId);
 }

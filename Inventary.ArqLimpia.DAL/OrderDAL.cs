@@ -2,6 +2,7 @@ using inventory.ArqLimpia.EN;
 using Inventory.ArqLimpia.BL.DTOs;
 using Inventory.ArqLimpia.EN;
 using Inventory.EN.Enterprice;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 
@@ -48,13 +49,7 @@ namespace Inventary.ArqLimpia.DAL
                     orderProducts.Add(orderProduct);
                 }
                 await _ordersProductCollection.InsertManyAsync(orderProducts);
-
-                // Actualizar el inventario de la compañía
-                await UpdateCompanyInventory(orderInput.Products.ToList());
-
-                // Actualizar el inventario de la tienda
-                await UpdateStoreInventory(orderInput.StoreId, orderInput.Products.ToList());
-
+ 
             }
             catch (Exception ex)
             {
@@ -62,12 +57,62 @@ namespace Inventary.ArqLimpia.DAL
             }
         }
 
-        public async Task<List<OrdersEN>> Find()
+        public async Task<OrdersEN> AuthorizeOrder(string orderId)
         {
-            var filter = Builders<OrdersEN>.Filter.Empty;
-            var result = await _ordersCollection.FindAsync(filter);
-            return await result.ToListAsync();
+            try
+            {
+                var filter = Builders<OrdersEN>.Filter.Eq("_id", ObjectId.Parse(orderId));
+                var orderResult = await _ordersCollection.FindAsync(filter);
+                var orderEntity = await orderResult.SingleOrDefaultAsync();
+
+                if (orderEntity == null)
+                {
+                    // Manejar el caso donde no se encuentra la devolución
+                    // Puedes lanzar una excepción, loggear un error, etc.
+                    throw new Exception("Orden no encontrada");
+                }
+
+                // Verificar si la devolución ya fue autorizada
+                if (orderEntity.Status == OrderStatus.Confirmed)
+                {
+                    // Manejar el caso donde la devolución ya fue autorizada
+                    // Puedes lanzar una excepción, loggear un error, etc.
+                    throw new Exception("La orden ya fue autorizada anteriormente");
+                }
+
+                // Actualizar el estado de la devolución a "Confirmada"
+                var updateStatus = Builders<OrdersEN>.Update.Set("Status", OrderStatus.Confirmed);
+                await _ordersCollection.UpdateOneAsync(filter, updateStatus);
+
+                // Obtener la lista de productos devueltos
+                var ordersProducts = await _ordersProductCollection
+                    .Find(Builders<OrdersProductEN>.Filter.Eq("Orders", orderEntity._id))
+                    .ToListAsync();
+
+                // Convertir la lista de ProductReturnEN a ReturnProductsInputDTOs
+                var productsDTOs = ordersProducts.Select(product => new OrderProductInputDTOs
+                {
+                    ProductId = product.ProductId,
+                    Quantity = product.Quantity
+                }).ToList();
+
+
+                // Actualizar el inventario de la compañía
+                await UpdateCompanyInventory(productsDTOs);
+
+                // Actualizar el inventario de la tienda
+                await UpdateStoreInventory(orderEntity.StoreId, productsDTOs);
+
+                // Devolver la entidad de devolución
+                return orderEntity;
+            }
+            catch (Exception ex)
+            {
+                // Manejar la excepción, puedes loggear el error, lanzar otra excepción, etc.
+                throw ex;
+            }
         }
+
 
         private async Task UpdateCompanyInventory(List<OrderProductInputDTOs> products)
         {

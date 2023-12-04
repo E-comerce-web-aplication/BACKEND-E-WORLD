@@ -1,6 +1,7 @@
 ﻿using inventory.ArqLimpia.EN;
 using Inventory.ArqLimpia.EN;
 using Inventory.ArqLimpia.EN.Interfaces;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using static Inventory.ArqLimpia.BL.DTOs.ReturnDTOs;
 
@@ -49,13 +50,6 @@ namespace Inventary.ArqLimpia.DAL
                     returnProducts.Add(returnProduct);
                 }
                 await _returnProductCollection.InsertManyAsync(returnProducts);
-
-                // Actualizar el inventario de la compañía
-                await UpdateCompanyInventory(returnInput.Products.ToList());
-
-                // Actualizar el inventario de la tienda
-                await UpdateStoreInventory(returnInput.StoreId, returnInput.Products.ToList());
-
             }
             catch (Exception ex)
             {
@@ -86,13 +80,61 @@ namespace Inventary.ArqLimpia.DAL
             }
         }
 
-
-        public async Task<List<ReturnEN>> Find()
+        public async Task<ReturnEN> AuthorizeReturn(string returnId)
         {
-            var filter = Builders<ReturnEN>.Filter.Empty;
-            var result = await _returnCollection.FindAsync(filter);
-            return await result.ToListAsync();
+            try
+            {
+                var filter = Builders<ReturnEN>.Filter.Eq("_id", ObjectId.Parse(returnId));
+                var returnResult = await _returnCollection.FindAsync(filter);
+                var returnEntity = await returnResult.SingleOrDefaultAsync();
+
+                if (returnEntity == null)
+                {
+                    // Manejar el caso donde no se encuentra la devolución
+                    // Puedes lanzar una excepción, loggear un error, etc.
+                    throw new Exception("Devolución no encontrada");
+                }
+
+                // Verificar si la devolución ya fue autorizada
+                if (returnEntity.Status == ReturnStatus.Confirmed)
+                {
+                    // Manejar el caso donde la devolución ya fue autorizada
+                    // Puedes lanzar una excepción, loggear un error, etc.
+                    throw new Exception("La devolución ya fue autorizada anteriormente");
+                }
+
+                // Actualizar el estado de la devolución a "Confirmada"
+                var updateStatus = Builders<ReturnEN>.Update.Set("Status", ReturnStatus.Confirmed);
+                await _returnCollection.UpdateOneAsync(filter, updateStatus);
+
+                // Obtener la lista de productos devueltos
+                var returnedProducts = await _returnProductCollection
+                    .Find(Builders<ProductReturnEN>.Filter.Eq("Returns", returnEntity._id))
+                    .ToListAsync();
+
+                // Convertir la lista de ProductReturnEN a ReturnProductsInputDTOs
+                var productsDTOs = returnedProducts.Select(product => new ReturnProductsInputDTOs
+                {
+                    ProductId = product.ProductId,
+                    Quantity = product.Quantity
+                }).ToList();
+
+                // Actualizar el inventario de la compañía
+                await UpdateCompanyInventory(productsDTOs);
+
+                // Actualizar el inventario de la tienda
+                await UpdateStoreInventory(returnEntity.StoreId, productsDTOs);
+
+                // Devolver la entidad de devolución
+                return returnEntity;
+            }
+            catch (Exception ex)
+            {
+                // Manejar la excepción, puedes loggear el error, lanzar otra excepción, etc.
+                throw ex;
+            }
         }
+
 
         private ReturnStatus ConvertToReturnStatus(string status)
         {

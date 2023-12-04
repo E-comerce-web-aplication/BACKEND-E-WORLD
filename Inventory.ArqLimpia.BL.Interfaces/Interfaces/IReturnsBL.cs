@@ -5,6 +5,6 @@ namespace Inventory.ArqLimpia.BL.Interfaces.Interfaces
     public  interface IReturns
     {
         Task<CreateReturnOutputDTO> Create(CreateReturnInputDTO pReturn);
-        Task<List<FindReturnOutputDTOs>> Find();
+        Task<FindReturnOutputDTOs> Find(string returnId);
     }
 }
