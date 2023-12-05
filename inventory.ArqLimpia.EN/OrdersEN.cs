@@ -15,7 +15,7 @@ namespace Inventory.ArqLimpia.EN
 
         [BsonElement("User")]
         [BsonRepresentation(BsonType.Int32)]
-        public int CustomerId { get; set; }
+        public int UserId { get; set; }
 
         [BsonElement("Store")]
         [BsonRepresentation(BsonType.Int32)]

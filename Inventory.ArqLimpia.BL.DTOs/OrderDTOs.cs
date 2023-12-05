@@ -10,7 +10,7 @@ namespace Inventory.ArqLimpia.BL.DTOs
     {
         public DateTime OrderDate { get; set; }
         public int StoreId { get; set; }
-        public int CustomerId { get; set; }
+        public int UserId { get; set; }
         public decimal Total { get; set; }
         public List<OrderProductInputDTOs> Products { get; set; }
         public string Status { get; set; }
@@ -21,7 +21,7 @@ namespace Inventory.ArqLimpia.BL.DTOs
         public string Id { get; set; }
         public DateTime OrderDate { get; set; }
         public int StoreId { get; set; }
-        public int CustomerId { get; set; }
+        public int UserId { get; set; }
         public decimal Total { get; set; }
         public List<OrderProductInputDTOs> Products { get; set; }
         public string Status { get; set; }
@@ -32,7 +32,7 @@ namespace Inventory.ArqLimpia.BL.DTOs
         public string Id { get; set; }
         public DateTime OrderDate { get; set; }
         public int StoreId { get; set; }
-        public int CustomerId { get; set; }
+        public int UserId { get; set; }
         public decimal Total { get; set; }
         public List<OrderProductInputDTOs> Products { get; set; }
         public string Status { get; set; }
@@ -48,7 +48,7 @@ namespace Inventory.ArqLimpia.BL.DTOs
         public string Id { get; set; }
         public DateTime OrderDate { get; set; }
         public int StoreId { get; set; }
-        public int CustomerId { get; set; }
+        public int UserId { get; set; }
         public decimal Total { get; set; }
         public List<OrderProductInputDTOs> Products { get; set; }
         public string Status { get; set; }

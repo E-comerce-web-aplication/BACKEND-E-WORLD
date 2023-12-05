@@ -23,14 +23,14 @@ namespace Inventory.ArqLimpia.BL
             {
                 OrderDate = order.OrderDate,
                 StoreId = order.StoreId,
-                CustomerId = order.CustomerId,
+                UserId = order.UserId,
                 Total = order.Total,
                 Status = order.Status
             };
 
             return createdOrder;
         }
-
+    
         public async Task<FindOrderOutputDTOs> Find(string orderId)
         {
 
@@ -51,7 +51,7 @@ namespace Inventory.ArqLimpia.BL
                     Id = orderItem._id,
                     OrderDate = orderItem.OrderDate,
                     StoreId = orderItem.StoreId,
-                    CustomerId = orderItem.CustomerId,
+                    UserId = orderItem.UserId,
                     Total = orderItem.Total,
                     Status = orderItem.Status.ToString()
                 };
