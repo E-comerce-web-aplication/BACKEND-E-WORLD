@@ -18,7 +18,7 @@ namespace Inventory.ArqLimpia.BL.DTOs
 
     public class CreateOrderOutputDTOs
     {
-        public string Id { get; set; }
+        public string _id { get; set; }
         public DateTime OrderDate { get; set; }
         public int StoreId { get; set; }
         public int UserId { get; set; }

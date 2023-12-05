@@ -12,7 +12,7 @@ namespace inventory.ArqLimpia.EN
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId Id { get; set; }
+        public ObjectId _id { get; set; }
 
         [BsonElement("StoreId")]
         public int StoreId { get; set; }
