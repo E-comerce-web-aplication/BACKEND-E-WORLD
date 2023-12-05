@@ -89,23 +89,18 @@ namespace Inventary.ArqLimpia.DAL
             try
             {
                 var filter = Builders<OrdersEN>.Filter.Eq("_id", ObjectId.Parse(orderId));
-                var orderResult = await _ordersCollection.FindAsync(filter);
-                var orderEntity = await orderResult.SingleOrDefaultAsync();
+                var updateStatus = Builders<OrdersEN>.Update.Set("Status", OrderStatus.Confirmed);
+
+                // Actualizar el estado de la orden a "Confirmada"
+                var orderEntity = await _ordersCollection.FindOneAndUpdateAsync(
+                    filter,
+                    updateStatus,
+                    new FindOneAndUpdateOptions<OrdersEN, OrdersEN> { ReturnDocument = ReturnDocument.After });
 
                 if (orderEntity == null)
                 {
                     throw new Exception("Orden no encontrada");
                 }
-
-                // Verificar si la orden ya fue autorizada
-                if (orderEntity.Status == OrderStatus.Confirmed)
-                {
-                    throw new Exception("La orden ya fue autorizada anteriormente");
-                }
-
-                // Actualizar el estado de la orden a "Confirmada"
-                var updateStatus = Builders<OrdersEN>.Update.Set("Status", OrderStatus.Confirmed);
-                await _ordersCollection.UpdateOneAsync(filter, updateStatus);
 
                 // Obtener la lista de productos de la orden
                 var ordersProducts = await _ordersProductCollection
@@ -133,6 +128,7 @@ namespace Inventary.ArqLimpia.DAL
                 throw ex;
             }
         }
+
 
 
 
