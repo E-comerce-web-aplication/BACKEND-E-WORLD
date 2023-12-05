@@ -36,7 +36,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(string orderId)
+        public async Task<IActionResult> Get([FromQuery] string orderId)
         {
             try
             {
@@ -45,7 +45,7 @@ namespace WebApi.Controllers
                 if (product == null)
                 {
                     // Manejar el caso en el que no se encuentra el elemento con el ID especificado
-                    return NotFound($"No se encontró el elemento con el ID {orderId}");
+                    return NotFound($"No se encontrï¿½ el elemento con el ID {orderId}");
                 }
 
                 return Ok(product);
