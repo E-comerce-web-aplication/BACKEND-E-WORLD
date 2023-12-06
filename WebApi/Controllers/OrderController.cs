@@ -22,6 +22,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
+        [Route("create")]
         public async Task<IActionResult> Post(CreateOrderInputDTOs order)
         {
             try
@@ -35,7 +36,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> Get([FromQuery] string orderId)
         {
             try
@@ -56,20 +57,20 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpGet("/order")]
+        [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] int storeId)
         {
             try
             {
-                var product = await _orderBL.FindAllOrders(storeId);
+                var order = await _orderBL.FindAllOrders(storeId);
 
-                if (product == null)
+                if (order == null)
                 {
                     // Manejar el caso en el que no se encuentra el elemento con el ID especificado
                     return NotFound($"No se encontr� el elemento con el ID {storeId}");
                 }
 
-                return Ok(product);
+                return Ok(order);
             }
             catch (Exception ex)
             {
