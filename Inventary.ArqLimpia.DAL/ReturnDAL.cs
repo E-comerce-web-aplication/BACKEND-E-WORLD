@@ -124,8 +124,8 @@ namespace Inventary.ArqLimpia.DAL
                 // Actualizar el inventario de la tienda
                 await UpdateStoreInventory(returnEntity.StoreId, productsDTOs);
 
-                // Devolver la entidad de devolución
-                return returnEntity;
+                var returnEntity2 = await returnResult.SingleOrDefaultAsync();
+                return returnEntity2;
             }
             catch (Exception ex)
             {

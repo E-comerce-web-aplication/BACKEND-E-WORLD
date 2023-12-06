@@ -104,7 +104,7 @@ namespace Inventary.ArqLimpia.DAL
 
                 // Obtener la lista de productos de la orden
                 var ordersProducts = await _ordersProductCollection
-                    .Find(Builders<OrdersProductEN>.Filter.Eq("Orders", orderEntity._id))
+                    .Find(Builders<OrdersProductEN>.Filter.Eq("OrderId", orderEntity._id))
                     .ToListAsync();
 
                 // Convertir la lista de OrdersProductEN a OrderProductInputDTOs
