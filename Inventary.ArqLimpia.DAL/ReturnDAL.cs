@@ -1,4 +1,6 @@
 ﻿using inventory.ArqLimpia.EN;
+using Inventory.ArqLimpia.BL.DTOs;
+using Inventory.ArqLimpia.EN;
 using Inventory.ArqLimpia.EN.Interfaces;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -84,52 +86,43 @@ namespace Inventary.ArqLimpia.DAL
             try
             {
                 var filter = Builders<ReturnEN>.Filter.Eq("_id", ObjectId.Parse(returnId));
-                var returnResult = await _returnCollection.FindAsync(filter);
-                var returnEntity = await returnResult.SingleOrDefaultAsync();
+                var updateStatus = Builders<ReturnEN>.Update.Set("Status", ReturnStatus.Confirmed);
+
+                // Actualizar el estado de la orden a "Confirmada"
+                var returnEntity = await _returnCollection.FindOneAndUpdateAsync(
+                    filter,
+                    updateStatus,
+                    new FindOneAndUpdateOptions<ReturnEN, ReturnEN> { ReturnDocument = ReturnDocument.After });
 
                 if (returnEntity == null)
                 {
-                    // Manejar el caso donde no se encuentra la devolución
-                    // Puedes lanzar una excepción, loggear un error, etc.
-                    throw new Exception("Devolución no encontrada");
+                    throw new Exception("Retorno no encontrada");
                 }
 
-                // Verificar si la devolución ya fue autorizada
-                if (returnEntity.Status == ReturnStatus.Confirmed)
-                {
-                    // Manejar el caso donde la devolución ya fue autorizada
-                    // Puedes lanzar una excepción, loggear un error, etc.
-                    throw new Exception("La devolución ya fue autorizada anteriormente");
-                }
-
-                // Actualizar el estado de la devolución a "Confirmada"
-                var updateStatus = Builders<ReturnEN>.Update.Set("Status", ReturnStatus.Confirmed);
-                await _returnCollection.UpdateOneAsync(filter, updateStatus);
-
-                // Obtener la lista de productos devueltos
-                var returnedProducts = await _returnProductCollection
+                // Obtener la lista de productos de la orden
+                var returnsProducts = await _returnProductCollection
                     .Find(Builders<ProductReturnEN>.Filter.Eq("Returns", returnEntity._id))
                     .ToListAsync();
 
                 // Convertir la lista de ProductReturnEN a ReturnProductsInputDTOs
-                var productsDTOs = returnedProducts.Select(product => new ReturnProductsInputDTOs
+                var returnDTOs = returnsProducts.Select(product => new ReturnProductsInputDTOs
                 {
                     ProductId = product.ProductId,
                     Quantity = product.Quantity
                 }).ToList();
 
+
                 // Actualizar el inventario de la compañía
-                await UpdateCompanyInventory(productsDTOs);
+                await UpdateCompanyInventory(returnDTOs);
 
                 // Actualizar el inventario de la tienda
-                await UpdateStoreInventory(returnEntity.StoreId, productsDTOs);
+                await UpdateStoreInventory(returnEntity.StoreId, returnDTOs);
 
-                var returnEntity2 = await returnResult.SingleOrDefaultAsync();
-                return returnEntity2;
+                // Devolver la entidad de la orden
+                return returnEntity;
             }
             catch (Exception ex)
             {
-                // Manejar la excepción, puedes loggear el error, lanzar otra excepción, etc.
                 throw ex;
             }
         }
