@@ -7,7 +7,7 @@ namespace Inventory.EN.Enterprice
     {
         Task Create( CreateOrderInputDTOs Order );
         Task<OrdersEN> AuthorizeOrder(string orderId);
-
+        Task< List<OrdersEN>> FindAllOrders(int storeId);
 
     }
 }

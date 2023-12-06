@@ -48,6 +48,27 @@ namespace WebApi.Controllers
                     return NotFound($"No se encontr� el elemento con el ID {orderId}");
                 }
 
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
+        }
+
+        [HttpGet("/order")]
+        public async Task<IActionResult> GetAll([FromQuery] int storeId)
+        {
+            try
+            {
+                var product = await _orderBL.FindAllOrders(storeId);
+
+                if (product == null)
+                {
+                    // Manejar el caso en el que no se encuentra el elemento con el ID especificado
+                    return NotFound($"No se encontr� el elemento con el ID {storeId}");
+                }
+
                 return Ok(product);
             }
             catch (Exception ex)

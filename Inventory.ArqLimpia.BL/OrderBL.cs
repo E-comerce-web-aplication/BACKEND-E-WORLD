@@ -1,4 +1,4 @@
- 
+
 using Inventory.ArqLimpia.BL.DTOs;
 using Inventory.ArqLimpia.BL.Interfaces;
 using Inventory.EN.Enterprice;
@@ -36,10 +36,10 @@ namespace Inventory.ArqLimpia.BL
 
             try
             {
-                // Llama al método AuthorizeReturn para obtener la información de la devolución
+                // Llama al mï¿½todo AuthorizeReturn para obtener la informaciï¿½n de la devoluciï¿½n
                 var orderItem = await _orderDAL.AuthorizeOrder(orderId);
 
-                // Verificar si la devolución no existe
+                // Verificar si la devoluciï¿½n no existe
                 if (orderItem == null)
                 {
                     return null;
@@ -61,6 +61,31 @@ namespace Inventory.ArqLimpia.BL
             catch (Exception ex)
             {
 
+                throw ex;
+            }
+        }
+
+        public async Task<List<OrderDto>> FindAllOrders(int storeId)
+        {
+             try
+            {
+                var stores = await _orderDAL.FindAllOrders(storeId);
+
+                if (stores?.Any() == true)
+                {
+                    var dtos = stores.Select(store => new OrderDto
+                    {
+                        StoreId = store.StoreId
+                       
+                    }).ToList();
+
+                    return dtos;
+                }
+
+                throw new Exception($"No se encontraron tiendas para el ID {storeId}");
+            }
+            catch (Exception ex)
+            {
                 throw ex;
             }
         }

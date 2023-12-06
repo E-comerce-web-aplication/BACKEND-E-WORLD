@@ -28,6 +28,9 @@ namespace Inventory.ArqLimpia.EN
         [BsonElement("Status")]
         [BsonRepresentation(BsonType.String)]
         public OrderStatus Status { get; set; }
+
+        [BsonElement("ProductInfo")]
+        public List<OrdersEN> ProductInfo { get; set; }
     }
 
     public enum OrderStatus

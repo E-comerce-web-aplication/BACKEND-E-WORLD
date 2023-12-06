@@ -146,5 +146,23 @@ namespace Inventary.ArqLimpia.DAL
                     throw new ArgumentException("Estado de pedido no válido");
             }
         }
+
+        public async Task<List<OrdersEN>> FindAllOrders(int storeId)
+        {
+            var matchStage = new BsonDocument("$match", new BsonDocument("StoreId", storeId));
+
+            var lookupStage = new BsonDocument("$lookup", new BsonDocument
+            {
+                { "from", "Products" },
+                { "localField", "ProductId" },
+                { "foreignField", "_id" },
+                { "as", "ProductInfo" }
+            });
+
+            var pipeline = new[] { matchStage, lookupStage };
+
+            var aggregation = await _inventoryCompanyCollection.Aggregate<OrdersEN>(pipeline).ToListAsync();
+            return aggregation;
+        }
     }
 }

@@ -53,4 +53,14 @@ namespace Inventory.ArqLimpia.BL.DTOs
         public List<OrderProductInputDTOs> Products { get; set; }
         public string Status { get; set; }
     }
+
+     public class OrderDto
+        {
+            public string Id { get; set; }
+            public int StoreId { get; set; }
+            public int UserId { get; set; }
+            public DateTime OrderDate { get; set; }
+            public object ProductInfo { get; set; }
+            public string Status { get; set; }
+        }
 }

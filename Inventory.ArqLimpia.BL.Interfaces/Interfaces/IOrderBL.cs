@@ -7,4 +7,5 @@ public interface IOrderBL
 {
     Task<CreateOrderOutputDTOs> Create(CreateOrderInputDTOs pProducts);
     Task<FindOrderOutputDTOs> Find(string orderId);
+    Task<List<OrderDto>> FindAllOrders(int storeId);
 }
